@@ -22,7 +22,7 @@ const sectionTitle: CSSProperties = { fontSize: '16px', fontWeight: 700, color: 
 const emptyCard: CSSProperties   = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '32px', fontSize: '13px', fontWeight: 300, color: muted }
 
 export default async function DashboardPage() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -46,10 +46,10 @@ export default async function DashboardPage() {
   ])
 
   const kpis = [
-    { label: 'Total prospects',   value: String(total ?? 0),       sub: 'depuis le lancement' },
-    { label: "Aujourd'hui",       value: String(todayCount ?? 0),  sub: 'nouveaux leads' },
-    { label: 'Vendeurs',          value: String(vendeurs ?? 0),    sub: 'estimations demand\u00e9es' },
-    { label: 'Conversion',        value: '0%',                     sub: 'lead \u2192 RDV' },
+    { label: 'Total prospects', value: String(total ?? 0),      sub: 'depuis le lancement' },
+    { label: "Aujourd'hui",     value: String(todayCount ?? 0), sub: 'nouveaux leads' },
+    { label: 'Vendeurs',        value: String(vendeurs ?? 0),   sub: 'estimations demand\u00e9es' },
+    { label: 'Conversion',      value: '0%',                    sub: 'lead \u2192 RDV' },
   ]
 
   return (
@@ -57,7 +57,6 @@ export default async function DashboardPage() {
       <div style={pageWrap}>
         <h1 style={pageTitle}>Tableau de bord</h1>
         <p style={pageSub}>{'Vue d\'ensemble de votre activit\u00e9 commerciale'}</p>
-
         <div style={kpiGrid}>
           {kpis.map((k) => (
             <div key={k.label} style={kpiCard}>
@@ -67,11 +66,8 @@ export default async function DashboardPage() {
             </div>
           ))}
         </div>
-
         <div style={sectionTitle}>{'Activit\u00e9 r\u00e9cente'}</div>
-        <div style={emptyCard}>
-          {'Les leads de la semaine et les relances \u00e0 effectuer appara\u00eetront ici.'}
-        </div>
+        <div style={emptyCard}>{'Les leads de la semaine appara\u00eetront ici.'}</div>
       </div>
     </CrmLayout>
   )
