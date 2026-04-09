@@ -30,6 +30,8 @@ const outils = [
   },
 ]
 
+const h1Style = { fontSize: 'clamp(2rem, 5vw, 3.5rem)' }
+
 export default function HubPage() {
   return (
     <main className="min-h-screen bg-white">
@@ -63,7 +65,7 @@ export default function HubPage() {
           </p>
           <h1
             className="font-black leading-[1.1] tracking-tight text-[#0F172A] mb-6"
-            style= fontSize: 'clamp(2rem, 5vw, 3.5rem)' 
+            style={h1Style}
           >
             Vos outils immobiliers
             <br />
