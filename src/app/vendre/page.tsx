@@ -8,7 +8,6 @@ import type { CSSProperties } from 'react'
 import { Phone, ChevronLeft, Send, Check, MapPin, Edit3, Zap, Map } from 'lucide-react'
 import Link from 'next/link'
 
-/* -------- Tokens -------- */
 const brand      = '#0066FF'
 const brandLight = '#EFF6FF'
 const fg         = '#0F172A'
@@ -20,7 +19,6 @@ const success    = '#10B981'
 const warning    = '#F59E0B'
 const W          = '680px'
 
-/* -------- Styles statiques -------- */
 const pageSt: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
 const navSt: CSSProperties       = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: '1px solid ' + border }
 const navTopSt: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
@@ -33,7 +31,6 @@ const phoneSt: CSSProperties     = { display: 'flex', alignItems: 'center', gap:
 const chatWrap: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
 const rowAl: CSSProperties       = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
 const rowUser: CSSProperties     = { display: 'flex', justifyContent: 'flex-end' }
-/* Fix texte coupé : wordBreak: break-word */
 const bubbleAl: CSSProperties    = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '84%' }
 const bubbleUser: CSSProperties  = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '80%', minWidth: '60px' }
 const tsLeft: CSSProperties      = { fontSize: '10px', color: muted, marginTop: '4px' }
@@ -69,11 +66,12 @@ const rgpdTxt: CSSProperties     = { fontSize: '12px', fontWeight: 400, color: f
 const rgpdLinkSt: CSSProperties  = { color: brand, textDecoration: 'underline', cursor: 'pointer' }
 const rgpdErrTxt: CSSProperties  = { fontSize: '11px', fontWeight: 600, color: warning, marginTop: '4px' }
 
-/* Adresse infos cards */
-const infoCardGray: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#f1f5f9', marginTop: '8px' }
+/* Adresse info cards */
+const infoCardGray: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#f1f5f9', marginTop: '8px' }
 const infoCardYellow: CSSProperties = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#fefce8', border: '1px solid #fde047', marginTop: '6px' }
-const infoBadge: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto' }
-const infoTxt: CSSProperties       = { fontSize: '13px', fontWeight: 500, color: fg }
+const infoTxt: CSSProperties        = { fontSize: '13px', fontWeight: 500, color: fg }
+const dpeBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#dbeafe', color: brand }
+const ignBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#fef9c3', color: '#854d0e' }
 
 /* Stepper */
 const stepperWrap: CSSProperties = { maxWidth: W, margin: '0 auto', padding: '10px 20px 12px', display: 'flex', alignItems: 'center' }
@@ -148,7 +146,7 @@ function rgpdBoxSt(active: boolean): CSSProperties {
   return { width: '18px', height: '18px', borderRadius: '4px', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brand : white, flexShrink: 0, marginTop: '1px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
 }
 
-/* -------- Stepper — Fragment avec key (fix warning) -------- */
+/* -------- Stepper — Fragment avec key -------- */
 const STEPS = [
   { n: 1, label: 'Bien',    qs: ['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'] },
   { n: 2, label: 'D\u00e9tails', qs: ['etat','equipements'] },
@@ -194,10 +192,10 @@ const TYPE_BIEN = [
 ]
 const ETAT = [
   { value: 'neuf',          label: 'Neuf / r\u00e9cent',      emoji: '\ud83c\udfc6' },
-  { value: 'tres_bon_etat', label: 'Tr\u00e8s bon \u00e9tat',      emoji: '\u2728' },
+  { value: 'tres_bon_etat', label: 'Tr\u00e8s bon \u00e9tat',  emoji: '\u2728' },
   { value: 'bon_etat',      label: 'Bon \u00e9tat',           emoji: '\ud83d\udc4d' },
-  { value: 'rafraichir',    label: '\u00c0 rafra\u00eechir',       emoji: '\ud83d\udd8c\ufe0f' },
-  { value: 'travaux',       label: 'Travaux importants', emoji: '\ud83d\udd28' },
+  { value: 'rafraichir',    label: '\u00c0 rafra\u00eechir',   emoji: '\ud83d\udd8c\ufe0f' },
+  { value: 'travaux',       label: 'Travaux importants',      emoji: '\ud83d\udd28' },
 ]
 const DELAI = [
   { value: 'immediat',   label: 'Imm\u00e9diat',   emoji: '\ud83d\udd25' },
@@ -211,7 +209,6 @@ const BIEN_LBL: Record<string, string>  = { appartement: 'Appartement', maison: 
 const ETAT_LBL: Record<string, string>  = { neuf: 'Neuf / r\u00e9cent', tres_bon_etat: 'Tr\u00e8s bon \u00e9tat', bon_etat: 'Bon \u00e9tat', rafraichir: '\u00c0 rafra\u00eechir', travaux: 'Travaux importants' }
 const DELAI_LBL: Record<string, string> = { immediat: 'Imm\u00e9diat', '1_3_mois': '1 - 3 mois', '3_6_mois': '3 - 6 mois', '6_mois': '+6 mois', pas_decide: 'Pas d\u00e9cid\u00e9' }
 
-/* -------- Flow -------- */
 function getNext(q: QuestionId, a: VendreAnswers): QuestionId {
   switch (q) {
     case 'adresse':          return 'type_bien'
@@ -235,18 +232,11 @@ function buildRecap(a: VendreAnswers): string {
   if (a.nb_pieces) desc += ', ' + a.nb_pieces + ' pi\u00e8ce' + (Number(a.nb_pieces) > 1 ? 's' : '')
   if (a.surface_terrain) desc += ', terrain ' + a.surface_terrain + 'm\u00b2'
   if (a.equipements && a.equipements.length > 0) desc += ' + ' + a.equipements.join(', ')
-  const lines = [
-    'Tr\u00e8s bien, r\u00e9capitulons ensemble votre bien !',
-    '',
-    'Voici le r\u00e9capitulatif de votre bien :',
-    '',
-    '\ud83c\udfd1 ' + desc,
-  ]
+  const lines = ['Tr\u00e8s bien, r\u00e9capitulons ensemble votre bien !', '', 'Voici le r\u00e9capitulatif de votre bien :', '', '\ud83c\udfd1 ' + desc]
   if (a.adresse) lines.push('\ud83d\udccd ' + a.adresse)
   if (a.etat) lines.push('\ud83d\udd27 ' + (ETAT_LBL[a.etat] ?? a.etat))
   if (a.delai) lines.push('\ud83d\uddd3 Vente souhait\u00e9e : ' + (DELAI_LBL[a.delai] ?? a.delai))
-  lines.push('')
-  lines.push('Est-ce que ces informations sont correctes ?')
+  lines.push('', 'Est-ce que ces informations sont correctes ?')
   return lines.join('\n')
 }
 
@@ -271,7 +261,6 @@ function Avatar() { return <div style={avatarSt}>AL</div> }
 
 type UiState = 'chat' | 'calcul' | 'verification'
 
-/* -------- Page -------- */
 export default function VendrePage() {
   const router = useRouter()
   const { messages, currentQuestion, answers, addMessage, setAnswer, setQuestion, reset } = useVendreStore()
@@ -294,19 +283,11 @@ export default function VendrePage() {
   }
 
   function handleFinalSubmit(prenom: string, nom: string, tel: string, email: string, civilite: 'monsieur' | 'madame') {
-    setAnswer('prenom', prenom)
-    setAnswer('nom', nom)
-    setAnswer('telephone', tel)
-    setAnswer('email', email)
-    setAnswer('civilite', civilite)
+    setAnswer('prenom', prenom); setAnswer('nom', nom); setAnswer('telephone', tel); setAnswer('email', email); setAnswer('civilite', civilite)
     addMessage({ from: 'user', text: prenom + ' ' + nom, timestamp: ts() })
     const t = crypto.randomUUID()
     setToken(t)
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...answers, prenom, nom, telephone: tel, email, civilite, token: t, type: 'vendre' }),
-    }).catch(() => null)
+    fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...answers, prenom, nom, telephone: tel, email, civilite, token: t, type: 'vendre' }) }).catch(() => null)
     setUiState('calcul')
   }
 
@@ -320,21 +301,10 @@ export default function VendrePage() {
     }
   }, [answers, token, router])
 
-  function handleVerifComplete(chosen: number) {
-    setAnswer('surface_terrain', chosen)
-    router.push('/resultats/' + token)
-  }
+  function handleVerifComplete(chosen: number) { setAnswer('surface_terrain', chosen); router.push('/resultats/' + token) }
 
   if (uiState === 'calcul') return <CalculLoading onComplete={handleCalculComplete} />
-  if (uiState === 'verification') {
-    return (
-      <VerificationDonnees
-        userSurface={answers.surface_terrain ?? 0}
-        cadastreSurface={answers.cadastre_surface ?? 0}
-        onComplete={handleVerifComplete}
-      />
-    )
-  }
+  if (uiState === 'verification') return <VerificationDonnees userSurface={answers.surface_terrain ?? 0} cadastreSurface={answers.cadastre_surface ?? 0} onComplete={handleVerifComplete} />
 
   return (
     <div style={pageSt}>
@@ -343,14 +313,9 @@ export default function VendrePage() {
           <div style={navLeftSt}>
             <Link href="/" style={backSt}><ChevronLeft size={14} /></Link>
             <Avatar />
-            <div>
-              <div style={navNameSt}>Alex Lopez</div>
-              <div style={navSubSt}>Mandataire IAD - Provence Verte</div>
-            </div>
+            <div><div style={navNameSt}>Alex Lopez</div><div style={navSubSt}>Mandataire IAD - Provence Verte</div></div>
           </div>
-          <a href="tel:+33613180168" style={phoneSt}>
-            <Phone size={13} color={brand} /> 06 13 18 01 68
-          </a>
+          <a href="tel:+33613180168" style={phoneSt}><Phone size={13} color={brand} /> 06 13 18 01 68</a>
         </div>
         <Stepper currentQ={currentQuestion} />
       </header>
@@ -359,32 +324,15 @@ export default function VendrePage() {
         {messages.map((msg) => (
           <div key={msg.id}>
             {msg.from === 'al' ? (
-              <div style={rowAl}>
-                <Avatar />
-                <div>
-                  <div style={bubbleAl}>{msg.text}</div>
-                  <div style={tsLeft}>{msg.timestamp}</div>
-                </div>
-              </div>
+              <div style={rowAl}><Avatar /><div><div style={bubbleAl}>{msg.text}</div><div style={tsLeft}>{msg.timestamp}</div></div></div>
             ) : (
-              <div style={rowUser}>
-                <div>
-                  <div style={bubbleUser}>{msg.text}</div>
-                  <div style={tsRight}>{msg.timestamp}</div>
-                </div>
-              </div>
+              <div style={rowUser}><div><div style={bubbleUser}>{msg.text}</div><div style={tsRight}>{msg.timestamp}</div></div></div>
             )}
           </div>
         ))}
         {currentQuestion !== 'done' && (
           <div style={inlineZone}>
-            <InputZone
-              question={currentQuestion}
-              answers={answers}
-              onAnswer={handleAnswer}
-              onFinalSubmit={handleFinalSubmit}
-              onRestart={() => { reset(); setUiState('chat') }}
-            />
+            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} onRestart={() => { reset(); setUiState('chat') }} />
           </div>
         )}
         <div ref={bottomRef} />
@@ -393,35 +341,20 @@ export default function VendrePage() {
   )
 }
 
-/* -------- InputZone router -------- */
 function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
-  question: QuestionId
-  answers: VendreAnswers
+  question: QuestionId; answers: VendreAnswers
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
   onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void
   onRestart: () => void
 }) {
   if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} />
   if (question === 'type_bien') return <Cards options={TYPE_BIEN} cols={2} onSelect={(v, l) => onAnswer('type_bien', v, l)} />
-  if (question === 'sous_type_maison') return (
-    <Cards
-      options={[{ value: 'mitoyenne', label: 'Mitoyenne', emoji: '\ud83c\udfd8\ufe0f' }, { value: 'individuelle', label: 'Individuelle', emoji: '\ud83c\udfe0' }]}
-      cols={2} onSelect={(v, l) => onAnswer('sous_type', v, l)}
-    />
-  )
+  if (question === 'sous_type_maison') return <Cards options={[{ value: 'mitoyenne', label: 'Mitoyenne', emoji: '\ud83c\udfd8\ufe0f' }, { value: 'individuelle', label: 'Individuelle', emoji: '\ud83c\udfe0' }]} cols={2} onSelect={(v, l) => onAnswer('sous_type', v, l)} />
   if (question === 'surface') return <Slider unit="m\u00b2" min={5} max={1000} def={80} onValidate={(v) => onAnswer('surface', v, v + ' m\u00b2')} />
   if (question === 'surface_terrain') return <Slider unit="m\u00b2" min={50} max={5000} def={500} onValidate={(v) => onAnswer('surface_terrain', v, v + ' m\u00b2')} />
-  if (question === 'nb_pieces') return (
-    <Cards
-      options={['1','2','3','4','5','6+'].map((n) => ({ value: n, label: n, emoji: '' }))}
-      cols={3}
-      onSelect={(v, l) => onAnswer('nb_pieces', parseInt(v) || 6, l + (parseInt(v) > 1 ? ' pi\u00e8ces' : ' pi\u00e8ce'))}
-    />
-  )
+  if (question === 'nb_pieces') return <Cards options={['1','2','3','4','5','6+'].map((n) => ({ value: n, label: n, emoji: '' }))} cols={3} onSelect={(v, l) => onAnswer('nb_pieces', parseInt(v) || 6, l + (parseInt(v) > 1 ? ' pi\u00e8ces' : ' pi\u00e8ce'))} />
   if (question === 'etat') return <Cards options={ETAT} cols={2} onSelect={(v, l) => onAnswer('etat', v, l)} />
-  if (question === 'equipements') return (
-    <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun \u00e9quipement')} />
-  )
+  if (question === 'equipements') return <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun \u00e9quipement')} />
   if (question === 'delai') return <Cards options={DELAI} cols={2} onSelect={(v, l) => onAnswer('delai', v, l)} />
   if (question === 'recapitulatif') return <RecapInput onConfirm={() => onAnswer('recapitulatif' as keyof VendreAnswers, true, '')} onRestart={onRestart} />
   if (question === 'coordonnees') return <Coordonnees onFinalSubmit={onFinalSubmit} />
@@ -431,14 +364,9 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
 /* -------- Adresse + DPE + Parcelle -------- */
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 interface Suggestion { label: string; lat: number; lng: number }
-interface AdresseInfos {
-  dpe?: { lettre: string }
-  parcelle?: { id: string; commune: string; surface: number | null }
-}
+interface AdresseInfos { dpe?: { lettre: string }; parcelle?: { id: string; commune: string; surface: number | null } }
 
-function AdresseInput({ onAnswer }: {
-  onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
-}) {
+function AdresseInput({ onAnswer }: { onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void }) {
   const [val, setVal]           = useState('')
   const [suggestions, setSug]   = useState<Suggestion[]>([])
   const [loading, setLoading]   = useState(false)
@@ -459,10 +387,7 @@ function AdresseInput({ onAnswer }: {
   }
 
   async function pickSuggestion(s: Suggestion) {
-    setSug([])
-    setVal(s.label)
-    setSelected(s)
-    setFetching(true)
+    setSug([]); setVal(s.label); setSelected(s); setFetching(true)
     try {
       const res  = await fetch('/api/adresse-infos?lat=' + s.lat + '&lng=' + s.lng + '&q=' + encodeURIComponent(s.label))
       const data = await res.json()
@@ -473,15 +398,11 @@ function AdresseInput({ onAnswer }: {
 
   function validate() {
     if (!selected) return
-    onAnswer('lat', selected.lat, '')
-    onAnswer('lng', selected.lng, '')
-    onAnswer('adresse', selected.label, selected.label)
+    onAnswer('lat', selected.lat, ''); onAnswer('lng', selected.lng, ''); onAnswer('adresse', selected.label, selected.label)
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setVal(e.target.value)
-    setSelected(null)
-    setInfos({})
+    setVal(e.target.value); setSelected(null); setInfos({})
     if (timer.current) clearTimeout(timer.current)
     timer.current = setTimeout(() => fetchSug(e.target.value), 300)
   }
@@ -495,8 +416,6 @@ function AdresseInput({ onAnswer }: {
           value={val} onChange={onChange} onKeyDown={(e) => e.key === 'Enter' && submit()} autoFocus autoComplete="off" />
         {!selected && <button style={sendBtnSt} onClick={submit}><Send size={16} color={white} /></button>}
       </div>
-
-      {/* Suggestions dropdown */}
       {suggestions.length > 0 && (
         <div style={suggestWrap}>
           {suggestions.map((s, i) => (
@@ -506,46 +425,36 @@ function AdresseInput({ onAnswer }: {
           ))}
         </div>
       )}
-
       {loading && <p style={loadingSt}>Recherche en cours...</p>}
       {fetching && <p style={loadingSt}>V\u00e9rification des donn\u00e9es officielles...</p>}
-
-      {/* Infos DPE + Parcelle apr\u00e8s s\u00e9lection */}
       {selected && !fetching && (
         <div>
           {infos.dpe && (
             <div style={infoCardGray}>
               <Zap size={15} color={brand} />
               <span style={infoTxt}>DPE trouv\u00e9 : <strong>{infos.dpe.lettre}</strong></span>
-              <span style=...infoBadge, backgroundColor: '#dbeafe', color: brand>V\u00e9rifi\u00e9 ADEME</span>
+              <span style={dpeBadgeSt}>V\u00e9rifi\u00e9 ADEME</span>
             </div>
           )}
           {infos.parcelle && (
             <div style={infoCardYellow}>
-              <Map size={15} color='#ca8a04' />
+              <Map size={15} color="#ca8a04" />
               <span style={infoTxt}>
                 Parcelle <strong>{infos.parcelle.id}</strong>
                 {infos.parcelle.commune ? ' \u00b7 ' + infos.parcelle.commune : ''}
                 {infos.parcelle.surface ? ' \u00b7 ' + infos.parcelle.surface + ' m\u00b2' : ''}
               </span>
-              <span style=...infoBadge, backgroundColor: '#fef9c3', color: '#854d0e'>IGN</span>
+              <span style={ignBadgeSt}>IGN</span>
             </div>
           )}
-          <button style={validateBtn} onClick={validate}>
-            <Send size={14} /> Valider cette adresse
-          </button>
+          <button style={validateBtn} onClick={validate}><Send size={14} /> Valider cette adresse</button>
         </div>
       )}
     </div>
   )
 }
 
-/* -------- Cards -------- */
-function Cards({ options, cols, onSelect }: {
-  options: { value: string; label: string; emoji: string }[]
-  cols: number
-  onSelect: (value: string, label: string) => void
-}) {
+function Cards({ options, cols, onSelect }: { options: { value: string; label: string; emoji: string }[]; cols: number; onSelect: (value: string, label: string) => void }) {
   const grid: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(' + cols + ', 1fr)', gap: '10px' }
   return (
     <div style={grid}>
@@ -559,40 +468,25 @@ function Cards({ options, cols, onSelect }: {
   )
 }
 
-/* -------- Slider -------- */
 function Slider({ unit, min, max, def, onValidate }: { unit: string; min: number; max: number; def: number; onValidate: (v: number) => void }) {
   const [val, setVal] = useState(def)
   return (
     <div style={sliderWrap}>
-      <div style={sliderValRow}>
-        <div style={sliderValBox}>{val}</div>
-        <span style={sliderUnit}>{unit}</span>
-      </div>
+      <div style={sliderValRow}><div style={sliderValBox}>{val}</div><span style={sliderUnit}>{unit}</span></div>
       <input type="range" min={min} max={max} value={val} style={sliderInp} onChange={(e) => setVal(Number(e.target.value))} />
-      <div style={sliderLabels}>
-        <span style={sliderLbl}>{min} {unit}</span>
-        <span style={sliderLbl}>{max} {unit}</span>
-      </div>
+      <div style={sliderLabels}><span style={sliderLbl}>{min} {unit}</span><span style={sliderLbl}>{max} {unit}</span></div>
       <button style={validateBtn} onClick={() => onValidate(val)}><Send size={14} /> Valider</button>
     </div>
   )
 }
 
-/* -------- Multi-select -------- */
 function MultiSelect({ options, onValidate }: { options: string[]; onValidate: (s: string[]) => void }) {
   const [sel, setSel] = useState<string[]>([])
   function toggle(o: string) { setSel((p) => p.includes(o) ? p.filter((x) => x !== o) : [...p, o]) }
   return (
     <div>
       <div style={multiGrid}>
-        {options.map((o) => {
-          const active = sel.includes(o)
-          return (
-            <div key={o} style={multiRowSt(active)} onClick={() => toggle(o)}>
-              <div style={checkSt(active)} /><span>{o}</span>
-            </div>
-          )
-        })}
+        {options.map((o) => { const active = sel.includes(o); return (<div key={o} style={multiRowSt(active)} onClick={() => toggle(o)}><div style={checkSt(active)} /><span>{o}</span></div>) })}
       </div>
       <button style={validateBtn} onClick={() => onValidate(sel)}>
         {sel.length === 0 ? 'Aucun \u00e9quipement' : 'Valider (' + sel.length + ' s\u00e9lectionn\u00e9' + (sel.length > 1 ? 's' : '') + ')'} <Send size={14} />
@@ -601,7 +495,6 @@ function MultiSelect({ options, onValidate }: { options: string[]; onValidate: (
   )
 }
 
-/* -------- Recap -------- */
 const recapGrid: CSSProperties    = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }
 const recapBtnOk: CSSProperties   = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '18px 12px', borderRadius: '16px', cursor: 'pointer', border: '2px solid ' + success, backgroundColor: '#f0fdf4', fontSize: '13px', fontWeight: 600, color: success }
 const recapBtnEdit: CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '18px 12px', borderRadius: '16px', cursor: 'pointer', border: '2px solid ' + border, backgroundColor: white, fontSize: '13px', fontWeight: 600, color: fg }
@@ -609,22 +502,13 @@ const recapBtnEdit: CSSProperties = { display: 'flex', flexDirection: 'column', 
 function RecapInput({ onConfirm, onRestart }: { onConfirm: () => void; onRestart: () => void }) {
   return (
     <div style={recapGrid}>
-      <button style={recapBtnOk} onClick={onConfirm}>
-        <span style={emojiSt}>\u2705</span>
-        <span>C&apos;est correct</span>
-      </button>
-      <button style={recapBtnEdit} onClick={onRestart}>
-        <Edit3 size={20} color={muted} />
-        <span>Je veux modifier</span>
-      </button>
+      <button style={recapBtnOk} onClick={onConfirm}><span style={emojiSt}>\u2705</span><span>C&apos;est correct</span></button>
+      <button style={recapBtnEdit} onClick={onRestart}><Edit3 size={20} color={muted} /><span>Je veux modifier</span></button>
     </div>
   )
 }
 
-/* -------- Coordonnees -------- */
-function Coordonnees({ onFinalSubmit }: {
-  onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void
-}) {
+function Coordonnees({ onFinalSubmit }: { onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void }) {
   const [civilite, setCiv]   = useState<'monsieur' | 'madame'>('monsieur')
   const [prenom, setPrenom]  = useState('')
   const [nom, setNom]        = useState('')
@@ -633,21 +517,12 @@ function Coordonnees({ onFinalSubmit }: {
   const [rgpd, setRgpd]      = useState(false)
   const [showErr, setShowErr] = useState(false)
   const valid = !!(prenom.trim() && nom.trim() && tel.trim() && email.trim())
-
-  function submit() {
-    if (!valid) return
-    if (!rgpd) { setShowErr(true); return }
-    onFinalSubmit(prenom.trim(), nom.trim(), tel.trim(), email.trim(), civilite)
-  }
-
+  function submit() { if (!valid) return; if (!rgpd) { setShowErr(true); return }; onFinalSubmit(prenom.trim(), nom.trim(), tel.trim(), email.trim(), civilite) }
   return (
     <div style={coordWrap}>
       <div style={coordHdr}>
         <div style={coordBadge}>\u2728</div>
-        <div>
-          <div style={coordTitle}>Derni\u00e8re \u00e9tape !</div>
-          <div style={coordSub}>Recevez votre estimation personnalis\u00e9e</div>
-        </div>
+        <div><div style={coordTitle}>Derni\u00e8re \u00e9tape !</div><div style={coordSub}>Recevez votre estimation personnalis\u00e9e</div></div>
       </div>
       <div style={civilRow}>
         <button style={civilBtnSt(civilite === 'monsieur')} onClick={() => setCiv('monsieur')}>Monsieur</button>
@@ -662,33 +537,21 @@ function Coordonnees({ onFinalSubmit }: {
       <div style={rgpdRowSt(rgpd, showErr && !rgpd)} onClick={() => { setRgpd(!rgpd); setShowErr(false) }}>
         <div style={rgpdBoxSt(rgpd)}>{rgpd && <Check size={11} color={white} strokeWidth={3} />}</div>
         <div>
-          <span style={rgpdTxt}>
-            <strong>J&apos;accepte</strong> que mes donn\u00e9es soient transmises au professionnel immobilier pour \u00eatre recontact\u00e9.{' '}
-            <span style={rgpdLinkSt}>Politique de confidentialit\u00e9</span>
-          </span>
+          <span style={rgpdTxt}><strong>J&apos;accepte</strong> que mes donn\u00e9es soient transmises au professionnel immobilier pour \u00eatre recontact\u00e9.{' '}<span style={rgpdLinkSt}>Politique de confidentialit\u00e9</span></span>
           {showErr && !rgpd && <div style={rgpdErrTxt}>Requis pour continuer</div>}
         </div>
       </div>
-      <button style={valid && rgpd ? validateBtn : validateOff} onClick={submit}>
-        Voir mon estimation <Send size={14} />
-      </button>
+      <button style={valid && rgpd ? validateBtn : validateOff} onClick={submit}>Voir mon estimation <Send size={14} /></button>
     </div>
   )
 }
 
-/* -------- Calcul loading -------- */
-const CALCUL_STEPS = [
-  'Recherche des ventes r\u00e9centes...',
-  'Analyse du march\u00e9 local',
-  'Calcul de votre estimation',
-]
+const CALCUL_STEPS = ['Recherche des ventes r\u00e9centes...', 'Analyse du march\u00e9 local', 'Calcul de votre estimation']
 
 function CalculLoading({ onComplete }: { onComplete: () => void }) {
   const [activeStep, setActiveStep] = useState(0)
   const [progress, setProgress]     = useState(0)
-  const ref = useRef(onComplete)
-  ref.current = onComplete
-
+  const ref = useRef(onComplete); ref.current = onComplete
   useEffect(() => {
     const t1 = setTimeout(() => { setActiveStep(1); setProgress(35) }, 900)
     const t2 = setTimeout(() => { setActiveStep(2); setProgress(68) }, 1900)
@@ -696,7 +559,6 @@ function CalculLoading({ onComplete }: { onComplete: () => void }) {
     const t4 = setTimeout(() => ref.current(), 3400)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
   }, [])
-
   return (
     <div style={calculPage}>
       <div style={calculIcon}>\ud83c\udfe0</div>
@@ -704,8 +566,7 @@ function CalculLoading({ onComplete }: { onComplete: () => void }) {
       <div style={calculSub}>Analyse des ventes r\u00e9centes dans votre secteur</div>
       <div style={calculSteps}>
         {CALCUL_STEPS.map((step, i) => {
-          const done   = i < activeStep
-          const active = i === activeStep
+          const done = i < activeStep; const active = i === activeStep
           return (
             <div key={i} style={calculStepRow}>
               <div style={stepIconSt(done, active)}>
@@ -721,19 +582,11 @@ function CalculLoading({ onComplete }: { onComplete: () => void }) {
   )
 }
 
-/* -------- Verification cadastre -------- */
-function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: {
-  userSurface: number
-  cadastreSurface: number
-  onComplete: (chosen: number) => void
-}) {
+function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: { userSurface: number; cadastreSurface: number; onComplete: (chosen: number) => void }) {
   const [chosen, setChosen] = useState<'user' | 'cadastre'>('cadastre')
   return (
     <div style={verifPage}>
-      <header style={verifNav}>
-        <div style={avatarSt}>AL</div>
-        <div style={navNameSt}>Alex Lopez</div>
-      </header>
+      <header style={verifNav}><div style={avatarSt}>AL</div><div style={navNameSt}>Alex Lopez</div></header>
       <div style={verifWrap}>
         <div style={verifIconSt}>\ud83d\udee1\ufe0f</div>
         <div style={verifTitle}>V\u00e9rification des informations</div>
