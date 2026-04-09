@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import type { CSSProperties } from 'react'
 import '@/styles/globals.css'
 
 const inter = Inter({
@@ -21,6 +22,16 @@ export const metadata: Metadata = {
   ),
 }
 
+const bodyStyle: CSSProperties = {
+  fontFamily: 'var(--font-inter), system-ui, sans-serif',
+  WebkitFontSmoothing: 'antialiased',
+  MozOsxFontSmoothing: 'grayscale',
+  margin: 0,
+  padding: 0,
+  backgroundColor: '#ffffff',
+  color: '#0F172A',
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,13 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={inter.variable}>
-      <body style=
-        fontFamily: 'var(--font-inter), system-ui, sans-serif',
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale',
-        margin: 0,
-        padding: 0,
-      >
+      <body style={bodyStyle}>
         {children}
       </body>
     </html>
