@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+
+@theme {
+  /* ─── Brand ─── */
+  --color-brand: #0066FF;
+  --color-brand-hover: #0052CC;
+  --color-brand-light: #EFF6FF;
+
+  /* ─── Neutrals ─── */
+  --color-foreground: #0F172A;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-surface: #F8FAFC;
+
+  /* ─── Semantic ─── */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-warning: #F59E0B;
+
+  /* ─── Typography ─── */
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* ─── Radius ─── */
+  --radius-card: 1rem;
+  --radius-btn: 9999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Utilitaires globaux ─── */
+.container-app {
+  max-width: 75rem; /* 1200px */
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* ─── Focus visible ─── */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
