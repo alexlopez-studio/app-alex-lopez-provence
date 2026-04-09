@@ -67,15 +67,11 @@ const rgpdRow: CSSProperties      = { display: 'flex', alignItems: 'flex-start',
 const rgpdTxt: CSSProperties      = { fontSize: '12px', fontWeight: 400, color: fg, lineHeight: 1.5 }
 const rgpdLinkSt: CSSProperties   = { color: brand, textDecoration: 'underline', cursor: 'pointer' }
 const rgpdErrTxt: CSSProperties   = { fontSize: '11px', fontWeight: 600, color: warning, marginTop: '4px' }
-
-/* Adresse info cards */
 const infoCardGray: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#f1f5f9', marginTop: '8px' }
 const infoCardYellow: CSSProperties = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#fefce8', border: '1px solid #fde047', marginTop: '6px' }
 const infoTxt: CSSProperties        = { fontSize: '13px', fontWeight: 500, color: fg }
 const dpeBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#dbeafe', color: brand }
 const ignBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#fef9c3', color: '#854d0e' }
-
-/* Modal */
 const overlayStyle: CSSProperties    = { position: 'fixed', inset: 0, backgroundColor: 'rgba(15,23,42,0.45)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }
 const modalCard: CSSProperties       = { backgroundColor: white, borderRadius: '20px', padding: '28px 28px 24px', maxWidth: '360px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }
 const modalIcon: CSSProperties       = { fontSize: '32px', textAlign: 'center', marginBottom: '14px' }
@@ -84,8 +80,6 @@ const modalSub: CSSProperties        = { fontSize: '13px', fontWeight: 300, colo
 const modalBtns: CSSProperties       = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
 const modalBtnCancel: CSSProperties  = { padding: '12px', borderRadius: '12px', border: '1.5px solid ' + border, backgroundColor: white, fontSize: '13px', fontWeight: 600, color: fg, cursor: 'pointer' }
 const modalBtnConfirm: CSSProperties = { padding: '12px', borderRadius: '12px', border: 'none', backgroundColor: '#EF4444', fontSize: '13px', fontWeight: 600, color: white, cursor: 'pointer' }
-
-/* Stepper */
 const stepperWrap: CSSProperties = { maxWidth: W, margin: '0 auto', padding: '10px 20px 12px', display: 'flex', alignItems: 'center' }
 const stepCol: CSSProperties     = { display: 'flex', flexDirection: 'column', alignItems: 'center' }
 const stepLbl: CSSProperties     = { fontSize: '10px', fontWeight: 600, marginTop: '5px', textAlign: 'center' }
@@ -99,8 +93,6 @@ const lblFutu: CSSProperties     = { ...stepLbl, color: muted }
 const connOut: CSSProperties     = { flex: 1, height: '3px', backgroundColor: border, borderRadius: '999px', overflow: 'hidden', margin: '0 4px', marginBottom: '15px' }
 const connOn: CSSProperties      = { height: '100%', width: '100%', backgroundColor: brand, borderRadius: '999px' }
 const connOff: CSSProperties     = { height: '100%', width: '0%', backgroundColor: brand, borderRadius: '999px' }
-
-/* Calcul */
 const calculPage: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }
 const calculIcon: CSSProperties      = { width: '72px', height: '72px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', fontSize: '32px' }
 const calculTitle: CSSProperties     = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
@@ -111,8 +103,6 @@ const calculBar: CSSProperties       = { width: '100%', maxWidth: '320px', heigh
 const calculStepTxtOn: CSSProperties  = { fontSize: '14px', fontWeight: 600, color: fg }
 const calculStepTxtOff: CSSProperties = { fontSize: '14px', fontWeight: 400, color: muted }
 const spinnerDotSt: CSSProperties    = { width: '8px', height: '8px', borderRadius: '999px', backgroundColor: white }
-
-/* Verification */
 const verifPage: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
 const verifNav: CSSProperties       = { backgroundColor: white, borderBottom: '1px solid ' + border, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }
 const verifWrap: CSSProperties      = { maxWidth: '500px', margin: '0 auto', padding: '40px 20px 60px' }
@@ -129,7 +119,6 @@ const verifBadge: CSSProperties     = { backgroundColor: '#d1fae5', color: succe
 const verifNote: CSSProperties      = { fontSize: '11px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '20px' }
 const verifTxtSt: CSSProperties     = { fontSize: '13px', fontWeight: 500, color: fg }
 
-/* -------- Styles dynamiques -------- */
 function cardSt(active: boolean): CSSProperties {
   return { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '14px 10px', borderRadius: '14px', cursor: 'pointer', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brandLight : white, fontSize: '13px', fontWeight: 600, color: active ? brand : fg, textAlign: 'center', width: '100%' }
 }
@@ -158,7 +147,6 @@ function rgpdBoxSt(active: boolean): CSSProperties {
   return { width: '18px', height: '18px', borderRadius: '4px', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brand : white, flexShrink: 0, marginTop: '1px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
 }
 
-/* -------- Stepper -------- */
 const STEPS = [
   { n: 1, label: 'Bien',    qs: ['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'] },
   { n: 2, label: 'D\u00e9tails', qs: ['etat','equipements'] },
@@ -191,7 +179,6 @@ function Stepper({ currentQ }: { currentQ: QuestionId }) {
   )
 }
 
-/* -------- Modal confirmation -------- */
 function ConfirmModal({ onCancel, onConfirm }: { onCancel: () => void; onConfirm: () => void }) {
   return (
     <div style={overlayStyle} onClick={onCancel}>
@@ -208,7 +195,6 @@ function ConfirmModal({ onCancel, onConfirm }: { onCancel: () => void; onConfirm
   )
 }
 
-/* -------- Data -------- */
 const TYPE_BIEN = [
   { value: 'appartement', label: 'Appartement', emoji: '🏢' },
   { value: 'maison',      label: 'Maison',      emoji: '🏠' },
@@ -298,10 +284,17 @@ export default function VendrePage() {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, currentQuestion])
 
+  /*
+   * FIX PRINCIPAL : si display est vide, on set silencieusement la réponse
+   * SANS déclencher de changement de question ni de message.
+   * Cela évite que onAnswer('lat', ..., '') ou onAnswer('cadastre_surface', ..., '')
+   * fasse avancer le flow prématurément.
+   */
   function handleAnswer(key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) {
     const newA = { ...answers, [key]: value }
     setAnswer(key, value)
-    if (display) addMessage({ from: 'user', text: display, timestamp: ts() })
+    if (!display) return  // réponse silencieuse — ne pas avancer le flow
+    addMessage({ from: 'user', text: display, timestamp: ts() })
     const next = getNext(currentQuestion, newA)
     setTimeout(() => {
       const msg = getMsg(next, newA)
@@ -310,7 +303,6 @@ export default function VendrePage() {
     }, 350)
   }
 
-  /* Injection d'un message AL (ex: infos cadastre après adresse) */
   function handleAlMessage(text: string) {
     addMessage({ from: 'al', text, timestamp: ts() })
   }
@@ -343,7 +335,6 @@ export default function VendrePage() {
   return (
     <div style={pageSt}>
       {showModal && <ConfirmModal onCancel={() => setShowModal(false)} onConfirm={confirmRestart} />}
-
       <header style={navSt}>
         <div style={navTopSt}>
           <div style={navLeftSt}>
@@ -353,8 +344,7 @@ export default function VendrePage() {
           </div>
           <div style={navRightSt}>
             <button style={restartBtnSt} onClick={() => setShowModal(true)}>
-              <RotateCcw size={12} />
-              {'Recommencer'}
+              <RotateCcw size={12} />{'Recommencer'}
             </button>
             <a href="tel:+33613180168" style={phoneSt}><Phone size={13} color={brand} /></a>
           </div>
@@ -374,14 +364,7 @@ export default function VendrePage() {
         ))}
         {currentQuestion !== 'done' && (
           <div style={inlineZone}>
-            <InputZone
-              question={currentQuestion}
-              answers={answers}
-              onAnswer={handleAnswer}
-              onFinalSubmit={handleFinalSubmit}
-              onRestart={() => setShowModal(true)}
-              onAlMessage={handleAlMessage}
-            />
+            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} onRestart={() => setShowModal(true)} onAlMessage={handleAlMessage} />
           </div>
         )}
         <div ref={bottomRef} />
@@ -406,12 +389,12 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart, onAl
   if (question === 'etat') return <Cards options={ETAT} cols={2} onSelect={(v, l) => onAnswer('etat', v, l)} />
   if (question === 'equipements') return <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun équipement')} />
   if (question === 'delai') return <Cards options={DELAI} cols={2} onSelect={(v, l) => onAnswer('delai', v, l)} />
-  if (question === 'recapitulatif') return <RecapInput onConfirm={() => onAnswer('recapitulatif' as keyof VendreAnswers, true, '')} onRestart={onRestart} />
+  /* Récapitulatif : display non-vide pour que handleAnswer avance le flow */
+  if (question === 'recapitulatif') return <RecapInput onConfirm={() => onAnswer('recapitulatif' as keyof VendreAnswers, true, "C'est correct ✅")} onRestart={onRestart} />
   if (question === 'coordonnees') return <Coordonnees onFinalSubmit={onFinalSubmit} />
   return null
 }
 
-/* -------- Adresse + DPE + Parcelle — info persistante via message AL -------- */
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 interface Suggestion { label: string; lat: number; lng: number }
 interface AdresseInfos { dpe?: { lettre: string }; parcelle?: { id: string; commune: string; surface: number | null } }
@@ -445,18 +428,21 @@ function AdresseInput({ onAnswer, onAlMessage }: {
       const res  = await fetch('/api/adresse-infos?lat=' + s.lat + '&lng=' + s.lng + '&q=' + encodeURIComponent(s.label))
       const data = await res.json()
       setInfos(data)
+      /* Silencieux — handleAnswer ne déclenche pas le flow si display='' */
       if (data.parcelle?.surface) onAnswer('cadastre_surface', data.parcelle.surface, '')
     } catch { setInfos({}) } finally { setFetching(false) }
   }
 
   function validate(currentInfos: AdresseInfos) {
     if (!selected) return
+    /* Réponses silencieuses — ne déclenchent PAS le flow (display='') */
     onAnswer('lat', selected.lat, '')
     onAnswer('lng', selected.lng, '')
+    /* Réponse principale — affiche la bulle utilisateur ET avance le flow */
     onAnswer('adresse', selected.label, selected.label)
-    /* Injection du message AL avec DPE + cadastre pour qu'ils restent visibles */
+    /* Injection DPE/cadastre comme message AL persistant */
     if (currentInfos.dpe || currentInfos.parcelle) {
-      const lines: string[] = ['Voici ce que j\'ai trouvé pour cette adresse :']
+      const lines: string[] = ["Voici ce que j'ai trouvé pour cette adresse :"]
       if (currentInfos.dpe) lines.push('⚡ DPE : ' + currentInfos.dpe.lettre + ' (vérifié ADEME)')
       if (currentInfos.parcelle) {
         let p = '🗺️ Parcelle : ' + currentInfos.parcelle.id
@@ -464,7 +450,8 @@ function AdresseInput({ onAnswer, onAlMessage }: {
         if (currentInfos.parcelle.surface) p += ' · ' + currentInfos.parcelle.surface + ' m²'
         lines.push(p)
       }
-      setTimeout(() => onAlMessage(lines.join('\n')), 100)
+      /* 50ms : après la bulle utilisateur (t=0) mais avant la question suivante (t=350ms) */
+      setTimeout(() => onAlMessage(lines.join('\n')), 50)
     }
   }
 
