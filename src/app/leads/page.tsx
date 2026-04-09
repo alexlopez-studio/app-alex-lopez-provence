@@ -16,20 +16,15 @@ const success = '#10B981'
 const warning = '#F59E0B'
 const error   = '#EF4444'
 
-/* ---- Styles ---- */
 const pageWrap: CSSProperties     = { padding: '32px' }
 const topRow: CSSProperties       = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }
 const titleWrap: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '10px' }
 const pageTitle: CSSProperties    = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
 const totalBadge: CSSProperties   = { fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '3px 10px' }
 const searchInput: CSSProperties  = { fontSize: '13px', color: fg, border: '1px solid ' + border, borderRadius: '10px', padding: '8px 14px', outline: 'none', backgroundColor: white, width: '240px' }
-
-/* Niveau 1 — type */
 const filterRow1: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' } as CSSProperties
-/* Niveau 2 — score, légèrement indenté */
 const filterRow2: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px', paddingLeft: '4px' } as CSSProperties
 const row2Label: CSSProperties    = { fontSize: '11px', fontWeight: 500, color: muted, marginRight: '2px' }
-
 const tableCard: CSSProperties    = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, overflow: 'hidden' }
 const tableHeader: CSSProperties  = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '10px 20px', borderBottom: '1px solid ' + border, fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: muted, alignItems: 'center' } as CSSProperties
 const rowSt: CSSProperties        = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '14px 20px', borderBottom: '1px solid ' + border, textDecoration: 'none', color: 'inherit', alignItems: 'center' }
@@ -50,14 +45,13 @@ const emptySub: CSSProperties     = { fontSize: '12px', color: muted }
 const newBadge: CSSProperties     = { fontSize: '9px', fontWeight: 700, color: success, backgroundColor: '#ECFDF5', borderRadius: '999px', padding: '1px 7px', letterSpacing: '0.08em', textTransform: 'uppercase' } as CSSProperties
 const paginationSt: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', fontSize: '12px', color: muted, borderTop: '1px solid ' + border }
 
-/* ---- Types ---- */
 type Statut = 'nouveau' | 'contacte' | 'rdv' | 'signe' | 'perdu'
 
 const STATUT_CFG: Record<Statut, { label: string; color: string; bg: string }> = {
   nouveau:  { label: 'Nouveau',  color: brand,   bg: '#EFF6FF' },
-  contacte: { label: 'Contacté', color: warning, bg: '#FFFBEB' },
+  contacte: { label: 'Contact\u00e9', color: warning, bg: '#FFFBEB' },
   rdv:      { label: 'RDV pris', color: success, bg: '#ECFDF5' },
-  signe:    { label: 'Signé',    color: success, bg: '#D1FAE5' },
+  signe:    { label: 'Sign\u00e9',    color: success, bg: '#D1FAE5' },
   perdu:    { label: 'Perdu',    color: error,   bg: '#FEF2F2' },
 }
 
@@ -70,7 +64,7 @@ const TYPE_CFG: Record<string, { label: string; color: string; bg: string }> = {
 function getTemperature(conf: number | null): { label: string; color: string; bg: string; dot: string } {
   if (!conf) return { label: 'Froid', color: muted,    bg: surface,   dot: '#94A3B8' }
   if (conf >= 70) return { label: 'Chaud', color: '#DC2626', bg: '#FEF2F2', dot: '#EF4444' }
-  if (conf >= 40) return { label: 'Tiède', color: '#D97706', bg: '#FFFBEB', dot: '#F59E0B' }
+  if (conf >= 40) return { label: 'Ti\u00e8de', color: '#D97706', bg: '#FFFBEB', dot: '#F59E0B' }
   return { label: 'Froid', color: muted, bg: surface, dot: '#94A3B8' }
 }
 
@@ -83,32 +77,14 @@ function scoreCircle(conf: number | null): CSSProperties {
   return { width: '32px', height: '32px', borderRadius: '999px', backgroundColor: t.bg, border: '2px solid ' + t.dot, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, color: t.color, flexShrink: 0 }
 }
 
-/* Tab niveau 1 (type) — plus visible */
 function tab1St(active: boolean, accentColor?: string): CSSProperties {
   const c = accentColor ?? brand
-  return {
-    display: 'inline-flex', alignItems: 'center', gap: '5px',
-    padding: '6px 14px', borderRadius: '999px',
-    fontSize: '13px', fontWeight: active ? 600 : 500,
-    color: active ? c : muted,
-    backgroundColor: active ? (c + '14') : 'transparent',
-    border: '1.5px solid ' + (active ? c : border),
-    textDecoration: 'none', whiteSpace: 'nowrap',
-  } as CSSProperties
+  return { display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '6px 14px', borderRadius: '999px', fontSize: '13px', fontWeight: active ? 600 : 500, color: active ? c : muted, backgroundColor: active ? (c + '14') : 'transparent', border: '1.5px solid ' + (active ? c : border), textDecoration: 'none', whiteSpace: 'nowrap' } as CSSProperties
 }
 
-/* Tab niveau 2 (score) — plus petit, plus subtil */
 function tab2St(active: boolean, accentColor?: string): CSSProperties {
   const c = accentColor ?? muted
-  return {
-    display: 'inline-flex', alignItems: 'center', gap: '4px',
-    padding: '4px 10px', borderRadius: '999px',
-    fontSize: '12px', fontWeight: active ? 600 : 400,
-    color: active ? c : muted,
-    backgroundColor: active ? (c + '14') : 'transparent',
-    border: '1px solid ' + (active ? c : border),
-    textDecoration: 'none', whiteSpace: 'nowrap',
-  } as CSSProperties
+  return { display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '999px', fontSize: '12px', fontWeight: active ? 600 : 400, color: active ? c : muted, backgroundColor: active ? (c + '14') : 'transparent', border: '1px solid ' + (active ? c : border), textDecoration: 'none', whiteSpace: 'nowrap' } as CSSProperties
 }
 
 function cntBadge1(active: boolean, accentColor?: string): CSSProperties {
@@ -121,11 +97,14 @@ function cntBadge2(active: boolean, accentColor?: string): CSSProperties {
   return { fontSize: '10px', fontWeight: 700, color: active ? white : muted, backgroundColor: active ? c : border, borderRadius: '999px', padding: '1px 6px' }
 }
 
+/* ── Next.js 15 : searchParams est une Promise ── */
 export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: { q?: string; type?: string; temp?: string }
+  searchParams: Promise<{ q?: string; type?: string; temp?: string }>
 }) {
+  const sp   = await searchParams   // ← await obligatoire en Next.js 15
+
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -146,9 +125,9 @@ export default async function LeadsPage({
   type Lead = Record<string, unknown>
   const all: Lead[] = (raw ?? []) as Lead[]
 
-  const q    = (searchParams.q ?? '').toLowerCase()
-  const type = searchParams.type ?? ''
-  const temp = searchParams.temp ?? ''
+  const q    = (sp.q    ?? '').toLowerCase()
+  const type = sp.type  ?? ''
+  const temp = sp.temp  ?? ''
 
   const filtered = all.filter((l) => {
     const name    = ((l.prenom as string ?? '') + ' ' + (l.nom as string ?? '')).toLowerCase()
@@ -162,15 +141,15 @@ export default async function LeadsPage({
   })
 
   function cnt(fn: (l: Lead) => boolean) { return all.filter(fn).length }
-  const total    = all.length
-  const vendeurs = cnt((l) => l.type === 'vendre')
+  const total     = all.length
+  const vendeurs  = cnt((l) => l.type === 'vendre')
   const acheteurs = cnt((l) => l.type === 'acheter')
-  const chauds   = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Chaud')
-  const tiedesN  = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Tiède')
-  const froids   = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Froid')
+  const chauds    = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Chaud')
+  const tiedesN   = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Ti\u00e8de')
+  const froids    = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Froid')
 
   function href(ov: Record<string, string>) {
-    const p = new URLSearchParams()
+    const p  = new URLSearchParams()
     const qV = ov.q    !== undefined ? ov.q    : q
     const tV = ov.type !== undefined ? ov.type : type
     const eV = ov.temp !== undefined ? ov.temp : temp
@@ -187,7 +166,6 @@ export default async function LeadsPage({
     <CrmLayout>
       <div style={pageWrap}>
 
-        {/* Header */}
         <div style={topRow}>
           <div style={titleWrap}>
             <h1 style={pageTitle}>Prospects</h1>
@@ -200,7 +178,6 @@ export default async function LeadsPage({
           </form>
         </div>
 
-        {/* Niveau 1 — Type de lead */}
         <div style={filterRow1}>
           <Link href={href({ type: '' })} style={tab1St(!type)}>
             Tous <span style={cntBadge1(!type)}>{total}</span>
@@ -213,7 +190,6 @@ export default async function LeadsPage({
           </Link>
         </div>
 
-        {/* Niveau 2 — Température (combinable avec le type) */}
         <div style={filterRow2}>
           <span style={row2Label}>Score :</span>
           <Link href={href({ temp: '' })} style={tab2St(!temp)}>
@@ -222,15 +198,14 @@ export default async function LeadsPage({
           <Link href={href({ temp: 'Chaud' })} style={tab2St(temp === 'Chaud', '#DC2626')}>
             Chauds <span style={cntBadge2(temp === 'Chaud', '#DC2626')}>{chauds}</span>
           </Link>
-          <Link href={href({ temp: 'Tiède' })} style={tab2St(temp === 'Tiède', '#D97706')}>
-            Tièdes <span style={cntBadge2(temp === 'Tiède', '#D97706')}>{tiedesN}</span>
+          <Link href={href({ temp: 'Ti\u00e8de' })} style={tab2St(temp === 'Ti\u00e8de', '#D97706')}>
+            Ti\u00e8des <span style={cntBadge2(temp === 'Ti\u00e8de', '#D97706')}>{tiedesN}</span>
           </Link>
           <Link href={href({ temp: 'Froid' })} style={tab2St(temp === 'Froid')}>
             Froids <span style={cntBadge2(temp === 'Froid')}>{froids}</span>
           </Link>
         </div>
 
-        {/* Table */}
         <div style={tableCard}>
           {filtered.length > 0 ? (
             <>
@@ -245,22 +220,22 @@ export default async function LeadsPage({
               </div>
 
               {filtered.map((lead) => {
-                const prenom  = (lead.prenom as string) ?? ''
-                const nom     = (lead.nom    as string) ?? ''
-                const fd      = (lead.form_data as Record<string, string> | null) ?? {}
-                const results = lead.results as Record<string, number> | null
-                const bas     = results?.fourchette_basse
-                const haut    = results?.fourchette_haute
-                const conf    = results?.confiance ?? null
-                const prixM2  = results?.prixM2
-                const statut  = (lead.statut as Statut) ?? 'nouveau'
-                const sCfg    = STATUT_CFG[statut] ?? STATUT_CFG.nouveau
-                const tCfg    = TYPE_CFG[lead.type as string] ?? TYPE_CFG.audit
-                const initial = (prenom[0] ?? (lead.email as string)?.[0] ?? '?').toUpperCase()
-                const adresse = fd.adresse ?? ''
+                const prenom   = (lead.prenom as string) ?? ''
+                const nom      = (lead.nom    as string) ?? ''
+                const fd       = (lead.form_data as Record<string, string> | null) ?? {}
+                const results  = lead.results as Record<string, number> | null
+                const bas      = results?.fourchette_basse
+                const haut     = results?.fourchette_haute
+                const conf     = results?.confiance ?? null
+                const prixM2   = results?.prixM2
+                const statut   = (lead.statut as Statut) ?? 'nouveau'
+                const sCfg     = STATUT_CFG[statut] ?? STATUT_CFG.nouveau
+                const tCfg     = TYPE_CFG[lead.type as string] ?? TYPE_CFG.audit
+                const initial  = (prenom[0] ?? (lead.email as string)?.[0] ?? '?').toUpperCase()
+                const adresse  = fd.adresse  ?? ''
                 const typeBien = fd.type_bien ?? ''
-                const date    = new Date(lead.created_at as string).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
-                const isNew   = statut === 'nouveau'
+                const date     = new Date(lead.created_at as string).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+                const isNew    = statut === 'nouveau'
 
                 return (
                   <Link key={lead.id as string} href={'/leads/' + lead.id} style={rowSt}>
@@ -273,7 +248,7 @@ export default async function LeadsPage({
                           {isNew && <span style={newBadge}>New</span>}
                         </div>
                         <div style={leadInfo}>
-                          {adresse}{typeBien ? ' · ' + typeBien : ''}{' · ' + date}
+                          {adresse}{typeBien ? ' \u00b7 ' + typeBien : ''}{' \u00b7 ' + date}
                         </div>
                       </div>
                     </div>
@@ -281,35 +256,33 @@ export default async function LeadsPage({
                     <div style={estimWrap}>
                       {bas && haut ? (
                         <>
-                          <div style={estimSt}>{fmt(bas) + ' – ' + fmt(haut)}</div>
-                          {prixM2 && <div style={estimM2}>{prixM2.toLocaleString('fr-FR') + ' €/m²'}</div>}
+                          <div style={estimSt}>{fmt(bas) + ' \u2013 ' + fmt(haut)}</div>
+                          {prixM2 && <div style={estimM2}>{prixM2.toLocaleString('fr-FR') + ' \u20ac/m\u00b2'}</div>}
                         </>
                       ) : (
-                        <div style={estimM2}>Non estimé</div>
+                        <div style={estimM2}>Non estim\u00e9</div>
                       )}
                     </div>
-                    <div style={statusWrap}>
-                      <span style={badge(sCfg.color, sCfg.bg)}>{sCfg.label}</span>
-                    </div>
+                    <div style={statusWrap}><span style={badge(sCfg.color, sCfg.bg)}>{sCfg.label}</span></div>
                     <div style={scoreWrap}>
-                      <div style={scoreCircle(conf)} title={getTemperature(conf).label + (conf ? ' · ' + conf + '/100' : '')}>
-                        {conf ?? '—'}
+                      <div style={scoreCircle(conf)} title={getTemperature(conf).label + (conf ? ' \u00b7 ' + conf + '/100' : '')}>
+                        {conf ?? '\u2014'}
                       </div>
                     </div>
-                    <div style={menuSt}>⋯</div>
+                    <div style={menuSt}>\u22ef</div>
                   </Link>
                 )
               })}
 
               <div style={paginationSt}>
-                <span>{'Afficher 10 · par page'}</span>
-                <span>{'1–' + filtered.length + ' sur ' + filtered.length}</span>
+                <span>Afficher 10 \u00b7 par page</span>
+                <span>{'1\u2013' + filtered.length + ' sur ' + filtered.length}</span>
               </div>
             </>
           ) : (
             <div style={emptyWrap}>
-              <div style={emptyTxt}>{q ? 'Aucun résultat pour "' + q + '".' : 'Aucun prospect pour l\'instant.'}</div>
-              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads du formulaire apparaîtront ici dès le déploiement.'}</div>
+              <div style={emptyTxt}>{q ? 'Aucun r\u00e9sultat pour "' + q + '".' : 'Aucun prospect pour l\'instant.'}</div>
+              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads du formulaire appara\u00eetront ici d\u00e8s le d\u00e9ploiement.'}</div>
             </div>
           )}
         </div>
