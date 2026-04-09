@@ -17,33 +17,38 @@ const warning = '#F59E0B'
 const error   = '#EF4444'
 
 /* ---- Styles ---- */
-const pageWrap: CSSProperties      = { padding: '32px' }
-const topRow: CSSProperties        = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }
-const titleWrap: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '10px' }
-const pageTitle: CSSProperties     = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
-const totalBadge: CSSProperties    = { fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '3px 10px' }
-const searchInput: CSSProperties   = { fontSize: '13px', color: fg, border: '1px solid ' + border, borderRadius: '10px', padding: '8px 14px', outline: 'none', backgroundColor: white, width: '240px' }
-const filterRow: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' } as CSSProperties
-const dividerSt: CSSProperties     = { width: '1px', height: '18px', backgroundColor: border, margin: '0 2px' }
-const tableCard: CSSProperties     = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, overflow: 'hidden' }
-const tableHeader: CSSProperties   = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '10px 20px', borderBottom: '1px solid ' + border, fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: muted, alignItems: 'center' } as CSSProperties
-const rowSt: CSSProperties         = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '14px 20px', borderBottom: '1px solid ' + border, textDecoration: 'none', color: 'inherit', alignItems: 'center' }
-const checkboxSt: CSSProperties    = { width: '15px', height: '15px', borderRadius: '4px', border: '1.5px solid ' + border, backgroundColor: white, flexShrink: 0 }
-const avatarSt: CSSProperties      = { width: '34px', height: '34px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, flexShrink: 0 }
-const leadRowInner: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '10px' }
-const leadName: CSSProperties      = { fontSize: '14px', fontWeight: 600, color: fg, display: 'flex', alignItems: 'center', gap: '6px' }
-const leadInfo: CSSProperties      = { fontSize: '11px', fontWeight: 400, color: muted, marginTop: '2px' }
-const estimWrap: CSSProperties     = { textAlign: 'right' as const }
-const estimSt: CSSProperties       = { fontSize: '13px', fontWeight: 600, color: fg }
-const estimM2: CSSProperties       = { fontSize: '11px', fontWeight: 400, color: muted }
-const statusWrap: CSSProperties    = { display: 'flex', justifyContent: 'center' }
-const scoreWrap: CSSProperties     = { display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }
-const menuSt: CSSProperties        = { color: muted, fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
-const emptyWrap: CSSProperties     = { padding: '56px', textAlign: 'center' as const }
-const emptyTxt: CSSProperties      = { fontSize: '14px', fontWeight: 300, color: muted, marginBottom: '6px' }
-const emptySub: CSSProperties      = { fontSize: '12px', color: muted }
-const newBadge: CSSProperties      = { fontSize: '9px', fontWeight: 700, color: success, backgroundColor: '#ECFDF5', borderRadius: '999px', padding: '1px 7px', letterSpacing: '0.08em', textTransform: 'uppercase' } as CSSProperties
-const paginationSt: CSSProperties  = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', fontSize: '12px', color: muted, borderTop: '1px solid ' + border }
+const pageWrap: CSSProperties     = { padding: '32px' }
+const topRow: CSSProperties       = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }
+const titleWrap: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '10px' }
+const pageTitle: CSSProperties    = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
+const totalBadge: CSSProperties   = { fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '3px 10px' }
+const searchInput: CSSProperties  = { fontSize: '13px', color: fg, border: '1px solid ' + border, borderRadius: '10px', padding: '8px 14px', outline: 'none', backgroundColor: white, width: '240px' }
+
+/* Niveau 1 — type */
+const filterRow1: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' } as CSSProperties
+/* Niveau 2 — score, légèrement indenté */
+const filterRow2: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px', paddingLeft: '4px' } as CSSProperties
+const row2Label: CSSProperties    = { fontSize: '11px', fontWeight: 500, color: muted, marginRight: '2px' }
+
+const tableCard: CSSProperties    = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, overflow: 'hidden' }
+const tableHeader: CSSProperties  = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '10px 20px', borderBottom: '1px solid ' + border, fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em', color: muted, alignItems: 'center' } as CSSProperties
+const rowSt: CSSProperties        = { display: 'grid', gridTemplateColumns: '24px 2.8fr 1fr 1.2fr 90px 60px 36px', gap: '12px', padding: '14px 20px', borderBottom: '1px solid ' + border, textDecoration: 'none', color: 'inherit', alignItems: 'center' }
+const checkboxSt: CSSProperties   = { width: '15px', height: '15px', borderRadius: '4px', border: '1.5px solid ' + border, backgroundColor: white, flexShrink: 0 }
+const avatarSt: CSSProperties     = { width: '34px', height: '34px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700, flexShrink: 0 }
+const leadRowInner: CSSProperties = { display: 'flex', alignItems: 'center', gap: '10px' }
+const leadName: CSSProperties     = { fontSize: '14px', fontWeight: 600, color: fg, display: 'flex', alignItems: 'center', gap: '6px' }
+const leadInfo: CSSProperties     = { fontSize: '11px', fontWeight: 400, color: muted, marginTop: '2px' }
+const estimWrap: CSSProperties    = { textAlign: 'right' as const }
+const estimSt: CSSProperties      = { fontSize: '13px', fontWeight: 600, color: fg }
+const estimM2: CSSProperties      = { fontSize: '11px', fontWeight: 400, color: muted }
+const statusWrap: CSSProperties   = { display: 'flex', justifyContent: 'center' }
+const scoreWrap: CSSProperties    = { display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }
+const menuSt: CSSProperties       = { color: muted, fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
+const emptyWrap: CSSProperties    = { padding: '56px', textAlign: 'center' as const }
+const emptyTxt: CSSProperties     = { fontSize: '14px', fontWeight: 300, color: muted, marginBottom: '6px' }
+const emptySub: CSSProperties     = { fontSize: '12px', color: muted }
+const newBadge: CSSProperties     = { fontSize: '9px', fontWeight: 700, color: success, backgroundColor: '#ECFDF5', borderRadius: '999px', padding: '1px 7px', letterSpacing: '0.08em', textTransform: 'uppercase' } as CSSProperties
+const paginationSt: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', fontSize: '12px', color: muted, borderTop: '1px solid ' + border }
 
 /* ---- Types ---- */
 type Statut = 'nouveau' | 'contacte' | 'rdv' | 'signe' | 'perdu'
@@ -62,7 +67,6 @@ const TYPE_CFG: Record<string, { label: string; color: string; bg: string }> = {
   audit:   { label: 'Audit',    color: muted,    bg: surface },
 }
 
-/* ---- Helpers ---- */
 function getTemperature(conf: number | null): { label: string; color: string; bg: string; dot: string } {
   if (!conf) return { label: 'Froid', color: muted,    bg: surface,   dot: '#94A3B8' }
   if (conf >= 70) return { label: 'Chaud', color: '#DC2626', bg: '#FEF2F2', dot: '#EF4444' }
@@ -79,24 +83,44 @@ function scoreCircle(conf: number | null): CSSProperties {
   return { width: '32px', height: '32px', borderRadius: '999px', backgroundColor: t.bg, border: '2px solid ' + t.dot, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, color: t.color, flexShrink: 0 }
 }
 
-function tabSt(active: boolean, accentColor?: string): CSSProperties {
+/* Tab niveau 1 (type) — plus visible */
+function tab1St(active: boolean, accentColor?: string): CSSProperties {
   const c = accentColor ?? brand
   return {
     display: 'inline-flex', alignItems: 'center', gap: '5px',
-    padding: '5px 12px', borderRadius: '999px',
+    padding: '6px 14px', borderRadius: '999px',
+    fontSize: '13px', fontWeight: active ? 600 : 500,
+    color: active ? c : muted,
+    backgroundColor: active ? (c + '14') : 'transparent',
+    border: '1.5px solid ' + (active ? c : border),
+    textDecoration: 'none', whiteSpace: 'nowrap',
+  } as CSSProperties
+}
+
+/* Tab niveau 2 (score) — plus petit, plus subtil */
+function tab2St(active: boolean, accentColor?: string): CSSProperties {
+  const c = accentColor ?? muted
+  return {
+    display: 'inline-flex', alignItems: 'center', gap: '4px',
+    padding: '4px 10px', borderRadius: '999px',
     fontSize: '12px', fontWeight: active ? 600 : 400,
     color: active ? c : muted,
-    backgroundColor: active ? (c + '18') : 'transparent',
+    backgroundColor: active ? (c + '14') : 'transparent',
     border: '1px solid ' + (active ? c : border),
     textDecoration: 'none', whiteSpace: 'nowrap',
   } as CSSProperties
 }
 
-function cntBadge(active: boolean): CSSProperties {
-  return { fontSize: '10px', fontWeight: 700, color: active ? white : muted, backgroundColor: active ? brand : border, borderRadius: '999px', padding: '1px 6px' }
+function cntBadge1(active: boolean, accentColor?: string): CSSProperties {
+  const c = accentColor ?? brand
+  return { fontSize: '11px', fontWeight: 700, color: active ? white : muted, backgroundColor: active ? c : border, borderRadius: '999px', padding: '1px 7px' }
 }
 
-/* ---- Page ---- */
+function cntBadge2(active: boolean, accentColor?: string): CSSProperties {
+  const c = accentColor ?? muted
+  return { fontSize: '10px', fontWeight: 700, color: active ? white : muted, backgroundColor: active ? c : border, borderRadius: '999px', padding: '1px 6px' }
+}
+
 export default async function LeadsPage({
   searchParams,
 }: {
@@ -128,7 +152,8 @@ export default async function LeadsPage({
 
   const filtered = all.filter((l) => {
     const name    = ((l.prenom as string ?? '') + ' ' + (l.nom as string ?? '')).toLowerCase()
-    const adresse = ((l.form_data as Record<string, string> | null)?.adresse ?? '').toLowerCase()
+    const fd      = (l.form_data as Record<string, string> | null) ?? {}
+    const adresse = (fd.adresse ?? '').toLowerCase()
     const r       = l.results as Record<string, number> | null
     const conf    = r?.confiance ?? null
     return (!q || name.includes(q) || adresse.includes(q))
@@ -136,27 +161,22 @@ export default async function LeadsPage({
         && (!temp || getTemperature(conf).label === temp)
   })
 
-  /* Comptes pour badges */
-  function cnt(arr: Lead[], fn: (l: Lead) => boolean) { return arr.filter(fn).length }
-  const countType = (t: string) => cnt(all, (l) => l.type === t)
-  const countTemp = (t: string) => cnt(all, (l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === t)
-
+  function cnt(fn: (l: Lead) => boolean) { return all.filter(fn).length }
   const total    = all.length
-  const vendeurs = countType('vendre')
-  const acheteurs = countType('acheter')
-  const chauds   = countTemp('Chaud')
-  const tiedesN  = countTemp('Tiède')
-  const froids   = countTemp('Froid')
+  const vendeurs = cnt((l) => l.type === 'vendre')
+  const acheteurs = cnt((l) => l.type === 'acheter')
+  const chauds   = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Chaud')
+  const tiedesN  = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Tiède')
+  const froids   = cnt((l) => getTemperature((l.results as Record<string, number> | null)?.confiance ?? null).label === 'Froid')
 
-  /* Construire les URLs des filtres */
-  function href(overrides: Record<string, string>) {
+  function href(ov: Record<string, string>) {
     const p = new URLSearchParams()
-    const qVal    = overrides.q    !== undefined ? overrides.q    : q
-    const typeVal = overrides.type !== undefined ? overrides.type : type
-    const tempVal = overrides.temp !== undefined ? overrides.temp : temp
-    if (qVal)    p.set('q', qVal)
-    if (typeVal) p.set('type', typeVal)
-    if (tempVal) p.set('temp', tempVal)
+    const qV = ov.q    !== undefined ? ov.q    : q
+    const tV = ov.type !== undefined ? ov.type : type
+    const eV = ov.temp !== undefined ? ov.temp : temp
+    if (qV) p.set('q', qV)
+    if (tV) p.set('type', tV)
+    if (eV) p.set('temp', eV)
     const s = p.toString()
     return '/leads' + (s ? '?' + s : '')
   }
@@ -180,28 +200,33 @@ export default async function LeadsPage({
           </form>
         </div>
 
-        {/* Filtres */}
-        <div style={filterRow}>
-          <Link href={href({ type: '', temp: '' })} style={tabSt(!type && !temp)}>
-            Tous <span style={cntBadge(!type && !temp)}>{total}</span>
+        {/* Niveau 1 — Type de lead */}
+        <div style={filterRow1}>
+          <Link href={href({ type: '' })} style={tab1St(!type)}>
+            Tous <span style={cntBadge1(!type)}>{total}</span>
           </Link>
-          <Link href={href({ type: 'vendre' })} style={tabSt(type === 'vendre')}>
-            Vendeurs <span style={cntBadge(type === 'vendre')}>{vendeurs}</span>
+          <Link href={href({ type: 'vendre' })} style={tab1St(type === 'vendre')}>
+            Vendeurs <span style={cntBadge1(type === 'vendre')}>{vendeurs}</span>
           </Link>
-          <Link href={href({ type: 'acheter' })} style={tabSt(type === 'acheter', '#7C3AED')}>
-            Acheteurs <span style={cntBadge(type === 'acheter')}>{acheteurs}</span>
+          <Link href={href({ type: 'acheter' })} style={tab1St(type === 'acheter', '#7C3AED')}>
+            Acheteurs <span style={cntBadge1(type === 'acheter', '#7C3AED')}>{acheteurs}</span>
           </Link>
+        </div>
 
-          <div style={dividerSt} />
-
-          <Link href={href({ temp: 'Chaud' })} style={tabSt(temp === 'Chaud', '#DC2626')}>
-            {'🔥 Chauds'} <span style={cntBadge(temp === 'Chaud')}>{chauds}</span>
+        {/* Niveau 2 — Température (combinable avec le type) */}
+        <div style={filterRow2}>
+          <span style={row2Label}>Score :</span>
+          <Link href={href({ temp: '' })} style={tab2St(!temp)}>
+            Tous <span style={cntBadge2(!temp)}>{type ? filtered.length : total}</span>
           </Link>
-          <Link href={href({ temp: 'Tiède' })} style={tabSt(temp === 'Tiède', '#D97706')}>
-            {'🌡️ Tièdes'} <span style={cntBadge(temp === 'Tiède')}>{tiedesN}</span>
+          <Link href={href({ temp: 'Chaud' })} style={tab2St(temp === 'Chaud', '#DC2626')}>
+            Chauds <span style={cntBadge2(temp === 'Chaud', '#DC2626')}>{chauds}</span>
           </Link>
-          <Link href={href({ temp: 'Froid' })} style={tabSt(temp === 'Froid')}>
-            {'❄️ Froids'} <span style={cntBadge(temp === 'Froid')}>{froids}</span>
+          <Link href={href({ temp: 'Tiède' })} style={tab2St(temp === 'Tiède', '#D97706')}>
+            Tièdes <span style={cntBadge2(temp === 'Tiède', '#D97706')}>{tiedesN}</span>
+          </Link>
+          <Link href={href({ temp: 'Froid' })} style={tab2St(temp === 'Froid')}>
+            Froids <span style={cntBadge2(temp === 'Froid')}>{froids}</span>
           </Link>
         </div>
 
@@ -223,7 +248,7 @@ export default async function LeadsPage({
                 const prenom  = (lead.prenom as string) ?? ''
                 const nom     = (lead.nom    as string) ?? ''
                 const fd      = (lead.form_data as Record<string, string> | null) ?? {}
-                const results = (lead.results as Record<string, number> | null)
+                const results = lead.results as Record<string, number> | null
                 const bas     = results?.fourchette_basse
                 const haut    = results?.fourchette_haute
                 const conf    = results?.confiance ?? null
@@ -231,7 +256,6 @@ export default async function LeadsPage({
                 const statut  = (lead.statut as Statut) ?? 'nouveau'
                 const sCfg    = STATUT_CFG[statut] ?? STATUT_CFG.nouveau
                 const tCfg    = TYPE_CFG[lead.type as string] ?? TYPE_CFG.audit
-                const temp    = getTemperature(conf)
                 const initial = (prenom[0] ?? (lead.email as string)?.[0] ?? '?').toUpperCase()
                 const adresse = fd.adresse ?? ''
                 const typeBien = fd.type_bien ?? ''
@@ -241,8 +265,6 @@ export default async function LeadsPage({
                 return (
                   <Link key={lead.id as string} href={'/leads/' + lead.id} style={rowSt}>
                     <div style={checkboxSt} />
-
-                    {/* Prospect */}
                     <div style={leadRowInner}>
                       <div style={avatarSt}>{initial}</div>
                       <div>
@@ -255,13 +277,7 @@ export default async function LeadsPage({
                         </div>
                       </div>
                     </div>
-
-                    {/* Type */}
-                    <div>
-                      <span style={badge(tCfg.color, tCfg.bg)}>{tCfg.label}</span>
-                    </div>
-
-                    {/* Estimation */}
+                    <div><span style={badge(tCfg.color, tCfg.bg)}>{tCfg.label}</span></div>
                     <div style={estimWrap}>
                       {bas && haut ? (
                         <>
@@ -272,26 +288,19 @@ export default async function LeadsPage({
                         <div style={estimM2}>Non estimé</div>
                       )}
                     </div>
-
-                    {/* Statut */}
                     <div style={statusWrap}>
                       <span style={badge(sCfg.color, sCfg.bg)}>{sCfg.label}</span>
                     </div>
-
-                    {/* Score */}
                     <div style={scoreWrap}>
-                      <div style={scoreCircle(conf)} title={temp.label + (conf ? ' · ' + conf + '/100' : '')}>
+                      <div style={scoreCircle(conf)} title={getTemperature(conf).label + (conf ? ' · ' + conf + '/100' : '')}>
                         {conf ?? '—'}
                       </div>
                     </div>
-
-                    {/* Menu */}
                     <div style={menuSt}>⋯</div>
                   </Link>
                 )
               })}
 
-              {/* Pagination */}
               <div style={paginationSt}>
                 <span>{'Afficher 10 · par page'}</span>
                 <span>{'1–' + filtered.length + ' sur ' + filtered.length}</span>
@@ -300,7 +309,7 @@ export default async function LeadsPage({
           ) : (
             <div style={emptyWrap}>
               <div style={emptyTxt}>{q ? 'Aucun résultat pour "' + q + '".' : 'Aucun prospect pour l\'instant.'}</div>
-              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads du formulaire apparaîtront ici.'}</div>
+              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads du formulaire apparaîtront ici dès le déploiement.'}</div>
             </div>
           )}
         </div>
