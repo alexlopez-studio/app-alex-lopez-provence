@@ -19,54 +19,54 @@ const success    = '#10B981'
 const warning    = '#F59E0B'
 const W          = '680px'
 
-const pageSt: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
-const navSt: CSSProperties       = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: '1px solid ' + border }
-const navTopSt: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
-const navLeftSt: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px' }
-const navRightSt: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '12px' }
-const avatarSt: CSSProperties    = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
-const navNameSt: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg }
-const navSubSt: CSSProperties    = { fontSize: '11px', color: muted }
-const backSt: CSSProperties      = { display: 'flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, color: muted, textDecoration: 'none' }
-const phoneSt: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: fg, textDecoration: 'none' }
+const pageSt: CSSProperties       = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
+const navSt: CSSProperties        = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: '1px solid ' + border }
+const navTopSt: CSSProperties     = { maxWidth: W, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
+const navLeftSt: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '10px' }
+const navRightSt: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '12px' }
+const avatarSt: CSSProperties     = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
+const navNameSt: CSSProperties    = { fontSize: '14px', fontWeight: 700, color: fg }
+const navSubSt: CSSProperties     = { fontSize: '11px', color: muted }
+const backSt: CSSProperties       = { display: 'flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, color: muted, textDecoration: 'none' }
+const phoneSt: CSSProperties      = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: fg, textDecoration: 'none' }
 const restartBtnSt: CSSProperties = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 500, color: muted, backgroundColor: 'transparent', border: '1px solid ' + border, borderRadius: '999px', padding: '5px 10px', cursor: 'pointer' }
-const chatWrap: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
-const rowAl: CSSProperties       = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
-const rowUser: CSSProperties     = { display: 'flex', justifyContent: 'flex-end' }
-const bubbleAl: CSSProperties    = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '84%' }
-const bubbleUser: CSSProperties  = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '80%', minWidth: '60px' }
-const tsLeft: CSSProperties      = { fontSize: '10px', color: muted, marginTop: '4px' }
-const tsRight: CSSProperties     = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
-const inlineZone: CSSProperties  = { marginTop: '8px' }
-const inputRow: CSSProperties    = { display: 'flex', gap: '10px', alignItems: 'center' }
-const inputSt: CSSProperties     = { flex: 1, fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
-const inputFull: CSSProperties   = { width: '100%', fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
-const sendBtnSt: CSSProperties   = { width: '42px', height: '42px', borderRadius: '12px', backgroundColor: brand, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
-const suggestWrap: CSSProperties = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '12px', overflow: 'hidden', marginTop: '6px' }
-const suggestBase: CSSProperties = { display: 'flex', alignItems: 'center', gap: '8px', padding: '11px 14px', fontSize: '13px', color: fg, cursor: 'pointer' }
-const loadingSt: CSSProperties   = { fontSize: '11px', color: muted, marginTop: '6px' }
-const validateBtn: CSSProperties = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: brand, border: 'none', color: white, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
-const validateOff: CSSProperties = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: border, border: 'none', color: muted, fontSize: '14px', fontWeight: 600, cursor: 'not-allowed', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
-const sliderWrap: CSSProperties  = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px' }
+const chatWrap: CSSProperties     = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
+const rowAl: CSSProperties        = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
+const rowUser: CSSProperties      = { display: 'flex', justifyContent: 'flex-end' }
+const bubbleAl: CSSProperties     = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '84%' }
+const bubbleUser: CSSProperties   = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '80%', minWidth: '60px' }
+const tsLeft: CSSProperties       = { fontSize: '10px', color: muted, marginTop: '4px' }
+const tsRight: CSSProperties      = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
+const inlineZone: CSSProperties   = { marginTop: '8px' }
+const inputRow: CSSProperties     = { display: 'flex', gap: '10px', alignItems: 'center' }
+const inputSt: CSSProperties      = { flex: 1, fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
+const inputFull: CSSProperties    = { width: '100%', fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
+const sendBtnSt: CSSProperties    = { width: '42px', height: '42px', borderRadius: '12px', backgroundColor: brand, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
+const suggestWrap: CSSProperties  = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '12px', overflow: 'hidden', marginTop: '6px' }
+const suggestBase: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '8px', padding: '11px 14px', fontSize: '13px', color: fg, cursor: 'pointer' }
+const loadingSt: CSSProperties    = { fontSize: '11px', color: muted, marginTop: '6px' }
+const validateBtn: CSSProperties  = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: brand, border: 'none', color: white, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
+const validateOff: CSSProperties  = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: border, border: 'none', color: muted, fontSize: '14px', fontWeight: 600, cursor: 'not-allowed', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
+const sliderWrap: CSSProperties   = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px' }
 const sliderValRow: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }
 const sliderValBox: CSSProperties = { border: '1.5px solid ' + border, borderRadius: '10px', padding: '8px 16px', fontSize: '18px', fontWeight: 700, color: fg, minWidth: '80px', textAlign: 'center' }
-const sliderUnit: CSSProperties  = { fontSize: '14px', fontWeight: 500, color: muted }
+const sliderUnit: CSSProperties   = { fontSize: '14px', fontWeight: 500, color: muted }
 const sliderLabels: CSSProperties = { display: 'flex', justifyContent: 'space-between', marginTop: '8px' }
-const sliderLbl: CSSProperties   = { fontSize: '11px', color: muted }
-const sliderInp: CSSProperties   = { width: '100%', accentColor: brand } as CSSProperties
-const multiGrid: CSSProperties   = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
-const emojiSt: CSSProperties     = { fontSize: '20px' }
-const coordWrap: CSSProperties   = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }
-const coordGrid: CSSProperties   = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
-const coordHdr: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2px' }
-const coordBadge: CSSProperties  = { width: '32px', height: '32px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }
-const coordTitle: CSSProperties  = { fontSize: '15px', fontWeight: 700, color: fg }
-const coordSub: CSSProperties    = { fontSize: '12px', fontWeight: 300, color: muted }
-const civilRow: CSSProperties    = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }
-const rgpdRow: CSSProperties     = { display: 'flex', alignItems: 'flex-start', gap: '10px', padding: '14px', borderRadius: '12px', cursor: 'pointer' }
-const rgpdTxt: CSSProperties     = { fontSize: '12px', fontWeight: 400, color: fg, lineHeight: 1.5 }
-const rgpdLinkSt: CSSProperties  = { color: brand, textDecoration: 'underline', cursor: 'pointer' }
-const rgpdErrTxt: CSSProperties  = { fontSize: '11px', fontWeight: 600, color: warning, marginTop: '4px' }
+const sliderLbl: CSSProperties    = { fontSize: '11px', color: muted }
+const sliderInp: CSSProperties    = { width: '100%', accentColor: brand } as CSSProperties
+const multiGrid: CSSProperties    = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const emojiSt: CSSProperties      = { fontSize: '20px' }
+const coordWrap: CSSProperties    = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }
+const coordGrid: CSSProperties    = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const coordHdr: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2px' }
+const coordBadge: CSSProperties   = { width: '32px', height: '32px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }
+const coordTitle: CSSProperties   = { fontSize: '15px', fontWeight: 700, color: fg }
+const coordSub: CSSProperties     = { fontSize: '12px', fontWeight: 300, color: muted }
+const civilRow: CSSProperties     = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }
+const rgpdRow: CSSProperties      = { display: 'flex', alignItems: 'flex-start', gap: '10px', padding: '14px', borderRadius: '12px', cursor: 'pointer' }
+const rgpdTxt: CSSProperties      = { fontSize: '12px', fontWeight: 400, color: fg, lineHeight: 1.5 }
+const rgpdLinkSt: CSSProperties   = { color: brand, textDecoration: 'underline', cursor: 'pointer' }
+const rgpdErrTxt: CSSProperties   = { fontSize: '11px', fontWeight: 600, color: warning, marginTop: '4px' }
 
 /* Adresse info cards */
 const infoCardGray: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#f1f5f9', marginTop: '8px' }
@@ -75,14 +75,14 @@ const infoTxt: CSSProperties        = { fontSize: '13px', fontWeight: 500, color
 const dpeBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#dbeafe', color: brand }
 const ignBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#fef9c3', color: '#854d0e' }
 
-/* Modal confirmation */
-const overlayStyle: CSSProperties   = { position: 'fixed', inset: 0, backgroundColor: 'rgba(15,23,42,0.45)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }
-const modalCard: CSSProperties      = { backgroundColor: white, borderRadius: '20px', padding: '28px 28px 24px', maxWidth: '360px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }
-const modalIcon: CSSProperties      = { fontSize: '32px', textAlign: 'center', marginBottom: '14px' }
-const modalTitle: CSSProperties     = { fontSize: '17px', fontWeight: 800, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
-const modalSub: CSSProperties       = { fontSize: '13px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '24px' }
-const modalBtns: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
-const modalBtnCancel: CSSProperties = { padding: '12px', borderRadius: '12px', border: '1.5px solid ' + border, backgroundColor: white, fontSize: '13px', fontWeight: 600, color: fg, cursor: 'pointer' }
+/* Modal */
+const overlayStyle: CSSProperties    = { position: 'fixed', inset: 0, backgroundColor: 'rgba(15,23,42,0.45)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }
+const modalCard: CSSProperties       = { backgroundColor: white, borderRadius: '20px', padding: '28px 28px 24px', maxWidth: '360px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }
+const modalIcon: CSSProperties       = { fontSize: '32px', textAlign: 'center', marginBottom: '14px' }
+const modalTitle: CSSProperties      = { fontSize: '17px', fontWeight: 800, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
+const modalSub: CSSProperties        = { fontSize: '13px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '24px' }
+const modalBtns: CSSProperties       = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const modalBtnCancel: CSSProperties  = { padding: '12px', borderRadius: '12px', border: '1.5px solid ' + border, backgroundColor: white, fontSize: '13px', fontWeight: 600, color: fg, cursor: 'pointer' }
 const modalBtnConfirm: CSSProperties = { padding: '12px', borderRadius: '12px', border: 'none', backgroundColor: '#EF4444', fontSize: '13px', fontWeight: 600, color: white, cursor: 'pointer' }
 
 /* Stepper */
@@ -101,33 +101,33 @@ const connOn: CSSProperties      = { height: '100%', width: '100%', backgroundCo
 const connOff: CSSProperties     = { height: '100%', width: '0%', backgroundColor: brand, borderRadius: '999px' }
 
 /* Calcul */
-const calculPage: CSSProperties  = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }
-const calculIcon: CSSProperties  = { width: '72px', height: '72px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', fontSize: '32px' }
-const calculTitle: CSSProperties = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
-const calculSub: CSSProperties   = { fontSize: '13px', fontWeight: 300, color: muted, marginBottom: '32px', textAlign: 'center' }
-const calculSteps: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '14px', width: '100%', maxWidth: '320px', marginBottom: '28px' }
-const calculStepRow: CSSProperties = { display: 'flex', alignItems: 'center', gap: '12px' }
-const calculBar: CSSProperties   = { width: '100%', maxWidth: '320px', height: '4px', backgroundColor: border, borderRadius: '999px', overflow: 'hidden' }
+const calculPage: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }
+const calculIcon: CSSProperties      = { width: '72px', height: '72px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px', fontSize: '32px' }
+const calculTitle: CSSProperties     = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
+const calculSub: CSSProperties       = { fontSize: '13px', fontWeight: 300, color: muted, marginBottom: '32px', textAlign: 'center' }
+const calculSteps: CSSProperties     = { display: 'flex', flexDirection: 'column', gap: '14px', width: '100%', maxWidth: '320px', marginBottom: '28px' }
+const calculStepRow: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '12px' }
+const calculBar: CSSProperties       = { width: '100%', maxWidth: '320px', height: '4px', backgroundColor: border, borderRadius: '999px', overflow: 'hidden' }
 const calculStepTxtOn: CSSProperties  = { fontSize: '14px', fontWeight: 600, color: fg }
 const calculStepTxtOff: CSSProperties = { fontSize: '14px', fontWeight: 400, color: muted }
-const spinnerDotSt: CSSProperties = { width: '8px', height: '8px', borderRadius: '999px', backgroundColor: white }
+const spinnerDotSt: CSSProperties    = { width: '8px', height: '8px', borderRadius: '999px', backgroundColor: white }
 
 /* Verification */
-const verifPage: CSSProperties   = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
-const verifNav: CSSProperties    = { backgroundColor: white, borderBottom: '1px solid ' + border, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }
-const verifWrap: CSSProperties   = { maxWidth: '500px', margin: '0 auto', padding: '40px 20px 60px' }
-const verifIconSt: CSSProperties = { width: '64px', height: '64px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: '28px' }
-const verifTitle: CSSProperties  = { fontSize: '20px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
-const verifSub: CSSProperties    = { fontSize: '13px', fontWeight: 300, color: muted, marginBottom: '28px', lineHeight: 1.6, textAlign: 'center' }
-const verifCard: CSSProperties   = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px', marginBottom: '16px' }
+const verifPage: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
+const verifNav: CSSProperties       = { backgroundColor: white, borderBottom: '1px solid ' + border, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }
+const verifWrap: CSSProperties      = { maxWidth: '500px', margin: '0 auto', padding: '40px 20px 60px' }
+const verifIconSt: CSSProperties    = { width: '64px', height: '64px', borderRadius: '999px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: '28px' }
+const verifTitle: CSSProperties     = { fontSize: '20px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
+const verifSub: CSSProperties       = { fontSize: '13px', fontWeight: 300, color: muted, marginBottom: '28px', lineHeight: 1.6, textAlign: 'center' }
+const verifCard: CSSProperties      = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px', marginBottom: '16px' }
 const verifCardTitle: CSSProperties = { fontSize: '13px', fontWeight: 700, color: fg, marginBottom: '12px' }
 const verifRadioOff: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', borderRadius: '12px', border: '2px solid ' + border, cursor: 'pointer', marginBottom: '8px' }
 const verifRadioOn: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', borderRadius: '12px', border: '2px solid ' + brand, backgroundColor: brandLight, cursor: 'pointer', marginBottom: '8px' }
-const verifDot: CSSProperties    = { width: '18px', height: '18px', borderRadius: '999px', border: '2px solid ' + border, flexShrink: 0 }
-const verifDotOn: CSSProperties  = { width: '18px', height: '18px', borderRadius: '999px', border: '6px solid ' + brand, flexShrink: 0 }
-const verifBadge: CSSProperties  = { backgroundColor: '#d1fae5', color: success, fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto' }
-const verifNote: CSSProperties   = { fontSize: '11px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '20px' }
-const verifTxtSt: CSSProperties  = { fontSize: '13px', fontWeight: 500, color: fg }
+const verifDot: CSSProperties       = { width: '18px', height: '18px', borderRadius: '999px', border: '2px solid ' + border, flexShrink: 0 }
+const verifDotOn: CSSProperties     = { width: '18px', height: '18px', borderRadius: '999px', border: '6px solid ' + brand, flexShrink: 0 }
+const verifBadge: CSSProperties     = { backgroundColor: '#d1fae5', color: success, fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto' }
+const verifNote: CSSProperties      = { fontSize: '11px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '20px' }
+const verifTxtSt: CSSProperties     = { fontSize: '13px', fontWeight: 500, color: fg }
 
 /* -------- Styles dynamiques -------- */
 function cardSt(active: boolean): CSSProperties {
@@ -196,9 +196,9 @@ function ConfirmModal({ onCancel, onConfirm }: { onCancel: () => void; onConfirm
   return (
     <div style={overlayStyle} onClick={onCancel}>
       <div style={modalCard} onClick={(e) => e.stopPropagation()}>
-        <div style={modalIcon}>\u267b\ufe0f</div>
-        <div style={modalTitle}>Recommencer depuis le d\u00e9but ?</div>
-        <div style={modalSub}>Votre progression actuelle sera effac\u00e9e et le formulaire sera r\u00e9initialis\u00e9.</div>
+        <div style={modalIcon}>{'♻️'}</div>
+        <div style={modalTitle}>{'Recommencer depuis le début ?'}</div>
+        <div style={modalSub}>{'Votre progression actuelle sera effacée et le formulaire sera réinitialisé.'}</div>
         <div style={modalBtns}>
           <button style={modalBtnCancel} onClick={onCancel}>Annuler</button>
           <button style={modalBtnConfirm} onClick={onConfirm}>Recommencer</button>
@@ -210,31 +210,31 @@ function ConfirmModal({ onCancel, onConfirm }: { onCancel: () => void; onConfirm
 
 /* -------- Data -------- */
 const TYPE_BIEN = [
-  { value: 'appartement', label: 'Appartement', emoji: '\ud83c\udfe2' },
-  { value: 'maison',      label: 'Maison',      emoji: '\ud83c\udfe0' },
-  { value: 'terrain',     label: 'Terrain',     emoji: '\ud83c\udf3f' },
-  { value: 'commerce',    label: 'Commerce',    emoji: '\ud83c\udfea' },
-  { value: 'immeuble',    label: 'Immeuble',    emoji: '\ud83c\udfd7\ufe0f' },
+  { value: 'appartement', label: 'Appartement', emoji: '🏢' },
+  { value: 'maison',      label: 'Maison',      emoji: '🏠' },
+  { value: 'terrain',     label: 'Terrain',     emoji: '🌿' },
+  { value: 'commerce',    label: 'Commerce',    emoji: '🏪' },
+  { value: 'immeuble',    label: 'Immeuble',    emoji: '🏗️' },
   { value: 'autre',       label: 'Autre',       emoji: '...' },
 ]
 const ETAT = [
-  { value: 'neuf',          label: 'Neuf / r\u00e9cent',  emoji: '\ud83c\udfc6' },
-  { value: 'tres_bon_etat', label: 'Tr\u00e8s bon \u00e9tat', emoji: '\u2728' },
-  { value: 'bon_etat',      label: 'Bon \u00e9tat',        emoji: '\ud83d\udc4d' },
-  { value: 'rafraichir',    label: '\u00c0 rafra\u00eechir', emoji: '\ud83d\udd8c\ufe0f' },
-  { value: 'travaux',       label: 'Travaux importants', emoji: '\ud83d\udd28' },
+  { value: 'neuf',          label: 'Neuf / récent',     emoji: '🏆' },
+  { value: 'tres_bon_etat', label: 'Très bon état',     emoji: '✨' },
+  { value: 'bon_etat',      label: 'Bon état',          emoji: '👍' },
+  { value: 'rafraichir',    label: 'À rafraîchir',      emoji: '🖌️' },
+  { value: 'travaux',       label: 'Travaux importants',emoji: '🔨' },
 ]
 const DELAI = [
-  { value: 'immediat',   label: 'Imm\u00e9diat',   emoji: '\ud83d\udd25' },
-  { value: '1_3_mois',   label: '1 - 3 mois', emoji: '\ud83d\udcc5' },
-  { value: '3_6_mois',   label: '3 - 6 mois', emoji: '\ud83d\uddd3\ufe0f' },
-  { value: '6_mois',     label: '+6 mois',    emoji: '\u23f3' },
-  { value: 'pas_decide', label: 'Pas d\u00e9cid\u00e9', emoji: '\ud83e\udd14' },
+  { value: 'immediat',   label: 'Immédiat',   emoji: '🔥' },
+  { value: '1_3_mois',   label: '1 - 3 mois', emoji: '📅' },
+  { value: '3_6_mois',   label: '3 - 6 mois', emoji: '🗓️' },
+  { value: '6_mois',     label: '+6 mois',    emoji: '⏳' },
+  { value: 'pas_decide', label: 'Pas décidé', emoji: '🤔' },
 ]
 const EQUIPEMENTS = ['Balcon', 'Terrasse', 'Parking', 'Garage', 'Cave', 'Jardin', 'Vue exceptionnelle', 'Piscine']
 const BIEN_LBL: Record<string, string>  = { appartement: 'Appartement', maison: 'Maison', terrain: 'Terrain', commerce: 'Commerce', immeuble: 'Immeuble', autre: 'Autre' }
-const ETAT_LBL: Record<string, string>  = { neuf: 'Neuf / r\u00e9cent', tres_bon_etat: 'Tr\u00e8s bon \u00e9tat', bon_etat: 'Bon \u00e9tat', rafraichir: '\u00c0 rafra\u00eechir', travaux: 'Travaux importants' }
-const DELAI_LBL: Record<string, string> = { immediat: 'Imm\u00e9diat', '1_3_mois': '1 - 3 mois', '3_6_mois': '3 - 6 mois', '6_mois': '+6 mois', pas_decide: 'Pas d\u00e9cid\u00e9' }
+const ETAT_LBL: Record<string, string>  = { neuf: 'Neuf / récent', tres_bon_etat: 'Très bon état', bon_etat: 'Bon état', rafraichir: 'À rafraîchir', travaux: 'Travaux importants' }
+const DELAI_LBL: Record<string, string> = { immediat: 'Immédiat', '1_3_mois': '1 - 3 mois', '3_6_mois': '3 - 6 mois', '6_mois': '+6 mois', pas_decide: 'Pas décidé' }
 
 function getNext(q: QuestionId, a: VendreAnswers): QuestionId {
   switch (q) {
@@ -255,14 +255,14 @@ function getNext(q: QuestionId, a: VendreAnswers): QuestionId {
 function buildRecap(a: VendreAnswers): string {
   const tl = BIEN_LBL[a.type_bien ?? ''] ?? a.type_bien ?? 'Bien'
   let desc = tl
-  if (a.surface) desc += ' de ' + a.surface + 'm\u00b2'
-  if (a.nb_pieces) desc += ', ' + a.nb_pieces + ' pi\u00e8ce' + (Number(a.nb_pieces) > 1 ? 's' : '')
-  if (a.surface_terrain) desc += ', terrain ' + a.surface_terrain + 'm\u00b2'
+  if (a.surface) desc += ' de ' + a.surface + 'm²'
+  if (a.nb_pieces) desc += ', ' + a.nb_pieces + ' pièce' + (Number(a.nb_pieces) > 1 ? 's' : '')
+  if (a.surface_terrain) desc += ', terrain ' + a.surface_terrain + 'm²'
   if (a.equipements && a.equipements.length > 0) desc += ' + ' + a.equipements.join(', ')
-  const lines = ['Tr\u00e8s bien, r\u00e9capitulons ensemble votre bien !', '', 'Voici le r\u00e9capitulatif de votre bien :', '', '\ud83c\udfd1 ' + desc]
-  if (a.adresse) lines.push('\ud83d\udccd ' + a.adresse)
-  if (a.etat) lines.push('\ud83d\udd27 ' + (ETAT_LBL[a.etat] ?? a.etat))
-  if (a.delai) lines.push('\ud83d\uddd3 Vente souhait\u00e9e : ' + (DELAI_LBL[a.delai] ?? a.delai))
+  const lines = ['Très bien, récapitulons ensemble votre bien !', '', 'Voici le récapitulatif de votre bien :', '', '🏡 ' + desc]
+  if (a.adresse) lines.push('📍 ' + a.adresse)
+  if (a.etat) lines.push('🔧 ' + (ETAT_LBL[a.etat] ?? a.etat))
+  if (a.delai) lines.push('🗓 Vente souhaitée : ' + (DELAI_LBL[a.delai] ?? a.delai))
   lines.push('', 'Est-ce que ces informations sont correctes ?')
   return lines.join('\n')
 }
@@ -271,14 +271,14 @@ function getMsg(q: QuestionId, a: VendreAnswers): string {
   if (q === 'recapitulatif') return buildRecap(a)
   switch (q) {
     case 'type_bien':        return "Parfait, je localise votre bien ! Quel type de bien souhaitez-vous faire estimer ?"
-    case 'sous_type_maison': return "Tr\u00e8s bien ! S'agit-il d'une maison mitoyenne ou individuelle ?"
+    case 'sous_type_maison': return "Très bien ! S'agit-il d'une maison mitoyenne ou individuelle ?"
     case 'surface':          return "Parfait ! Quelle est la surface habitable de votre bien ?"
-    case 'surface_terrain':  return "C'est not\u00e9 ! Quelle est la superficie totale du terrain de votre maison ?"
-    case 'nb_pieces':        return "C'est not\u00e9 ! Combien de pi\u00e8ces principales compte votre bien ?\n(S\u00e9jour + chambres, sans compter cuisine, salle de bain et WC)"
-    case 'etat':             return "Compris ! Quel est l'\u00e9tat g\u00e9n\u00e9ral de votre bien ?"
-    case 'equipements':      return "Tr\u00e8s bien ! Quels \u00e9quipements et atouts poss\u00e8de votre bien ?"
-    case 'delai':            return "Compris ! Dans quel d\u00e9lai souhaitez-vous vendre votre bien ?"
-    case 'coordonnees':      return "Parfait ! Pour finaliser votre estimation, j'ai besoin de vos coordonn\u00e9es."
+    case 'surface_terrain':  return "C'est noté ! Quelle est la superficie totale du terrain de votre maison ?"
+    case 'nb_pieces':        return "C'est noté ! Combien de pièces principales compte votre bien ?\n(Séjour + chambres, sans compter cuisine, salle de bain et WC)"
+    case 'etat':             return "Compris ! Quel est l'état général de votre bien ?"
+    case 'equipements':      return "Très bien ! Quels équipements et atouts possède votre bien ?"
+    case 'delai':            return "Compris ! Dans quel délai souhaitez-vous vendre votre bien ?"
+    case 'coordonnees':      return "Parfait ! Pour finaliser votre estimation, j'ai besoin de vos coordonnées."
     default:                 return ''
   }
 }
@@ -310,6 +310,11 @@ export default function VendrePage() {
     }, 350)
   }
 
+  /* Injection d'un message AL (ex: infos cadastre après adresse) */
+  function handleAlMessage(text: string) {
+    addMessage({ from: 'al', text, timestamp: ts() })
+  }
+
   function handleFinalSubmit(prenom: string, nom: string, tel: string, email: string, civilite: 'monsieur' | 'madame') {
     setAnswer('prenom', prenom); setAnswer('nom', nom); setAnswer('telephone', tel); setAnswer('email', email); setAnswer('civilite', civilite)
     addMessage({ from: 'user', text: prenom + ' ' + nom, timestamp: ts() })
@@ -330,7 +335,6 @@ export default function VendrePage() {
   }, [answers, token, router])
 
   function handleVerifComplete(chosen: number) { setAnswer('surface_terrain', chosen); router.push('/resultats/' + token) }
-
   function confirmRestart() { reset(); setUiState('chat'); setShowModal(false) }
 
   if (uiState === 'calcul') return <CalculLoading onComplete={handleCalculComplete} />
@@ -338,7 +342,6 @@ export default function VendrePage() {
 
   return (
     <div style={pageSt}>
-      {/* Modal de confirmation */}
       {showModal && <ConfirmModal onCancel={() => setShowModal(false)} onConfirm={confirmRestart} />}
 
       <header style={navSt}>
@@ -346,12 +349,12 @@ export default function VendrePage() {
           <div style={navLeftSt}>
             <Link href="/" style={backSt}><ChevronLeft size={14} /></Link>
             <Avatar />
-            <div><div style={navNameSt}>Alex Lopez</div><div style={navSubSt}>Mandataire IAD - Provence Verte</div></div>
+            <div><div style={navNameSt}>Alex Lopez</div><div style={navSubSt}>{'Mandataire IAD - Provence Verte'}</div></div>
           </div>
           <div style={navRightSt}>
             <button style={restartBtnSt} onClick={() => setShowModal(true)}>
               <RotateCcw size={12} />
-              Recommencer
+              {'Recommencer'}
             </button>
             <a href="tel:+33613180168" style={phoneSt}><Phone size={13} color={brand} /></a>
           </div>
@@ -371,7 +374,14 @@ export default function VendrePage() {
         ))}
         {currentQuestion !== 'done' && (
           <div style={inlineZone}>
-            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} onRestart={() => setShowModal(true)} />
+            <InputZone
+              question={currentQuestion}
+              answers={answers}
+              onAnswer={handleAnswer}
+              onFinalSubmit={handleFinalSubmit}
+              onRestart={() => setShowModal(true)}
+              onAlMessage={handleAlMessage}
+            />
           </div>
         )}
         <div ref={bottomRef} />
@@ -380,31 +390,36 @@ export default function VendrePage() {
   )
 }
 
-function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
+function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart, onAlMessage }: {
   question: QuestionId; answers: VendreAnswers
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
   onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void
   onRestart: () => void
+  onAlMessage: (text: string) => void
 }) {
-  if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} />
+  if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} onAlMessage={onAlMessage} />
   if (question === 'type_bien') return <Cards options={TYPE_BIEN} cols={2} onSelect={(v, l) => onAnswer('type_bien', v, l)} />
-  if (question === 'sous_type_maison') return <Cards options={[{ value: 'mitoyenne', label: 'Mitoyenne', emoji: '\ud83c\udfd8\ufe0f' }, { value: 'individuelle', label: 'Individuelle', emoji: '\ud83c\udfe0' }]} cols={2} onSelect={(v, l) => onAnswer('sous_type', v, l)} />
-  if (question === 'surface') return <Slider unit="m\u00b2" min={5} max={1000} def={80} onValidate={(v) => onAnswer('surface', v, v + ' m\u00b2')} />
-  if (question === 'surface_terrain') return <Slider unit="m\u00b2" min={50} max={5000} def={500} onValidate={(v) => onAnswer('surface_terrain', v, v + ' m\u00b2')} />
-  if (question === 'nb_pieces') return <Cards options={['1','2','3','4','5','6+'].map((n) => ({ value: n, label: n, emoji: '' }))} cols={3} onSelect={(v, l) => onAnswer('nb_pieces', parseInt(v) || 6, l + (parseInt(v) > 1 ? ' pi\u00e8ces' : ' pi\u00e8ce'))} />
+  if (question === 'sous_type_maison') return <Cards options={[{ value: 'mitoyenne', label: 'Mitoyenne', emoji: '🏘️' }, { value: 'individuelle', label: 'Individuelle', emoji: '🏠' }]} cols={2} onSelect={(v, l) => onAnswer('sous_type', v, l)} />
+  if (question === 'surface') return <Slider unit="m²" min={5} max={1000} def={80} onValidate={(v) => onAnswer('surface', v, v + ' m²')} />
+  if (question === 'surface_terrain') return <Slider unit="m²" min={50} max={5000} def={500} onValidate={(v) => onAnswer('surface_terrain', v, v + ' m²')} />
+  if (question === 'nb_pieces') return <Cards options={['1','2','3','4','5','6+'].map((n) => ({ value: n, label: n, emoji: '' }))} cols={3} onSelect={(v, l) => onAnswer('nb_pieces', parseInt(v) || 6, l + (parseInt(v) > 1 ? ' pièces' : ' pièce'))} />
   if (question === 'etat') return <Cards options={ETAT} cols={2} onSelect={(v, l) => onAnswer('etat', v, l)} />
-  if (question === 'equipements') return <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun \u00e9quipement')} />
+  if (question === 'equipements') return <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun équipement')} />
   if (question === 'delai') return <Cards options={DELAI} cols={2} onSelect={(v, l) => onAnswer('delai', v, l)} />
   if (question === 'recapitulatif') return <RecapInput onConfirm={() => onAnswer('recapitulatif' as keyof VendreAnswers, true, '')} onRestart={onRestart} />
   if (question === 'coordonnees') return <Coordonnees onFinalSubmit={onFinalSubmit} />
   return null
 }
 
+/* -------- Adresse + DPE + Parcelle — info persistante via message AL -------- */
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 interface Suggestion { label: string; lat: number; lng: number }
 interface AdresseInfos { dpe?: { lettre: string }; parcelle?: { id: string; commune: string; surface: number | null } }
 
-function AdresseInput({ onAnswer }: { onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void }) {
+function AdresseInput({ onAnswer, onAlMessage }: {
+  onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
+  onAlMessage: (text: string) => void
+}) {
   const [val, setVal]           = useState('')
   const [suggestions, setSug]   = useState<Suggestion[]>([])
   const [loading, setLoading]   = useState(false)
@@ -434,9 +449,23 @@ function AdresseInput({ onAnswer }: { onAnswer: (key: keyof VendreAnswers, value
     } catch { setInfos({}) } finally { setFetching(false) }
   }
 
-  function validate() {
+  function validate(currentInfos: AdresseInfos) {
     if (!selected) return
-    onAnswer('lat', selected.lat, ''); onAnswer('lng', selected.lng, ''); onAnswer('adresse', selected.label, selected.label)
+    onAnswer('lat', selected.lat, '')
+    onAnswer('lng', selected.lng, '')
+    onAnswer('adresse', selected.label, selected.label)
+    /* Injection du message AL avec DPE + cadastre pour qu'ils restent visibles */
+    if (currentInfos.dpe || currentInfos.parcelle) {
+      const lines: string[] = ['Voici ce que j\'ai trouvé pour cette adresse :']
+      if (currentInfos.dpe) lines.push('⚡ DPE : ' + currentInfos.dpe.lettre + ' (vérifié ADEME)')
+      if (currentInfos.parcelle) {
+        let p = '🗺️ Parcelle : ' + currentInfos.parcelle.id
+        if (currentInfos.parcelle.commune) p += ' · ' + currentInfos.parcelle.commune
+        if (currentInfos.parcelle.surface) p += ' · ' + currentInfos.parcelle.surface + ' m²'
+        lines.push(p)
+      }
+      setTimeout(() => onAlMessage(lines.join('\n')), 100)
+    }
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -463,29 +492,29 @@ function AdresseInput({ onAnswer }: { onAnswer: (key: keyof VendreAnswers, value
           ))}
         </div>
       )}
-      {loading && <p style={loadingSt}>Recherche en cours...</p>}
-      {fetching && <p style={loadingSt}>V\u00e9rification des donn\u00e9es officielles...</p>}
+      {loading && <p style={loadingSt}>{'Recherche en cours...'}</p>}
+      {fetching && <p style={loadingSt}>{'Vérification des données officielles...'}</p>}
       {selected && !fetching && (
         <div>
           {infos.dpe && (
             <div style={infoCardGray}>
               <Zap size={15} color={brand} />
-              <span style={infoTxt}>DPE trouv\u00e9 : <strong>{infos.dpe.lettre}</strong></span>
-              <span style={dpeBadgeSt}>V\u00e9rifi\u00e9 ADEME</span>
+              <span style={infoTxt}>{'DPE trouvé : '}<strong>{infos.dpe.lettre}</strong></span>
+              <span style={dpeBadgeSt}>{'Vérifié ADEME'}</span>
             </div>
           )}
           {infos.parcelle && (
             <div style={infoCardYellow}>
               <Map size={15} color="#ca8a04" />
               <span style={infoTxt}>
-                Parcelle <strong>{infos.parcelle.id}</strong>
-                {infos.parcelle.commune ? ' \u00b7 ' + infos.parcelle.commune : ''}
-                {infos.parcelle.surface ? ' \u00b7 ' + infos.parcelle.surface + ' m\u00b2' : ''}
+                {'Parcelle '}<strong>{infos.parcelle.id}</strong>
+                {infos.parcelle.commune ? ' · ' + infos.parcelle.commune : ''}
+                {infos.parcelle.surface ? ' · ' + infos.parcelle.surface + ' m²' : ''}
               </span>
               <span style={ignBadgeSt}>IGN</span>
             </div>
           )}
-          <button style={validateBtn} onClick={validate}><Send size={14} /> Valider cette adresse</button>
+          <button style={validateBtn} onClick={() => validate(infos)}><Send size={14} /> {'Valider cette adresse'}</button>
         </div>
       )}
     </div>
@@ -527,7 +556,7 @@ function MultiSelect({ options, onValidate }: { options: string[]; onValidate: (
         {options.map((o) => { const active = sel.includes(o); return (<div key={o} style={multiRowSt(active)} onClick={() => toggle(o)}><div style={checkSt(active)} /><span>{o}</span></div>) })}
       </div>
       <button style={validateBtn} onClick={() => onValidate(sel)}>
-        {sel.length === 0 ? 'Aucun \u00e9quipement' : 'Valider (' + sel.length + ' s\u00e9lectionn\u00e9' + (sel.length > 1 ? 's' : '') + ')'} <Send size={14} />
+        {sel.length === 0 ? 'Aucun équipement' : 'Valider (' + sel.length + ' sélectionné' + (sel.length > 1 ? 's' : '') + ')'} <Send size={14} />
       </button>
     </div>
   )
@@ -540,7 +569,7 @@ const recapBtnEdit: CSSProperties = { display: 'flex', flexDirection: 'column', 
 function RecapInput({ onConfirm, onRestart }: { onConfirm: () => void; onRestart: () => void }) {
   return (
     <div style={recapGrid}>
-      <button style={recapBtnOk} onClick={onConfirm}><span style={emojiSt}>\u2705</span><span>C&apos;est correct</span></button>
+      <button style={recapBtnOk} onClick={onConfirm}><span style={emojiSt}>✅</span><span>{"C'est correct"}</span></button>
       <button style={recapBtnEdit} onClick={onRestart}><Edit3 size={20} color={muted} /><span>Je veux modifier</span></button>
     </div>
   )
@@ -559,32 +588,32 @@ function Coordonnees({ onFinalSubmit }: { onFinalSubmit: (p: string, n: string, 
   return (
     <div style={coordWrap}>
       <div style={coordHdr}>
-        <div style={coordBadge}>\u2728</div>
-        <div><div style={coordTitle}>Derni\u00e8re \u00e9tape !</div><div style={coordSub}>Recevez votre estimation personnalis\u00e9e</div></div>
+        <div style={coordBadge}>✨</div>
+        <div><div style={coordTitle}>{'Dernière étape !'}</div><div style={coordSub}>{'Recevez votre estimation personnalisée'}</div></div>
       </div>
       <div style={civilRow}>
         <button style={civilBtnSt(civilite === 'monsieur')} onClick={() => setCiv('monsieur')}>Monsieur</button>
         <button style={civilBtnSt(civilite === 'madame')} onClick={() => setCiv('madame')}>Madame</button>
       </div>
       <div style={coordGrid}>
-        <input style={inputFull} placeholder="Pr\u00e9nom *" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+        <input style={inputFull} placeholder="Prénom *" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
         <input style={inputFull} placeholder="Nom *" value={nom} onChange={(e) => setNom(e.target.value)} />
       </div>
       <input style={inputFull} type="email" placeholder="Email *" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input style={inputFull} type="tel" placeholder="T\u00e9l\u00e9phone *" value={tel} onChange={(e) => setTel(e.target.value)} />
+      <input style={inputFull} type="tel" placeholder="Téléphone *" value={tel} onChange={(e) => setTel(e.target.value)} />
       <div style={rgpdRowSt(rgpd, showErr && !rgpd)} onClick={() => { setRgpd(!rgpd); setShowErr(false) }}>
         <div style={rgpdBoxSt(rgpd)}>{rgpd && <Check size={11} color={white} strokeWidth={3} />}</div>
         <div>
-          <span style={rgpdTxt}><strong>J&apos;accepte</strong> que mes donn\u00e9es soient transmises au professionnel immobilier pour \u00eatre recontact\u00e9.{' '}<span style={rgpdLinkSt}>Politique de confidentialit\u00e9</span></span>
+          <span style={rgpdTxt}><strong>{"J'accepte"}</strong>{" que mes données soient transmises au professionnel immobilier pour être recontacté. "}<span style={rgpdLinkSt}>{'Politique de confidentialité'}</span></span>
           {showErr && !rgpd && <div style={rgpdErrTxt}>Requis pour continuer</div>}
         </div>
       </div>
-      <button style={valid && rgpd ? validateBtn : validateOff} onClick={submit}>Voir mon estimation <Send size={14} /></button>
+      <button style={valid && rgpd ? validateBtn : validateOff} onClick={submit}>{'Voir mon estimation'} <Send size={14} /></button>
     </div>
   )
 }
 
-const CALCUL_STEPS = ['Recherche des ventes r\u00e9centes...', 'Analyse du march\u00e9 local', 'Calcul de votre estimation']
+const CALCUL_STEPS = ['Recherche des ventes récentes...', 'Analyse du marché local', 'Calcul de votre estimation']
 
 function CalculLoading({ onComplete }: { onComplete: () => void }) {
   const [activeStep, setActiveStep] = useState(0)
@@ -599,9 +628,9 @@ function CalculLoading({ onComplete }: { onComplete: () => void }) {
   }, [])
   return (
     <div style={calculPage}>
-      <div style={calculIcon}>\ud83c\udfe0</div>
-      <div style={calculTitle}>Calcul de votre estimation</div>
-      <div style={calculSub}>Analyse des ventes r\u00e9centes dans votre secteur</div>
+      <div style={calculIcon}>🏠</div>
+      <div style={calculTitle}>{'Calcul de votre estimation'}</div>
+      <div style={calculSub}>{'Analyse des ventes récentes dans votre secteur'}</div>
       <div style={calculSteps}>
         {CALCUL_STEPS.map((step, i) => {
           const done = i < activeStep; const active = i === activeStep
@@ -626,24 +655,24 @@ function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: { use
     <div style={verifPage}>
       <header style={verifNav}><div style={avatarSt}>AL</div><div style={navNameSt}>Alex Lopez</div></header>
       <div style={verifWrap}>
-        <div style={verifIconSt}>\ud83d\udee1\ufe0f</div>
-        <div style={verifTitle}>V\u00e9rification des informations</div>
-        <div style={verifSub}>Nous avons r\u00e9cup\u00e9r\u00e9 des donn\u00e9es officielles qui diff\u00e8rent de certaines informations que vous avez indiqu\u00e9es.</div>
+        <div style={verifIconSt}>🛡️</div>
+        <div style={verifTitle}>{'Vérification des informations'}</div>
+        <div style={verifSub}>{'Nous avons récupéré des données officielles qui diffèrent de certaines informations que vous avez indiquées.'}</div>
         <div style={verifCard}>
           <div style={verifCardTitle}>Surface terrain</div>
           <div style={chosen === 'user' ? verifRadioOn : verifRadioOff} onClick={() => setChosen('user')}>
             <div style={chosen === 'user' ? verifDotOn : verifDot} />
-            <span style={verifTxtSt}>Vos informations : {userSurface} m\u00b2</span>
+            <span style={verifTxtSt}>{'Vos informations : '}{userSurface}{' m²'}</span>
           </div>
           <div style={chosen === 'cadastre' ? verifRadioOn : verifRadioOff} onClick={() => setChosen('cadastre')}>
             <div style={chosen === 'cadastre' ? verifDotOn : verifDot} />
-            <span style={verifTxtSt}>Donn\u00e9es officielles (Cadastre IGN) : {cadastreSurface} m\u00b2</span>
-            <div style={verifBadge}>Recommand\u00e9</div>
+            <span style={verifTxtSt}>{'Données officielles (Cadastre IGN) : '}{cadastreSurface}{' m²'}</span>
+            <div style={verifBadge}>{'Recommandé'}</div>
           </div>
         </div>
-        <div style={verifNote}>Les donn\u00e9es officielles proviennent de sources gouvernementales et sont g\u00e9n\u00e9ralement plus pr\u00e9cises.</div>
+        <div style={verifNote}>{'Les données officielles proviennent de sources gouvernementales et sont généralement plus précises.'}</div>
         <button style={validateBtn} onClick={() => onComplete(chosen === 'cadastre' ? cadastreSurface : userSurface)}>
-          Valider et voir mon estimation <Send size={14} />
+          {'Valider et voir mon estimation'} <Send size={14} />
         </button>
       </div>
     </div>
