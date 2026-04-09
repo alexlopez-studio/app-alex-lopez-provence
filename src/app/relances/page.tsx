@@ -27,7 +27,8 @@ export default async function RelancesPage() {
     .order('scheduled_at', { ascending: true })
     .limit(200)
 
-  const relances: RelanceItem[] = (raw ?? []) as RelanceItem[]
+  // Supabase renvoie leads comme un tableau via la jointure FK — on cast via unknown
+  const relances = (raw ?? []) as unknown as RelanceItem[]
 
   return (
     <CrmLayout>
