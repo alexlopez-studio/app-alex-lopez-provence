@@ -21,7 +21,6 @@ function formatEur(n: number) {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n)
 }
 
-/* ─ Styles ─ */
 const pageWrap: CSSProperties    = { padding: '32px' }
 const topBar: CSSProperties      = { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '24px' }
 const backLnk: CSSProperties     = { display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: muted, textDecoration: 'none', marginBottom: '12px' }
@@ -38,8 +37,7 @@ const twoCol: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 
 const card: CSSProperties        = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '24px' }
 const bienCard: CSSProperties    = { ...card, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' } as CSSProperties
 const cardTitle: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg, marginBottom: '16px' }
-const relanceItemSt: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0' }
-const relanceLast: CSSProperties = { display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0' }
+const relanceItemSt: CSSProperties = { display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0' }
 const relanceLbl: CSSProperties  = { fontSize: '13px', fontWeight: 500, color: fg, flex: 1 }
 const relanceSub: CSSProperties  = { fontSize: '11px', fontWeight: 400, color: muted }
 const relanceInner: CSSProperties = { flex: 1 }
@@ -68,22 +66,22 @@ const delaiTxt: CSSProperties    = { fontSize: '12px', color: muted }
 type Statut = 'nouveau' | 'contacte' | 'rdv' | 'signe' | 'perdu'
 
 const STATUT_CONFIG: Record<Statut, { label: string; color: string; bg: string }> = {
-  nouveau:  { label: 'Nouveau',    color: brand,   bg: '#EFF6FF' },
-  contacte: { label: 'Contact\u00e9',   color: warning, bg: '#FFFBEB' },
-  rdv:      { label: 'RDV pris',   color: success, bg: '#ECFDF5' },
-  signe:    { label: 'Sign\u00e9',      color: success, bg: '#D1FAE5' },
-  perdu:    { label: 'Perdu',      color: error,   bg: '#FEF2F2' },
+  nouveau:  { label: 'Nouveau',   color: brand,   bg: '#EFF6FF' },
+  contacte: { label: 'Contact\u00e9',  color: warning, bg: '#FFFBEB' },
+  rdv:      { label: 'RDV pris',  color: success, bg: '#ECFDF5' },
+  signe:    { label: 'Sign\u00e9',     color: success, bg: '#D1FAE5' },
+  perdu:    { label: 'Perdu',     color: error,   bg: '#FEF2F2' },
 }
 
 const ETAT_LBL: Record<string, string>  = { neuf: 'Neuf / r\u00e9cent', tres_bon_etat: 'Tr\u00e8s bon \u00e9tat', bon_etat: 'Bon \u00e9tat', rafraichir: '\u00c0 rafra\u00eechir', travaux: 'Travaux importants' }
 const DELAI_LBL: Record<string, string> = { immediat: 'Imm\u00e9diat', '1_3_mois': '1-3 mois', '3_6_mois': '3-6 mois', '6_mois': '+6 mois', pas_decide: 'Pas d\u00e9cid\u00e9' }
 
 const RELANCES = [
-  { label: 'Premiers contacts',       sub: 'Semaines 1-2', emoji: '\ud83d\ude80' },
-  { label: 'R\u00e9cap estimation',   sub: 'J+1',          emoji: '\ud83d\udcca' },
-  { label: 'Relance de suivi',        sub: 'J+3',          emoji: '\u23f0' },
-  { label: 'Rappel personnalis\u00e9', sub: 'J+7',         emoji: '\ud83d\udcde' },
-  { label: 'Suivi J+14',              sub: 'J+14',         emoji: '\ud83d\udc64' },
+  { label: 'Premiers contacts',        sub: 'Semaines 1-2', emoji: '\ud83d\ude80' },
+  { label: 'R\u00e9cap estimation',    sub: 'J+1',          emoji: '\ud83d\udcca' },
+  { label: 'Relance de suivi',         sub: 'J+3',          emoji: '\u23f0' },
+  { label: 'Rappel personnalis\u00e9', sub: 'J+7',          emoji: '\ud83d\udcde' },
+  { label: 'Suivi J+14',               sub: 'J+14',         emoji: '\ud83d\udc64' },
 ]
 
 function badgeSt(color: string, bg: string): CSSProperties {
@@ -94,7 +92,14 @@ function relanceBorderSt(last: boolean): CSSProperties {
   return { ...relanceItemSt, borderBottom: last ? 'none' : '1px solid ' + border }
 }
 
-export default async function LeadDetailPage({ params }: { params: { id: string } }) {
+/* ── Next.js 15 : params est une Promise ── */
+export default async function LeadDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params   // ← await obligatoire en Next.js 15
+
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -111,7 +116,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
   )
 
   const { data: lead } = await serviceClient
-    .from('leads').select('*').eq('id', params.id).single()
+    .from('leads').select('*').eq('id', id).single()
 
   if (!lead) notFound()
 
@@ -121,27 +126,24 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
   const nom      = lead.nom ?? ''
   const statut   = (lead.statut as Statut) ?? 'nouveau'
   const cfg      = STATUT_CONFIG[statut] ?? STATUT_CONFIG.nouveau
-  const surface  = fd.surface  as number | undefined
+  const surface  = fd.surface   as number | undefined
   const nbPieces = fd.nb_pieces as number | undefined
-  const adresse  = fd.adresse  as string | undefined
-  const etat     = fd.etat     as string | undefined
-  const delai    = fd.delai    as string | undefined
+  const adresse  = fd.adresse   as string | undefined
+  const etat     = fd.etat      as string | undefined
+  const delai    = fd.delai     as string | undefined
   const typeBien = fd.type_bien as string | undefined
   const bas      = results?.fourchette_basse
   const haut     = results?.fourchette_haute
   const confiance = results?.confiance as number | undefined
   const hasEstim = bas && haut
   const date     = new Date(lead.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-
   const typeLbl  = typeBien === 'maison' ? 'Maison' : typeBien === 'appartement' ? 'Appartement' : typeBien ?? 'Bien'
 
   return (
     <CrmLayout>
       <div style={pageWrap}>
 
-        <Link href="/leads" style={backLnk}>
-          {'\u2190 Prospects'}
-        </Link>
+        <Link href="/leads" style={backLnk}>{'\u2190 Prospects'}</Link>
 
         <div style={topBar}>
           <div>
@@ -170,7 +172,6 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         )}
 
         <div style={twoCol}>
-          {/* Relances */}
           <div style={card}>
             <div style={cardTitle}>{'\ud83d\udd04 Relances automatiques'}</div>
             {RELANCES.map((r, i) => (
@@ -185,7 +186,6 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
             ))}
           </div>
 
-          {/* Activité */}
           <div style={card}>
             <div style={cardTitle}>{'\u26a1 Activit\u00e9 du prospect'}</div>
             <div style={activityRow}>
@@ -223,7 +223,6 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         )}
 
         <div style={twoCol}>
-          {/* Score */}
           <div style={card}>
             <div style={scoreLabel}>{'Score de fiabilit\u00e9'}</div>
             <div style={scoreWrap}>
@@ -234,7 +233,6 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
             {delai && <div style={delaiTxt}>{'\ud83d\uddd3 Vente souhait\u00e9e : ' + (DELAI_LBL[delai] ?? delai)}</div>}
           </div>
 
-          {/* Statut + Notes */}
           <div style={card}>
             <div style={cardTitle}>{'\ud83d\udcdd Statut & Notes'}</div>
             <div style={fieldLabel}>Statut</div>
