@@ -1,11 +1,11 @@
 'use client'
 
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { Fragment, useRef, useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useVendreStore } from '@/stores/vendreStore'
 import type { VendreAnswers, QuestionId } from '@/stores/vendreStore'
 import type { CSSProperties } from 'react'
-import { Phone, ChevronLeft, Send, Check, MapPin, Edit3 } from 'lucide-react'
+import { Phone, ChevronLeft, Send, Check, MapPin, Edit3, Zap, Map } from 'lucide-react'
 import Link from 'next/link'
 
 /* -------- Tokens -------- */
@@ -33,8 +33,9 @@ const phoneSt: CSSProperties     = { display: 'flex', alignItems: 'center', gap:
 const chatWrap: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
 const rowAl: CSSProperties       = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
 const rowUser: CSSProperties     = { display: 'flex', justifyContent: 'flex-end' }
-const bubbleAl: CSSProperties    = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '84%' }
-const bubbleUser: CSSProperties  = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '80%', minWidth: '60px' }
+/* Fix texte coupé : wordBreak: break-word */
+const bubbleAl: CSSProperties    = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '84%' }
+const bubbleUser: CSSProperties  = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '80%', minWidth: '60px' }
 const tsLeft: CSSProperties      = { fontSize: '10px', color: muted, marginTop: '4px' }
 const tsRight: CSSProperties     = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
 const inlineZone: CSSProperties  = { marginTop: '8px' }
@@ -67,6 +68,12 @@ const rgpdRow: CSSProperties     = { display: 'flex', alignItems: 'flex-start', 
 const rgpdTxt: CSSProperties     = { fontSize: '12px', fontWeight: 400, color: fg, lineHeight: 1.5 }
 const rgpdLinkSt: CSSProperties  = { color: brand, textDecoration: 'underline', cursor: 'pointer' }
 const rgpdErrTxt: CSSProperties  = { fontSize: '11px', fontWeight: 600, color: warning, marginTop: '4px' }
+
+/* Adresse infos cards */
+const infoCardGray: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#f1f5f9', marginTop: '8px' }
+const infoCardYellow: CSSProperties = { display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '12px', backgroundColor: '#fefce8', border: '1px solid #fde047', marginTop: '6px' }
+const infoBadge: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto' }
+const infoTxt: CSSProperties       = { fontSize: '13px', fontWeight: 500, color: fg }
 
 /* Stepper */
 const stepperWrap: CSSProperties = { maxWidth: W, margin: '0 auto', padding: '10px 20px 12px', display: 'flex', alignItems: 'center' }
@@ -141,7 +148,7 @@ function rgpdBoxSt(active: boolean): CSSProperties {
   return { width: '18px', height: '18px', borderRadius: '4px', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brand : white, flexShrink: 0, marginTop: '1px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
 }
 
-/* -------- Stepper -------- */
+/* -------- Stepper — Fragment avec key (fix warning) -------- */
 const STEPS = [
   { n: 1, label: 'Bien',    qs: ['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'] },
   { n: 2, label: 'D\u00e9tails', qs: ['etat','equipements'] },
@@ -159,8 +166,8 @@ function Stepper({ currentQ }: { currentQ: QuestionId }) {
       {STEPS.map((step, i) => {
         const st = step.n < cs ? 'done' : step.n === cs ? 'curr' : 'futu'
         return (
-          <>
-            <div key={step.n} style={stepCol}>
+          <Fragment key={step.n}>
+            <div style={stepCol}>
               <div style={st === 'done' ? dotDone : st === 'curr' ? dotCurr : dotFutu}>
                 {st === 'done' ? <Check size={12} color={white} strokeWidth={3} /> : step.n}
               </div>
@@ -169,7 +176,7 @@ function Stepper({ currentQ }: { currentQ: QuestionId }) {
             {i < STEPS.length - 1 && (
               <div style={connOut}><div style={step.n < cs ? connOn : connOff} /></div>
             )}
-          </>
+          </Fragment>
         )
       })}
     </div>
@@ -391,7 +398,7 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
   question: QuestionId
   answers: VendreAnswers
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
-  onFinalSubmit: (prenom: string, nom: string, tel: string, email: string, civilite: 'monsieur' | 'madame') => void
+  onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void
   onRestart: () => void
 }) {
   if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} />
@@ -421,17 +428,24 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
   return null
 }
 
-/* -------- Adresse + cadastre IGN -------- */
+/* -------- Adresse + DPE + Parcelle -------- */
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 interface Suggestion { label: string; lat: number; lng: number }
+interface AdresseInfos {
+  dpe?: { lettre: string }
+  parcelle?: { id: string; commune: string; surface: number | null }
+}
 
 function AdresseInput({ onAnswer }: {
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
 }) {
-  const [val, setVal]         = useState('')
-  const [suggestions, setSug] = useState<Suggestion[]>([])
-  const [loading, setLoading] = useState(false)
-  const timer                 = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [val, setVal]           = useState('')
+  const [suggestions, setSug]   = useState<Suggestion[]>([])
+  const [loading, setLoading]   = useState(false)
+  const [selected, setSelected] = useState<Suggestion | null>(null)
+  const [infos, setInfos]       = useState<AdresseInfos>({})
+  const [fetching, setFetching] = useState(false)
+  const timer                   = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   async function fetchSug(q: string) {
     if (q.length < 3) { setSug([]); return }
@@ -447,18 +461,27 @@ function AdresseInput({ onAnswer }: {
   async function pickSuggestion(s: Suggestion) {
     setSug([])
     setVal(s.label)
-    onAnswer('lat', s.lat, '')
-    onAnswer('lng', s.lng, '')
+    setSelected(s)
+    setFetching(true)
     try {
-      const res  = await fetch('/api/cadastre?lat=' + s.lat + '&lng=' + s.lng)
+      const res  = await fetch('/api/adresse-infos?lat=' + s.lat + '&lng=' + s.lng + '&q=' + encodeURIComponent(s.label))
       const data = await res.json()
-      if (data.surface) onAnswer('cadastre_surface', data.surface, '')
-    } catch { /* ignore */ }
-    onAnswer('adresse', s.label, s.label)
+      setInfos(data)
+      if (data.parcelle?.surface) onAnswer('cadastre_surface', data.parcelle.surface, '')
+    } catch { setInfos({}) } finally { setFetching(false) }
+  }
+
+  function validate() {
+    if (!selected) return
+    onAnswer('lat', selected.lat, '')
+    onAnswer('lng', selected.lng, '')
+    onAnswer('adresse', selected.label, selected.label)
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     setVal(e.target.value)
+    setSelected(null)
+    setInfos({})
     if (timer.current) clearTimeout(timer.current)
     timer.current = setTimeout(() => fetchSug(e.target.value), 300)
   }
@@ -470,8 +493,10 @@ function AdresseInput({ onAnswer }: {
       <div style={inputRow}>
         <input style={inputSt} type="text" placeholder="Ex : 12 rue de la Paix, Cotignac"
           value={val} onChange={onChange} onKeyDown={(e) => e.key === 'Enter' && submit()} autoFocus autoComplete="off" />
-        <button style={sendBtnSt} onClick={submit}><Send size={16} color={white} /></button>
+        {!selected && <button style={sendBtnSt} onClick={submit}><Send size={16} color={white} /></button>}
       </div>
+
+      {/* Suggestions dropdown */}
       {suggestions.length > 0 && (
         <div style={suggestWrap}>
           {suggestions.map((s, i) => (
@@ -481,7 +506,36 @@ function AdresseInput({ onAnswer }: {
           ))}
         </div>
       )}
+
       {loading && <p style={loadingSt}>Recherche en cours...</p>}
+      {fetching && <p style={loadingSt}>V\u00e9rification des donn\u00e9es officielles...</p>}
+
+      {/* Infos DPE + Parcelle apr\u00e8s s\u00e9lection */}
+      {selected && !fetching && (
+        <div>
+          {infos.dpe && (
+            <div style={infoCardGray}>
+              <Zap size={15} color={brand} />
+              <span style={infoTxt}>DPE trouv\u00e9 : <strong>{infos.dpe.lettre}</strong></span>
+              <span style=...infoBadge, backgroundColor: '#dbeafe', color: brand>V\u00e9rifi\u00e9 ADEME</span>
+            </div>
+          )}
+          {infos.parcelle && (
+            <div style={infoCardYellow}>
+              <Map size={15} color='#ca8a04' />
+              <span style={infoTxt}>
+                Parcelle <strong>{infos.parcelle.id}</strong>
+                {infos.parcelle.commune ? ' \u00b7 ' + infos.parcelle.commune : ''}
+                {infos.parcelle.surface ? ' \u00b7 ' + infos.parcelle.surface + ' m\u00b2' : ''}
+              </span>
+              <span style=...infoBadge, backgroundColor: '#fef9c3', color: '#854d0e'>IGN</span>
+            </div>
+          )}
+          <button style={validateBtn} onClick={validate}>
+            <Send size={14} /> Valider cette adresse
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -567,7 +621,7 @@ function RecapInput({ onConfirm, onRestart }: { onConfirm: () => void; onRestart
   )
 }
 
-/* -------- Coordonnees civilite + RGPD -------- */
+/* -------- Coordonnees -------- */
 function Coordonnees({ onFinalSubmit }: {
   onFinalSubmit: (p: string, n: string, t: string, e: string, c: 'monsieur' | 'madame') => void
 }) {
@@ -595,19 +649,16 @@ function Coordonnees({ onFinalSubmit }: {
           <div style={coordSub}>Recevez votre estimation personnalis\u00e9e</div>
         </div>
       </div>
-
       <div style={civilRow}>
         <button style={civilBtnSt(civilite === 'monsieur')} onClick={() => setCiv('monsieur')}>Monsieur</button>
         <button style={civilBtnSt(civilite === 'madame')} onClick={() => setCiv('madame')}>Madame</button>
       </div>
-
       <div style={coordGrid}>
         <input style={inputFull} placeholder="Pr\u00e9nom *" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
         <input style={inputFull} placeholder="Nom *" value={nom} onChange={(e) => setNom(e.target.value)} />
       </div>
       <input style={inputFull} type="email" placeholder="Email *" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input style={inputFull} type="tel" placeholder="T\u00e9l\u00e9phone *" value={tel} onChange={(e) => setTel(e.target.value)} />
-
       <div style={rgpdRowSt(rgpd, showErr && !rgpd)} onClick={() => { setRgpd(!rgpd); setShowErr(false) }}>
         <div style={rgpdBoxSt(rgpd)}>{rgpd && <Check size={11} color={white} strokeWidth={3} />}</div>
         <div>
@@ -618,7 +669,6 @@ function Coordonnees({ onFinalSubmit }: {
           {showErr && !rgpd && <div style={rgpdErrTxt}>Requis pour continuer</div>}
         </div>
       </div>
-
       <button style={valid && rgpd ? validateBtn : validateOff} onClick={submit}>
         Voir mon estimation <Send size={14} />
       </button>
@@ -659,10 +709,7 @@ function CalculLoading({ onComplete }: { onComplete: () => void }) {
           return (
             <div key={i} style={calculStepRow}>
               <div style={stepIconSt(done, active)}>
-                {done
-                  ? <Check size={11} color={white} strokeWidth={3} />
-                  : active ? <div style={spinnerDotSt} /> : null
-                }
+                {done ? <Check size={11} color={white} strokeWidth={3} /> : active ? <div style={spinnerDotSt} /> : null}
               </div>
               <span style={active || done ? calculStepTxtOn : calculStepTxtOff}>{step}</span>
             </div>
@@ -681,7 +728,6 @@ function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: {
   onComplete: (chosen: number) => void
 }) {
   const [chosen, setChosen] = useState<'user' | 'cadastre'>('cadastre')
-
   return (
     <div style={verifPage}>
       <header style={verifNav}>
@@ -691,10 +737,7 @@ function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: {
       <div style={verifWrap}>
         <div style={verifIconSt}>\ud83d\udee1\ufe0f</div>
         <div style={verifTitle}>V\u00e9rification des informations</div>
-        <div style={verifSub}>
-          Nous avons r\u00e9cup\u00e9r\u00e9 des donn\u00e9es officielles qui diff\u00e8rent de certaines informations que vous avez indiqu\u00e9es.
-        </div>
-
+        <div style={verifSub}>Nous avons r\u00e9cup\u00e9r\u00e9 des donn\u00e9es officielles qui diff\u00e8rent de certaines informations que vous avez indiqu\u00e9es.</div>
         <div style={verifCard}>
           <div style={verifCardTitle}>Surface terrain</div>
           <div style={chosen === 'user' ? verifRadioOn : verifRadioOff} onClick={() => setChosen('user')}>
@@ -707,11 +750,7 @@ function VerificationDonnees({ userSurface, cadastreSurface, onComplete }: {
             <div style={verifBadge}>Recommand\u00e9</div>
           </div>
         </div>
-
-        <div style={verifNote}>
-          Les donn\u00e9es officielles proviennent de sources gouvernementales et sont g\u00e9n\u00e9ralement plus pr\u00e9cises.
-        </div>
-
+        <div style={verifNote}>Les donn\u00e9es officielles proviennent de sources gouvernementales et sont g\u00e9n\u00e9ralement plus pr\u00e9cises.</div>
         <button style={validateBtn} onClick={() => onComplete(chosen === 'cadastre' ? cadastreSurface : userSurface)}>
           Valider et voir mon estimation <Send size={14} />
         </button>
