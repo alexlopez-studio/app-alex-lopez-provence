@@ -4,8 +4,8 @@ import { cookies } from 'next/headers'
 import CrmLayout from '@/components/crm/CrmLayout'
 import type { CSSProperties } from 'react'
 
-const fg     = '#0F172A'
-const muted  = '#64748B'
+const fg   = '#0F172A'
+const muted = '#64748B'
 
 const pageWrap: CSSProperties  = { padding: '32px' }
 const pageTitle: CSSProperties = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em', marginBottom: '6px' }
@@ -16,7 +16,7 @@ export default async function RelancesPage() {
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { get: (name) => cookieStore.get(name)?.value } }
+    { cookies: { get: (name: string) => cookieStore.get(name)?.value } }
   )
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) redirect('/auth/login')
@@ -25,7 +25,7 @@ export default async function RelancesPage() {
     <CrmLayout>
       <div style={pageWrap}>
         <h1 style={pageTitle}>Relances</h1>
-        <p style={pageSub}>{'Planning des relances à effectuer — en cours de développement.'}</p>
+        <p style={pageSub}>{'Planning des relances \u00e0 effectuer \u2014 en cours de d\u00e9veloppement.'}</p>
       </div>
     </CrmLayout>
   )
