@@ -1,10 +1,11 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useVendreStore } from '@/stores/vendreStore'
 import type { VendreAnswers, QuestionId } from '@/stores/vendreStore'
 import type { CSSProperties } from 'react'
-import { Phone, ChevronLeft, Send, Home, FileText, Target, User, MapPin } from 'lucide-react'
+import { Phone, ChevronLeft, Send, Check, MapPin } from 'lucide-react'
 import Link from 'next/link'
 
 /* ─── Tokens ─── */
@@ -15,58 +16,107 @@ const muted      = '#64748B'
 const border     = '#E2E8F0'
 const surface    = '#F8FAFC'
 const white      = '#ffffff'
-const CONTENT_WIDTH = '700px'
+const W          = '680px'
 
 /* ─── Styles statiques ─── */
-const pageStyle: CSSProperties      = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
-const navStyle: CSSProperties       = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: `1px solid ${border}` }
-const navTopStyle: CSSProperties    = { maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
-const navLeftStyle: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px' }
-const avatarStyle: CSSProperties    = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
-const navNameStyle: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg }
-const navSubStyle: CSSProperties    = { fontSize: '11px', color: muted }
-const backStyle: CSSProperties      = { display: 'flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, color: muted, textDecoration: 'none' }
-const phoneStyle: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: fg, textDecoration: 'none' }
-const progressOuter: CSSProperties  = { backgroundColor: border, height: '3px' }
-const progressInner: CSSProperties  = { maxWidth: CONTENT_WIDTH, margin: '0 auto', height: '3px', position: 'relative' }
-const tabsWrap: CSSProperties       = { maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
-const pctStyle: CSSProperties       = { fontSize: '11px', fontWeight: 700, color: brand }
-const chatWrap: CSSProperties       = { maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: '120px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
-const rowAl: CSSProperties          = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
-const rowUser: CSSProperties        = { display: 'flex', justifyContent: 'flex-end' }
-const bubbleAl: CSSProperties       = { backgroundColor: white, border: `1px solid ${border}`, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-word', maxWidth: '85%' }
-const bubbleUser: CSSProperties     = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, wordBreak: 'break-word', maxWidth: '85%' }
-const tsLeft: CSSProperties         = { fontSize: '10px', color: muted, marginTop: '4px' }
-const tsRight: CSSProperties        = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
-const inlineZone: CSSProperties     = { marginTop: '8px' }
-const inputRow: CSSProperties       = { display: 'flex', gap: '10px', alignItems: 'center' }
-const inputStyle: CSSProperties     = { flex: 1, fontSize: '14px', color: fg, border: `1.5px solid ${border}`, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
-const inputFull: CSSProperties      = { width: '100%', fontSize: '14px', color: fg, border: `1.5px solid ${border}`, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
-const sendBtn: CSSProperties        = { width: '42px', height: '42px', borderRadius: '12px', backgroundColor: brand, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
-const suggestWrap: CSSProperties    = { backgroundColor: white, border: `1px solid ${border}`, borderRadius: '12px', overflow: 'hidden', marginTop: '6px' }
-const suggestItem: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '8px', padding: '11px 14px', fontSize: '13px', color: fg, cursor: 'pointer' }
-const loadingStyle: CSSProperties   = { fontSize: '11px', color: muted, marginTop: '6px' }
-const validateBtn: CSSProperties    = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: brand, border: 'none', color: white, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
-const validateOff: CSSProperties    = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: border, border: 'none', color: muted, fontSize: '14px', fontWeight: 600, cursor: 'not-allowed', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
-const sliderWrap: CSSProperties     = { backgroundColor: white, borderRadius: '16px', border: `1px solid ${border}`, padding: '20px' }
-const sliderValRow: CSSProperties   = { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }
-const sliderValBox: CSSProperties   = { border: `1.5px solid ${border}`, borderRadius: '10px', padding: '8px 16px', fontSize: '18px', fontWeight: 700, color: fg, minWidth: '80px', textAlign: 'center' }
-const sliderUnit: CSSProperties     = { fontSize: '14px', fontWeight: 500, color: muted }
-const sliderLabels: CSSProperties   = { display: 'flex', justifyContent: 'space-between', marginTop: '8px' }
-const sliderLbl: CSSProperties      = { fontSize: '11px', color: muted }
-const sliderInp: CSSProperties      = { width: '100%', accentColor: brand } as CSSProperties
-const multiGrid: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
-const emojiSt: CSSProperties        = { fontSize: '20px' }
-const coordGrid: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
-const coordWrap: CSSProperties      = { display: 'flex', flexDirection: 'column', gap: '10px' }
+const pageStyle: CSSProperties     = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
+const navStyle: CSSProperties      = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: '1px solid ' + border }
+const navTopStyle: CSSProperties   = { maxWidth: W, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
+const navLeftStyle: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '10px' }
+const avatarStyle: CSSProperties   = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
+const navNameSt: CSSProperties     = { fontSize: '14px', fontWeight: 700, color: fg }
+const navSubSt: CSSProperties      = { fontSize: '11px', color: muted }
+const backSt: CSSProperties        = { display: 'flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, color: muted, textDecoration: 'none' }
+const phoneSt: CSSProperties       = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: fg, textDecoration: 'none' }
+const chatWrap: CSSProperties      = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
+const rowAl: CSSProperties         = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
+const rowUser: CSSProperties       = { display: 'flex', justifyContent: 'flex-end' }
+
+/* Fix bulles — overflowWrap + minWidth */
+const bubbleAl: CSSProperties      = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '80%' }
+const bubbleUser: CSSProperties    = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '80%', minWidth: '60px' }
+const tsLeft: CSSProperties        = { fontSize: '10px', color: muted, marginTop: '4px' }
+const tsRight: CSSProperties       = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
+const inlineZone: CSSProperties    = { marginTop: '8px' }
+const inputRow: CSSProperties      = { display: 'flex', gap: '10px', alignItems: 'center' }
+const inputSt: CSSProperties       = { flex: 1, fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
+const inputFull: CSSProperties     = { width: '100%', fontSize: '14px', color: fg, border: '1.5px solid ' + border, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: white, boxSizing: 'border-box' }
+const sendBtnSt: CSSProperties     = { width: '42px', height: '42px', borderRadius: '12px', backgroundColor: brand, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
+const suggestWrap: CSSProperties   = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '12px', overflow: 'hidden', marginTop: '6px' }
+const suggestItem: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '8px', padding: '11px 14px', fontSize: '13px', color: fg, cursor: 'pointer' }
+const loadingSt: CSSProperties     = { fontSize: '11px', color: muted, marginTop: '6px' }
+const validateBtn: CSSProperties   = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: brand, border: 'none', color: white, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
+const validateOff: CSSProperties   = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: border, border: 'none', color: muted, fontSize: '14px', fontWeight: 600, cursor: 'not-allowed', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
+const sliderWrap: CSSProperties    = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '20px' }
+const sliderValRow: CSSProperties  = { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }
+const sliderValBox: CSSProperties  = { border: '1.5px solid ' + border, borderRadius: '10px', padding: '8px 16px', fontSize: '18px', fontWeight: 700, color: fg, minWidth: '80px', textAlign: 'center' }
+const sliderUnit: CSSProperties    = { fontSize: '14px', fontWeight: 500, color: muted }
+const sliderLabels: CSSProperties  = { display: 'flex', justifyContent: 'space-between', marginTop: '8px' }
+const sliderLbl: CSSProperties     = { fontSize: '11px', color: muted }
+const sliderInp: CSSProperties     = { width: '100%', accentColor: brand } as CSSProperties
+const multiGrid: CSSProperties     = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const emojiSt: CSSProperties       = { fontSize: '20px' }
+const coordGrid: CSSProperties     = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const coordWrap: CSSProperties     = { display: 'flex', flexDirection: 'column', gap: '10px' }
+
+/* ─── Stepper connecté ─── */
+const stepperWrap: CSSProperties   = { maxWidth: W, margin: '0 auto', padding: '10px 20px 12px', display: 'flex', alignItems: 'center' }
+const stepLabelSt: CSSProperties   = { fontSize: '10px', fontWeight: 600, marginTop: '5px', textAlign: 'center' }
+
+const STEPS = [
+  { n: 1, label: 'Bien',    questions: ['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'] },
+  { n: 2, label: 'Détails', questions: ['etat','equipements'] },
+  { n: 3, label: 'Projet',  questions: ['delai'] },
+  { n: 4, label: 'Contact', questions: ['coordonnees','done'] },
+]
+
+function getCurrentStep(q: QuestionId): number {
+  for (const s of STEPS) {
+    if (s.questions.includes(q)) return s.n
+  }
+  return 1
+}
+
+function StepDot({ n, status }: { n: number; status: 'done' | 'current' | 'future' }) {
+  const base: CSSProperties = {
+    width: '28px', height: '28px', borderRadius: '999px', flexShrink: 0,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    fontSize: '11px', fontWeight: 700, transition: 'all 0.3s ease',
+  }
+  if (status === 'done')    return <div style=...base, backgroundColor: brand, color: white, border: '2px solid ' + brand><Check size={12} color={white} strokeWidth={3} /></div>
+  if (status === 'current') return <div style=...base, backgroundColor: brandLight, color: brand, border: '2px solid ' + brand>{n}</div>
+  return <div style=...base, backgroundColor: white, color: muted, border: '2px solid ' + border>{n}</div>
+}
+
+function StepConnector({ filled }: { filled: boolean }) {
+  const outer: CSSProperties = { flex: 1, height: '3px', backgroundColor: border, borderRadius: '999px', overflow: 'hidden', margin: '0 4px', marginBottom: '15px' }
+  const inner: CSSProperties = { height: '100%', width: filled ? '100%' : '0%', backgroundColor: brand, transition: 'width 0.4s ease', borderRadius: '999px' }
+  return <div style={outer}><div style={inner} /></div>
+}
+
+function Stepper({ currentQ }: { currentQ: QuestionId }) {
+  const currentStep = getCurrentStep(currentQ)
+  return (
+    <div style={stepperWrap}>
+      {STEPS.map((step, i) => {
+        const status = step.n < currentStep ? 'done' : step.n === currentStep ? 'current' : 'future'
+        return (
+          <>
+            <div key={step.n} style=display:'flex',flexDirection:'column',alignItems:'center'>
+              <StepDot n={step.n} status={status} />
+              <span style=...stepLabelSt, color: status === 'future' ? muted : status === 'current' ? brand : fg, fontWeight: status === 'current' ? 700 : 500>
+                {step.label}
+              </span>
+            </div>
+            {i < STEPS.length - 1 && <StepConnector filled={step.n < currentStep} />}
+          </>
+        )
+      })}
+    </div>
+  )
+}
 
 /* ─── Styles dynamiques ─── */
-function fillStyle(pct: number): CSSProperties {
-  return { position: 'absolute', top: 0, left: 0, height: '100%', width: pct + '%', backgroundColor: brand, transition: 'width 0.4s ease' }
-}
-function tabSt(active: boolean): CSSProperties {
-  return { display: 'flex', alignItems: 'center', gap: '5px', padding: '10px 4px', fontSize: '11px', fontWeight: 600, color: active ? brand : muted, borderBottom: active ? '2px solid ' + brand : '2px solid transparent' }
-}
 function cardSt(active: boolean): CSSProperties {
   return { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '14px 10px', borderRadius: '14px', cursor: 'pointer', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brandLight : white, fontSize: '13px', fontWeight: 600, color: active ? brand : fg, textAlign: 'center', width: '100%' }
 }
@@ -120,10 +170,6 @@ function getNext(q: QuestionId, a: VendreAnswers): QuestionId {
     default:                 return 'done'
   }
 }
-function getPct(q: QuestionId): number {
-  const m: Partial<Record<QuestionId, number>> = { adresse:5, type_bien:15, sous_type_maison:22, surface:30, surface_terrain:38, nb_pieces:45, etat:55, equipements:70, delai:85, coordonnees:95, done:100 }
-  return m[q] ?? 0
-}
 function getMsg(q: QuestionId, a: VendreAnswers): string {
   switch (q) {
     case 'type_bien':        return "Parfait, je localise votre bien ! Quel type de bien souhaitez-vous faire estimer ?"
@@ -135,34 +181,26 @@ function getMsg(q: QuestionId, a: VendreAnswers): string {
     case 'equipements':      return "Très bien ! Quels équipements et atouts possède votre bien ?"
     case 'delai':            return "Compris ! Dans quel délai souhaitez-vous vendre votre bien ?"
     case 'coordonnees':      return "Parfait ! Pour finaliser votre estimation, j'ai besoin de vos coordonnées."
-    case 'done':             return "Merci " + (a.prenom || '') + " ! 🎉 Je prépare votre estimation personnalisée. Vous recevrez vos résultats par email sous quelques instants."
     default:                 return ''
   }
 }
-function getSection(q: QuestionId): 'bien' | 'details' | 'projet' | 'contact' {
-  if (['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'].includes(q)) return 'bien'
-  if (['etat','equipements'].includes(q)) return 'details'
-  if (q === 'delai') return 'projet'
-  return 'contact'
-}
 function ts() { return new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) }
 
-/* ─── Avatar ─── */
 function Avatar() { return <div style={avatarStyle}>AL</div> }
 
 /* ─── Page ─── */
 export default function VendrePage() {
-  const { messages, currentQuestion, answers, progress, addMessage, setAnswer, setQuestion, setProgress } = useVendreStore()
+  const router = useRouter()
+  const { messages, currentQuestion, answers, addMessage, setAnswer, setQuestion } = useVendreStore()
   const bottomRef = useRef<HTMLDivElement>(null)
-  const section = getSection(currentQuestion)
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, currentQuestion])
 
+  /* Handler générique — une réponse à la fois */
   function handleAnswer(key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) {
     setAnswer(key, value)
     if (display) addMessage({ from: 'user', text: display, timestamp: ts() })
     const next = getNext(currentQuestion, { ...answers, [key]: value })
-    setProgress(getPct(next))
     setTimeout(() => {
       const msg = getMsg(next, { ...answers, [key]: value })
       if (msg) addMessage({ from: 'al', text: msg, timestamp: ts() })
@@ -170,50 +208,43 @@ export default function VendrePage() {
     }, 350)
   }
 
-  const tabs = [
-    { id: 'bien',    label: 'Bien',    Icon: Home },
-    { id: 'details', label: 'Détails', Icon: FileText },
-    { id: 'projet',  label: 'Projet',  Icon: Target },
-    { id: 'contact', label: 'Contact', Icon: User },
-  ]
+  /* Handler coordonnées — soumission unique, pas de répétition */
+  function handleFinalSubmit(prenom: string, nom: string, tel: string, email: string) {
+    setAnswer('prenom', prenom)
+    setAnswer('nom', nom)
+    setAnswer('telephone', tel)
+    setAnswer('email', email)
+    addMessage({ from: 'user', text: prenom + ' ' + nom, timestamp: ts() })
+    const token = crypto.randomUUID()
+    /* Envoi en arrière-plan vers l'API (lead + email) */
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...answers, prenom, nom, telephone: tel, email, token, type: 'vendre' }),
+    }).catch(() => null)
+    /* Redirection immédiate vers la page de résultats */
+    router.push('/resultats/' + token)
+  }
 
   return (
     <div style={pageStyle}>
       <header style={navStyle}>
         <div style={navTopStyle}>
           <div style={navLeftStyle}>
-            <Link href="/" style={backStyle}><ChevronLeft size={14} /></Link>
+            <Link href="/" style={backSt}><ChevronLeft size={14} /></Link>
             <Avatar />
             <div>
-              <div style={navNameStyle}>Alex Lopez</div>
-              <div style={navSubStyle}>Mandataire IAD · Provence Verte</div>
+              <div style={navNameSt}>Alex Lopez</div>
+              <div style={navSubSt}>Mandataire IAD · Provence Verte</div>
             </div>
           </div>
-          <a href="tel:+33613180168" style={phoneStyle}>
+          <a href="tel:+33613180168" style={phoneSt}>
             <Phone size={13} color={brand} />
             06 13 18 01 68
           </a>
         </div>
-
-        <div style={progressOuter}>
-          <div style={progressInner}>
-            <div style={fillStyle(progress)} />
-          </div>
-        </div>
-
-        <div style={tabsWrap}>
-          {tabs.map((tab) => {
-            const Icon = tab.Icon
-            return (
-              <div key={tab.id} style={tabSt(section === tab.id)}>
-                <Icon size={13} />{tab.label}
-              </div>
-            )
-          })}
-          <div style={tabSt(false)}>
-            <span style={pctStyle}>{progress}%</span>
-          </div>
-        </div>
+        {/* Stepper connecté = progrès + étapes fusionnés */}
+        <Stepper currentQ={currentQuestion} />
       </header>
 
       <div style={chatWrap}>
@@ -240,7 +271,7 @@ export default function VendrePage() {
 
         {currentQuestion !== 'done' && (
           <div style={inlineZone}>
-            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} />
+            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} />
           </div>
         )}
 
@@ -251,10 +282,11 @@ export default function VendrePage() {
 }
 
 /* ─── Routing inputs ─── */
-function InputZone({ question, answers, onAnswer }: {
+function InputZone({ question, answers, onAnswer, onFinalSubmit }: {
   question: QuestionId
   answers: VendreAnswers
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
+  onFinalSubmit: (prenom: string, nom: string, tel: string, email: string) => void
 }) {
   if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} />
   if (question === 'type_bien') return <Cards options={TYPE_BIEN} cols={2} onSelect={(v, l) => onAnswer('type_bien', v, l)} />
@@ -279,29 +311,27 @@ function InputZone({ question, answers, onAnswer }: {
     <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun équipement')} />
   )
   if (question === 'delai') return <Cards options={DELAI} cols={2} onSelect={(v, l) => onAnswer('delai', v, l)} />
-  if (question === 'coordonnees') return <Coordonnees onAnswer={onAnswer} />
+  if (question === 'coordonnees') return <Coordonnees onFinalSubmit={onFinalSubmit} />
   return null
 }
 
-/* ─── Adresse — API adresse.data.gouv.fr (gratuite, sans clé) ─── */
+/* ─── Adresse — api-adresse.data.gouv.fr ─── */
 interface Suggestion { label: string; lat: number; lng: number }
-
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 
 function AdresseInput({ onAnswer }: {
   onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
 }) {
-  const [val, setVal]             = useState('')
-  const [suggestions, setSug]     = useState<Suggestion[]>([])
-  const [loading, setLoading]     = useState(false)
-  const timer                     = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [val, setVal]         = useState('')
+  const [suggestions, setSug] = useState<Suggestion[]>([])
+  const [loading, setLoading] = useState(false)
+  const timer                 = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   async function fetchSug(q: string) {
     if (q.length < 3) { setSug([]); return }
     setLoading(true)
     try {
-      const url = API_ADRESSE + '?q=' + encodeURIComponent(q) + '&limit=5'
-      const res  = await fetch(url)
+      const res  = await fetch(API_ADRESSE + '?q=' + encodeURIComponent(q) + '&limit=5')
       const data = await res.json()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setSug(data.features.map((f: any) => ({ label: f.properties.label, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] })))
@@ -321,9 +351,9 @@ function AdresseInput({ onAnswer }: {
   return (
     <div>
       <div style={inputRow}>
-        <input style={inputStyle} type="text" placeholder="Ex : 12 rue de la Paix, Cotignac"
+        <input style={inputSt} type="text" placeholder="Ex : 12 rue de la Paix, Cotignac"
           value={val} onChange={onChange} onKeyDown={(e) => e.key === 'Enter' && submit()} autoFocus autoComplete="off" />
-        <button style={sendBtn} onClick={submit}><Send size={16} color={white} /></button>
+        <button style={sendBtnSt} onClick={submit}><Send size={16} color={white} /></button>
       </div>
       {suggestions.length > 0 && (
         <div style={suggestWrap}>
@@ -335,7 +365,7 @@ function AdresseInput({ onAnswer }: {
           ))}
         </div>
       )}
-      {loading && <p style={loadingStyle}>Recherche en cours...</p>}
+      {loading && <p style={loadingSt}>Recherche en cours...</p>}
     </div>
   )
 }
@@ -382,14 +412,13 @@ function Slider({ unit, min, max, def, onValidate }: { unit: string; min: number
 
 /* ─── Multi-select ─── */
 function MultiSelect({ options, onValidate }: { options: string[]; onValidate: (s: string[]) => void }) {
-  const [selected, setSel] = useState<string[]>([])
+  const [sel, setSel] = useState<string[]>([])
   function toggle(o: string) { setSel((p) => p.includes(o) ? p.filter((x) => x !== o) : [...p, o]) }
-  const label = selected.length === 0 ? 'Aucun équipement' : 'Valider (' + selected.length + ' sélectionné' + (selected.length > 1 ? 's' : '') + ')'
   return (
     <div>
       <div style={multiGrid}>
         {options.map((o) => {
-          const active = selected.includes(o)
+          const active = sel.includes(o)
           return (
             <div key={o} style={multiRowSt(active)} onClick={() => toggle(o)}>
               <div style={checkSt(active)} />
@@ -398,30 +427,22 @@ function MultiSelect({ options, onValidate }: { options: string[]; onValidate: (
           )
         })}
       </div>
-      <button style={validateBtn} onClick={() => onValidate(selected)}>
-        {label} <Send size={14} />
+      <button style={validateBtn} onClick={() => onValidate(sel)}>
+        {sel.length === 0 ? 'Aucun équipement' : 'Valider (' + sel.length + ' sélectionné' + (sel.length > 1 ? 's' : '') + ')'} <Send size={14} />
       </button>
     </div>
   )
 }
 
-/* ─── Coordonnées ─── */
-function Coordonnees({ onAnswer }: {
-  onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
+/* ─── Coordonnées — soumission unique (fix répétitions) ─── */
+function Coordonnees({ onFinalSubmit }: {
+  onFinalSubmit: (prenom: string, nom: string, tel: string, email: string) => void
 }) {
   const [prenom, setPrenom] = useState('')
   const [nom, setNom]       = useState('')
   const [tel, setTel]       = useState('')
   const [email, setEmail]   = useState('')
   const valid = !!(prenom.trim() && nom.trim() && tel.trim() && email.trim())
-
-  function submit() {
-    if (!valid) return
-    onAnswer('prenom', prenom.trim(), '')
-    onAnswer('nom', nom.trim(), '')
-    onAnswer('telephone', tel.trim(), '')
-    onAnswer('email', email.trim(), prenom + ' ' + nom)
-  }
 
   return (
     <div style={coordWrap}>
@@ -431,7 +452,7 @@ function Coordonnees({ onAnswer }: {
       </div>
       <input style={inputFull} type="tel" placeholder="Téléphone" value={tel} onChange={(e) => setTel(e.target.value)} />
       <input style={inputFull} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <button style={valid ? validateBtn : validateOff} onClick={submit} disabled={!valid}>
+      <button style={valid ? validateBtn : validateOff} onClick={() => valid && onFinalSubmit(prenom.trim(), nom.trim(), tel.trim(), email.trim())} disabled={!valid}>
         Obtenir mon estimation <Send size={14} />
       </button>
     </div>
