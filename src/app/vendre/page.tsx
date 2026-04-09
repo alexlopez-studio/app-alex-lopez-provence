@@ -33,8 +33,9 @@ const restartBtnSt: CSSProperties = { display: 'flex', alignItems: 'center', gap
 const chatWrap: CSSProperties     = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
 const rowAl: CSSProperties        = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
 const rowUser: CSSProperties      = { display: 'flex', justifyContent: 'flex-end' }
-const bubbleAl: CSSProperties     = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '84%' }
-const bubbleUser: CSSProperties   = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'break-word', wordBreak: 'break-word', maxWidth: '80%', minWidth: '60px' }
+const bubbleAl: CSSProperties     = { backgroundColor: white, border: '1px solid ' + border, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', fontSize: '14px', color: fg, lineHeight: 1.65, whiteSpace: 'pre-wrap', overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '84%' }
+/* Fix textes coupés : maxWidth 95% + wordBreak normal */
+const bubbleUser: CSSProperties   = { backgroundColor: brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', fontSize: '14px', fontWeight: 500, color: white, lineHeight: 1.5, overflowWrap: 'normal', wordBreak: 'normal', maxWidth: '95%', minWidth: '60px' }
 const tsLeft: CSSProperties       = { fontSize: '10px', color: muted, marginTop: '4px' }
 const tsRight: CSSProperties      = { fontSize: '10px', color: muted, marginTop: '4px', textAlign: 'right' }
 const inlineZone: CSSProperties   = { marginTop: '8px' }
@@ -284,16 +285,10 @@ export default function VendrePage() {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, currentQuestion])
 
-  /*
-   * FIX PRINCIPAL : si display est vide, on set silencieusement la réponse
-   * SANS déclencher de changement de question ni de message.
-   * Cela évite que onAnswer('lat', ..., '') ou onAnswer('cadastre_surface', ..., '')
-   * fasse avancer le flow prématurément.
-   */
   function handleAnswer(key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) {
     const newA = { ...answers, [key]: value }
     setAnswer(key, value)
-    if (!display) return  // réponse silencieuse — ne pas avancer le flow
+    if (!display) return
     addMessage({ from: 'user', text: display, timestamp: ts() })
     const next = getNext(currentQuestion, newA)
     setTimeout(() => {
@@ -389,7 +384,6 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart, onAl
   if (question === 'etat') return <Cards options={ETAT} cols={2} onSelect={(v, l) => onAnswer('etat', v, l)} />
   if (question === 'equipements') return <MultiSelect options={EQUIPEMENTS} onValidate={(sel) => onAnswer('equipements', sel, sel.length ? sel.join(', ') : 'Aucun équipement')} />
   if (question === 'delai') return <Cards options={DELAI} cols={2} onSelect={(v, l) => onAnswer('delai', v, l)} />
-  /* Récapitulatif : display non-vide pour que handleAnswer avance le flow */
   if (question === 'recapitulatif') return <RecapInput onConfirm={() => onAnswer('recapitulatif' as keyof VendreAnswers, true, "C'est correct ✅")} onRestart={onRestart} />
   if (question === 'coordonnees') return <Coordonnees onFinalSubmit={onFinalSubmit} />
   return null
@@ -428,19 +422,15 @@ function AdresseInput({ onAnswer, onAlMessage }: {
       const res  = await fetch('/api/adresse-infos?lat=' + s.lat + '&lng=' + s.lng + '&q=' + encodeURIComponent(s.label))
       const data = await res.json()
       setInfos(data)
-      /* Silencieux — handleAnswer ne déclenche pas le flow si display='' */
       if (data.parcelle?.surface) onAnswer('cadastre_surface', data.parcelle.surface, '')
     } catch { setInfos({}) } finally { setFetching(false) }
   }
 
   function validate(currentInfos: AdresseInfos) {
     if (!selected) return
-    /* Réponses silencieuses — ne déclenchent PAS le flow (display='') */
     onAnswer('lat', selected.lat, '')
     onAnswer('lng', selected.lng, '')
-    /* Réponse principale — affiche la bulle utilisateur ET avance le flow */
     onAnswer('adresse', selected.label, selected.label)
-    /* Injection DPE/cadastre comme message AL persistant */
     if (currentInfos.dpe || currentInfos.parcelle) {
       const lines: string[] = ["Voici ce que j'ai trouvé pour cette adresse :"]
       if (currentInfos.dpe) lines.push('⚡ DPE : ' + currentInfos.dpe.lettre + ' (vérifié ADEME)')
@@ -450,7 +440,6 @@ function AdresseInput({ onAnswer, onAlMessage }: {
         if (currentInfos.parcelle.surface) p += ' · ' + currentInfos.parcelle.surface + ' m²'
         lines.push(p)
       }
-      /* 50ms : après la bulle utilisateur (t=0) mais avant la question suivante (t=350ms) */
       setTimeout(() => onAlMessage(lines.join('\n')), 50)
     }
   }
