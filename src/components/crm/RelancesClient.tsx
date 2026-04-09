@@ -39,37 +39,37 @@ function groupRelances(items: RelanceItem[]) {
     else if (d < nextWeek)                  week.push(r)
     else                                    later.push(r)
   }
-  const groups: { label: string; color: string; items: RelanceItem[] }[] = []
-  if (late.length)  groups.push({ label: '⚠️ En retard',     color: error,  items: late  })
-  if (today.length) groups.push({ label: "📅 Aujourd'hui",   color: brand,  items: today })
-  if (week.length)  groups.push({ label: '📆 Cette semaine', color: fg,     items: week  })
-  if (later.length) groups.push({ label: '🗓 Plus tard',     color: muted,  items: later })
+  const groups: { label: string; items: RelanceItem[] }[] = []
+  if (late.length)  groups.push({ label: '⚠️ En retard',     items: late  })
+  if (today.length) groups.push({ label: "📅 Aujourd'hui",   items: today })
+  if (week.length)  groups.push({ label: '📆 Cette semaine', items: week  })
+  if (later.length) groups.push({ label: '🗓 Plus tard',     items: later })
   return groups
 }
 
-const pageWrap: CSSProperties    = { padding: '32px' }
-const topRow: CSSProperties      = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }
-const titleWrap: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px' }
-const pageTitle: CSSProperties   = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
-const totalBadge: CSSProperties  = { fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '3px 10px' }
-const toggleBtn: CSSProperties   = { fontSize: '12px', fontWeight: 500, color: muted, backgroundColor: white, border: '1px solid ' + border, borderRadius: '999px', padding: '7px 14px', cursor: 'pointer' }
-const groupLbl: CSSProperties    = { fontSize: '11px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.14em', marginBottom: '10px', marginTop: '24px', color: muted }
-const groupCard: CSSProperties   = { backgroundColor: white, borderRadius: '14px', border: '1px solid ' + border, overflow: 'hidden', marginBottom: '8px' }
-const rowSt: CSSProperties       = { display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 18px', borderBottom: '1px solid ' + border }
-const rowLast: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 18px' }
-const iconBox: CSSProperties     = { width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }
-const iconDone: CSSProperties    = { width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#F0FDF4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }
-const rowMain: CSSProperties     = { flex: 1, minWidth: 0 }
-const rowTitle: CSSProperties    = { fontSize: '13px', fontWeight: 600, color: fg }
+const pageWrap: CSSProperties     = { padding: '32px' }
+const topRow: CSSProperties       = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }
+const titleWrap: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '10px' }
+const pageTitle: CSSProperties    = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
+const totalBadge: CSSProperties   = { fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '3px 10px' }
+const toggleBtn: CSSProperties    = { fontSize: '12px', fontWeight: 500, color: muted, backgroundColor: white, border: '1px solid ' + border, borderRadius: '999px', padding: '7px 14px', cursor: 'pointer' }
+const groupLbl: CSSProperties     = { fontSize: '11px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.14em', color: muted, marginBottom: '10px', marginTop: '24px' }
+const groupCard: CSSProperties    = { backgroundColor: white, borderRadius: '14px', border: '1px solid ' + border, overflow: 'hidden' }
+const rowSt: CSSProperties        = { display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 18px', borderBottom: '1px solid ' + border }
+const rowLast: CSSProperties      = { display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 18px' }
+const iconBox: CSSProperties      = { width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }
+const iconDone: CSSProperties     = { width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#F0FDF4', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }
+const rowMain: CSSProperties      = { flex: 1, minWidth: 0 }
+const rowTitle: CSSProperties     = { fontSize: '13px', fontWeight: 600, color: fg }
 const rowTitleDone: CSSProperties = { fontSize: '13px', fontWeight: 400, color: muted, textDecoration: 'line-through' }
-const rowSub: CSSProperties      = { fontSize: '11px', color: muted, marginTop: '2px' }
-const leadLink: CSSProperties    = { fontSize: '11px', fontWeight: 500, color: brand, textDecoration: 'none' }
-const doneBtn: CSSProperties     = { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: success, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '999px', padding: '6px 12px', cursor: 'pointer' }
-const doneBtnOff: CSSProperties  = { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '6px 12px', cursor: 'not-allowed', opacity: 0.6 }
-const doneBadge: CSSProperties   = { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 600, color: success, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '999px', padding: '4px 10px' }
-const emptyWrap: CSSProperties   = { padding: '56px', textAlign: 'center' as const }
-const emptyEmoji: CSSProperties  = { fontSize: '32px', marginBottom: '12px' }
-const emptyTxt: CSSProperties    = { fontSize: '14px', fontWeight: 300, color: muted }
+const rowSub: CSSProperties       = { fontSize: '11px', color: muted, marginTop: '2px' }
+const leadLink: CSSProperties     = { fontSize: '11px', fontWeight: 500, color: brand, textDecoration: 'none' }
+const doneBtn: CSSProperties      = { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: success, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '999px', padding: '6px 12px', cursor: 'pointer' }
+const doneBtnOff: CSSProperties   = { display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: muted, backgroundColor: surface, border: '1px solid ' + border, borderRadius: '999px', padding: '6px 12px', cursor: 'not-allowed', opacity: 0.6 }
+const doneBadge: CSSProperties    = { display: 'inline-flex', alignItems: 'center', fontSize: '11px', fontWeight: 600, color: success, backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '999px', padding: '4px 10px' }
+const emptyWrap: CSSProperties    = { padding: '56px', textAlign: 'center' as const }
+const emptyEmoji: CSSProperties   = { fontSize: '32px', marginBottom: '12px' }
+const emptyTxt: CSSProperties     = { fontSize: '14px', fontWeight: 300, color: muted }
 
 export default function RelancesClient({ relances: initial }: { relances: RelanceItem[] }) {
   const [items, setItems]       = useState<RelanceItem[]>(initial.filter(r => r.statut === 'planifiee'))
@@ -121,11 +121,11 @@ export default function RelancesClient({ relances: initial }: { relances: Relanc
           <div style={groupLbl}>{group.label}</div>
           <div style={groupCard}>
             {group.items.map((r, i) => {
-              const lead    = r.leads
-              const name    = lead ? ((lead.prenom ?? '') + ' ' + (lead.nom ?? '')).trim() : 'Prospect'
-              const icon    = TYPE_LBL[r.type]  ?? '📌'
-              const typeLbl = TYPE_NAME[r.type] ?? r.type
-              const time    = new Date(r.scheduled_at).toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+              const lead     = r.leads
+              const name     = lead ? ((lead.prenom ?? '') + ' ' + (lead.nom ?? '')).trim() : 'Prospect'
+              const icon     = TYPE_LBL[r.type]  ?? '📌'
+              const typeLbl  = TYPE_NAME[r.type] ?? r.type
+              const time     = new Date(r.scheduled_at).toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
               const isLoading = loading === r.id
               const isLast    = i === group.items.length - 1
               return (
@@ -134,13 +134,11 @@ export default function RelancesClient({ relances: initial }: { relances: Relanc
                   <div style={rowMain}>
                     <div style={rowTitle}>{typeLbl}{r.titre ? ` — ${r.titre}` : ''}</div>
                     <div style={rowSub}>
-                      <span>{time} · </span>
-                      {lead ? (
-                        <Link href={`/leads/${lead.id}`} style={leadLink}>{name}</Link>
-                      ) : (
-                        <span>{name}</span>
-                      )}
-                      {lead?.telephone && <span> · {lead.telephone}</span>}
+                      {time} · {lead
+                        ? <Link href={`/leads/${lead.id}`} style={leadLink}>{name}</Link>
+                        : name
+                      }
+                      {lead?.telephone && ` · ${lead.telephone}`}
                     </div>
                   </div>
                   <button

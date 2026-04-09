@@ -23,52 +23,52 @@ function formatEur(n: number) {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n)
 }
 
-const pageWrap: CSSProperties    = { padding: '32px' }
-const topBar: CSSProperties      = { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '24px' }
-const backLnk: CSSProperties     = { display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: muted, textDecoration: 'none', marginBottom: '12px' }
-const headName: CSSProperties    = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em', marginBottom: '4px' }
-const headSub: CSSProperties     = { fontSize: '12px', fontWeight: 400, color: muted, display: 'flex', flexWrap: 'wrap', gap: '12px' } as CSSProperties
-const actionsRow: CSSProperties  = { display: 'flex', gap: '10px', alignItems: 'center' }
-const btnCall: CSSProperties     = { display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: brand, color: white, fontSize: '13px', fontWeight: 600, padding: '9px 18px', borderRadius: '999px', textDecoration: 'none' }
-const btnMail: CSSProperties     = { display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: white, color: fg, border: '1.5px solid ' + border, fontSize: '13px', fontWeight: 600, padding: '9px 18px', borderRadius: '999px', textDecoration: 'none' }
-const alertBand: CSSProperties   = { backgroundColor: surface, border: '1px solid ' + border, borderRadius: '14px', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' } as CSSProperties
-const alertIcon: CSSProperties   = { fontSize: '16px' }
-const alertTxt: CSSProperties    = { fontSize: '13px', fontWeight: 500, color: fg, flex: 1 }
-const alertScore: CSSProperties  = { fontSize: '13px', fontWeight: 600, color: brand }
-const twoCol: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }
-const card: CSSProperties        = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '24px' }
-const cardHeader: CSSProperties  = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }
-const cardTitle: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg }
-const pendingBadge: CSSProperties = { fontSize: '11px', fontWeight: 600, color: brand, backgroundColor: brandLight, borderRadius: '999px', padding: '2px 9px' }
-const bienCard: CSSProperties    = { ...card, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' } as CSSProperties
-const bienEmoji: CSSProperties   = { fontSize: '24px' }
-const bienInner: CSSProperties   = { flex: 1 }
-const bienTitle: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg, marginBottom: '4px' }
-const bienSub: CSSProperties     = { fontSize: '12px', color: muted }
-const bienEstim: CSSProperties   = { textAlign: 'right' as const }
-const bienRange: CSSProperties   = { fontSize: '18px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
-const bienM2: CSSProperties      = { fontSize: '12px', color: muted, marginTop: '2px' }
-const scoreWrap: CSSProperties   = { display: 'flex', alignItems: 'flex-end', gap: '12px', marginBottom: '16px' }
-const scoreBig: CSSProperties    = { fontSize: '48px', fontWeight: 900, color: fg, letterSpacing: '-0.05em', lineHeight: 1 }
-const scoreDenom: CSSProperties  = { fontSize: '16px', fontWeight: 400, color: muted, marginBottom: '6px' }
-const scoreLbl: CSSProperties    = { fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.14em', color: muted, marginBottom: '8px' } as CSSProperties
-const delaiTxt: CSSProperties    = { fontSize: '12px', color: muted }
-const taskRow: CSSProperties     = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid ' + border }
-const taskRowLast: CSSProperties = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0' }
-const taskIcon: CSSProperties    = { fontSize: '16px', flexShrink: 0, marginTop: '2px' }
-const taskInner: CSSProperties   = { flex: 1 }
-const taskTitle: CSSProperties   = { fontSize: '13px', fontWeight: 600, color: fg }
+const pageWrap: CSSProperties      = { padding: '32px' }
+const topBar: CSSProperties        = { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '24px' }
+const backLnk: CSSProperties       = { display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: muted, textDecoration: 'none', marginBottom: '12px' }
+const headName: CSSProperties      = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em', marginBottom: '4px' }
+const headSub: CSSProperties       = { fontSize: '12px', color: muted, display: 'flex', flexWrap: 'wrap', gap: '12px' } as CSSProperties
+const actionsRow: CSSProperties    = { display: 'flex', gap: '10px', alignItems: 'center' }
+const btnCall: CSSProperties       = { display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: brand, color: white, fontSize: '13px', fontWeight: 600, padding: '9px 18px', borderRadius: '999px', textDecoration: 'none' }
+const btnMail: CSSProperties       = { display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: white, color: fg, border: '1.5px solid ' + border, fontSize: '13px', fontWeight: 600, padding: '9px 18px', borderRadius: '999px', textDecoration: 'none' }
+const alertBand: CSSProperties     = { backgroundColor: surface, border: '1px solid ' + border, borderRadius: '14px', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' } as CSSProperties
+const alertIcon: CSSProperties     = { fontSize: '16px' }
+const alertTxt: CSSProperties      = { fontSize: '13px', fontWeight: 500, color: fg, flex: 1 }
+const alertScore: CSSProperties    = { fontSize: '13px', fontWeight: 600, color: brand }
+const twoCol: CSSProperties        = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }
+const card: CSSProperties          = { backgroundColor: white, borderRadius: '16px', border: '1px solid ' + border, padding: '24px' }
+const cardHeader: CSSProperties    = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }
+const cardTitle: CSSProperties     = { fontSize: '14px', fontWeight: 700, color: fg }
+const pendingBadge: CSSProperties  = { fontSize: '11px', fontWeight: 600, color: brand, backgroundColor: brandLight, borderRadius: '999px', padding: '2px 9px' }
+const bienCard: CSSProperties      = { ...card, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' } as CSSProperties
+const bienEmoji: CSSProperties     = { fontSize: '24px' }
+const bienInner: CSSProperties     = { flex: 1 }
+const bienTitle: CSSProperties     = { fontSize: '14px', fontWeight: 700, color: fg, marginBottom: '4px' }
+const bienSub: CSSProperties       = { fontSize: '12px', color: muted }
+const bienEstim: CSSProperties     = { textAlign: 'right' as const }
+const bienRange: CSSProperties     = { fontSize: '18px', fontWeight: 900, color: fg, letterSpacing: '-0.03em' }
+const bienM2: CSSProperties        = { fontSize: '12px', color: muted, marginTop: '2px' }
+const scoreWrap: CSSProperties     = { display: 'flex', alignItems: 'flex-end', gap: '12px', marginBottom: '16px' }
+const scoreBig: CSSProperties      = { fontSize: '48px', fontWeight: 900, color: fg, letterSpacing: '-0.05em', lineHeight: 1 }
+const scoreDenom: CSSProperties    = { fontSize: '16px', fontWeight: 400, color: muted, marginBottom: '6px' }
+const scoreLbl: CSSProperties      = { fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.14em', color: muted, marginBottom: '8px' } as CSSProperties
+const delaiTxt: CSSProperties      = { fontSize: '12px', color: muted }
+const taskRow: CSSProperties       = { display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0', borderBottom: '1px solid ' + border }
+const taskRowLast: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 0' }
+const taskIcon: CSSProperties      = { fontSize: '16px', flexShrink: 0 }
+const taskInner: CSSProperties     = { flex: 1 }
+const taskTitle: CSSProperties     = { fontSize: '13px', fontWeight: 600, color: fg }
 const taskTitleDone: CSSProperties = { fontSize: '13px', fontWeight: 400, color: muted, textDecoration: 'line-through' }
-const taskDate: CSSProperties    = { fontSize: '11px', color: muted, marginTop: '2px' }
-const taskDateLate: CSSProperties = { fontSize: '11px', color: error, marginTop: '2px', fontWeight: 600 }
+const taskDate: CSSProperties      = { fontSize: '11px', color: muted, marginTop: '2px' }
+const taskDateLate: CSSProperties  = { fontSize: '11px', color: error, fontWeight: 600, marginTop: '2px' }
 const planifierWrap: CSSProperties = { marginTop: '16px', paddingTop: '16px', borderTop: '1px solid ' + border }
-const actRow: CSSProperties      = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid ' + border }
-const actRowLast: CSSProperties  = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0' }
-const actIcon: CSSProperties     = { fontSize: '18px', flexShrink: 0, marginTop: '1px' }
-const actInner: CSSProperties    = { flex: 1 }
-const actTitle: CSSProperties    = { fontSize: '13px', fontWeight: 600, color: fg }
-const actSub: CSSProperties      = { fontSize: '11px', color: muted, marginTop: '2px' }
-const emptyNote: CSSProperties   = { fontSize: '12px', fontWeight: 300, color: muted, lineHeight: 1.6 }
+const actRow: CSSProperties        = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0', borderBottom: '1px solid ' + border }
+const actRowLast: CSSProperties    = { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '10px 0' }
+const actIcon: CSSProperties       = { fontSize: '18px', flexShrink: 0, marginTop: '1px' }
+const actInner: CSSProperties      = { flex: 1 }
+const actTitle: CSSProperties      = { fontSize: '13px', fontWeight: 600, color: fg }
+const actSub: CSSProperties        = { fontSize: '11px', color: muted, marginTop: '2px' }
+const emptyNote: CSSProperties     = { fontSize: '12px', fontWeight: 300, color: muted, lineHeight: 1.6 }
 
 type Statut = 'nouveau' | 'contacte' | 'rdv' | 'signe' | 'perdu'
 const STATUT: Record<Statut, { color: string; bg: string }> = {
@@ -111,8 +111,8 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
 
   const fd        = lead.form_data as Record<string, unknown> | null ?? {}
   const results   = lead.results  as Record<string, number>  | null ?? {}
-  const prenom    = lead.prenom ?? ''
-  const nom       = lead.nom    ?? ''
+  const prenom    = (lead.prenom ?? '') as string
+  const nom       = (lead.nom    ?? '') as string
   const statut    = (lead.statut as Statut) ?? 'nouveau'
   const cfg       = STATUT[statut] ?? STATUT.nouveau
   const surface   = fd.surface   as number | undefined
@@ -125,13 +125,12 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
   const haut      = results?.fourchette_haute
   const confiance = results?.confiance as number | undefined
   const hasEstim  = bas && haut
-  const date      = new Date(lead.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  const date      = new Date(lead.created_at as string).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   const typeLbl   = typeBien === 'maison' ? 'Maison' : typeBien === 'appartement' ? 'Appartement' : typeBien ?? 'Bien'
 
   const relances  = (relancesRaw ?? []) as Record<string, unknown>[]
   const pending   = relances.filter(r => r.statut === 'planifiee')
   const completed = relances.filter(r => r.statut !== 'planifiee')
-  const now       = new Date()
 
   return (
     <CrmLayout>
@@ -142,15 +141,19 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
           <div>
             <h1 style={headName}>{prenom && nom ? prenom + ' ' + nom : 'Anonyme'}</h1>
             <div style={headSub}>
-              {adresse        && <span>📍 {adresse}</span>}
+              {adresse          && <span>📍 {adresse}</span>}
               <span>Reçu le {date}</span>
-              {lead.telephone && <span>📞 {lead.telephone}</span>}
-              {lead.email     && <span>✉️ {lead.email}</span>}
+              {lead.telephone   && <span>📞 {lead.telephone as string}</span>}
+              {lead.email       && <span>✉️ {lead.email as string}</span>}
             </div>
           </div>
           <div style={actionsRow}>
-            {lead.telephone && <a href={'tel:' + lead.telephone} style={btnCall}>📞 Appeler</a>}
-            {lead.email     && <a href={'mailto:' + lead.email}  style={btnMail}>✉️ Email</a>}
+            {lead.telephone && (
+              <a href={'tel:' + (lead.telephone as string)} style={btnCall}>📞 Appeler</a>
+            )}
+            {lead.email && (
+              <a href={'mailto:' + (lead.email as string)} style={btnMail}>✉️ Email</a>
+            )}
           </div>
         </div>
 
@@ -178,10 +181,10 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
 
             {pending.map((r, i) => {
               const icon    = TYPE_ICON[r.type as string] ?? '📌'
-              const lbl     = TYPE_LBL[r.type  as string] ?? String(r.type)
-              const d       = new Date(r.scheduled_at as string)
-              const isLate  = d < now
-              const time    = d.toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+              const lbl     = TYPE_LBL[r.type as string]  ?? String(r.type)
+              const dt      = new Date(r.scheduled_at as string)
+              const isLate  = dt < new Date()
+              const time    = dt.toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
               const isLast  = i === pending.length - 1 && completed.length === 0
               return (
                 <div key={r.id as string} style={isLast ? taskRowLast : taskRow}>
@@ -196,9 +199,9 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
             })}
 
             {completed.map((r, i) => {
-              const icon   = TYPE_ICON[r.type as string] ?? '📌'
-              const lbl    = TYPE_LBL[r.type  as string] ?? String(r.type)
-              const time   = new Date(r.scheduled_at as string).toLocaleString('fr-FR', { day: 'numeric', month: 'short' })
+              const icon  = TYPE_ICON[r.type as string] ?? '📌'
+              const lbl   = TYPE_LBL[r.type as string]  ?? String(r.type)
+              const time  = new Date(r.scheduled_at as string).toLocaleString('fr-FR', { day: 'numeric', month: 'short' })
               const isLast = i === completed.length - 1
               return (
                 <div key={r.id as string} style={isLast ? taskRowLast : taskRow}>
@@ -231,12 +234,8 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
               <div style={actRow}>
                 <span style={actIcon}>📋</span>
                 <div style={actInner}>
-                  <div style={actTitle}>
-                    {relances.length} tâche{relances.length > 1 ? 's' : ''} planifiée{relances.length > 1 ? 's' : ''}
-                  </div>
-                  <div style={actSub}>
-                    {completed.length} terminée{completed.length > 1 ? 's' : ''} · {pending.length} en attente
-                  </div>
+                  <div style={actTitle}>{relances.length} tâche{relances.length > 1 ? 's' : ''} planifiée{relances.length > 1 ? 's' : ''}</div>
+                  <div style={actSub}>{completed.length} terminée{completed.length > 1 ? 's' : ''} · {pending.length} en attente</div>
                 </div>
               </div>
             )}
@@ -259,17 +258,17 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
             <div style={bienInner}>
               <div style={bienTitle}>
                 {typeLbl}
-                {surface  ? ' · ' + surface + ' m²' : ''}
+                {surface  ? ' · ' + surface  + ' m²' : ''}
                 {nbPieces ? ' · ' + nbPieces + ' pièce' + (Number(nbPieces) > 1 ? 's' : '') : ''}
               </div>
               {adresse && <div style={bienSub}>📍 {adresse}</div>}
-              {etat    && <div style={bienSub}>🔧 {ETAT[etat]  ?? etat}</div>}
+              {etat    && <div style={bienSub}>🔧 {ETAT[etat] ?? etat}</div>}
               {delai   && <div style={bienSub}>🗓 Vente : {DELAI[delai] ?? delai}</div>}
             </div>
             {hasEstim && (
               <div style={bienEstim}>
                 <div style={bienRange}>{formatEur(bas!)} — {formatEur(haut!)}</div>
-                {results?.prixM2 && <div style={bienM2}>{results.prixM2.toLocaleString('fr-FR')} €/m²</div>}
+                {results?.prixM2 && <div style={bienM2}>{(results.prixM2 as number).toLocaleString('fr-FR')} €/m²</div>}
               </div>
             )}
           </div>
@@ -293,7 +292,7 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
             <LeadActions
               leadId={id}
               initialStatut={statut}
-              initialNotes={lead.notes ?? ''}
+              initialNotes={(lead.notes ?? '') as string}
             />
           </div>
         </div>
