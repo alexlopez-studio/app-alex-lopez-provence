@@ -1,81 +1,90 @@
 import { create } from 'zustand'
 
-export type TypeBien = 'appartement' | 'maison' | 'terrain' | 'autre'
-export type EtatGeneral = 'a_renover' | 'bon_etat' | 'tres_bon_etat' | 'neuf'
-export type DPE = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'NC'
-export type DelaiVente = 'urgent' | '3_6_mois' | '6_mois_plus'
-export type Exterieur = 'aucun' | 'balcon' | 'terrasse' | 'jardin'
+export interface ChatMessage {
+  id: string
+  from: 'al' | 'user'
+  text: string
+  timestamp: string
+}
 
-export interface VendreState {
-  // Navigation
-  step: number
-  // Étape 1 — Le bien
-  type_bien: TypeBien | ''
-  adresse: string
-  surface: string
-  nb_pieces: string
-  etage: string
-  nb_etages: string
-  annee_construction: string
-  // Étape 2 — État
-  etat: EtatGeneral | ''
-  garage: boolean
-  parking: boolean
-  cave: boolean
-  exterieur: Exterieur
-  surface_exterieur: string
-  cuisine_equipee: boolean
-  double_vitrage: boolean
-  dpe: DPE | ''
-  // Étape 3 — Contexte
-  delai: DelaiVente | ''
-  occupe: boolean
-  deja_estime: boolean
-  prix_souhaite: string
-  // Étape 4 — Coordonnées
-  prenom: string
-  nom: string
-  telephone: string
-  email: string
-  // Actions
-  setField: <K extends keyof VendreState>(key: K, value: VendreState[K]) => void
-  nextStep: () => void
-  prevStep: () => void
+export interface VendreAnswers {
+  adresse?: string
+  type_bien?: string
+  sous_type?: string
+  surface?: number
+  surface_terrain?: number
+  nb_pieces?: number
+  etat?: string
+  travaux?: string[]
+  equipements?: string[]
+  sous_sol?: string
+  proprietaire?: string
+  situation_juridique?: string
+  delai?: string
+  prenom?: string
+  nom?: string
+  telephone?: string
+  email?: string
+}
+
+export type QuestionId =
+  | 'adresse'
+  | 'type_bien'
+  | 'sous_type_maison'
+  | 'surface'
+  | 'surface_terrain'
+  | 'nb_pieces'
+  | 'etat'
+  | 'travaux'
+  | 'equipements'
+  | 'sous_sol'
+  | 'proprietaire'
+  | 'situation_juridique'
+  | 'delai'
+  | 'coordonnees'
+  | 'done'
+
+interface VendreState {
+  messages: ChatMessage[]
+  currentQuestion: QuestionId
+  answers: VendreAnswers
+  progress: number
+  addMessage: (msg: Omit<ChatMessage, 'id'>) => void
+  setAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers]) => void
+  setQuestion: (q: QuestionId) => void
+  setProgress: (p: number) => void
   reset: () => void
 }
 
-const initialState = {
-  step: 1,
-  type_bien: '' as const,
-  adresse: '',
-  surface: '',
-  nb_pieces: '',
-  etage: '',
-  nb_etages: '',
-  annee_construction: '',
-  etat: '' as const,
-  garage: false,
-  parking: false,
-  cave: false,
-  exterieur: 'aucun' as const,
-  surface_exterieur: '',
-  cuisine_equipee: false,
-  double_vitrage: false,
-  dpe: '' as const,
-  delai: '' as const,
-  occupe: false,
-  deja_estime: false,
-  prix_souhaite: '',
-  prenom: '',
-  nom: '',
-  telephone: '',
-  email: '',
+function now() {
+  return new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+}
+
+const INITIAL_MESSAGES: ChatMessage[] = [
+  {
+    id: '1',
+    from: 'al',
+    text: `Bonjour ! 👋 Je suis Alex Lopez, votre conseiller immobilier. Je vais vous aider à estimer la valeur de votre bien en quelques minutes.\n\nCommençons par l'adresse de votre bien s'il vous plaît !`,
+    timestamp: now(),
+  },
+]
+
+const initial = {
+  messages: INITIAL_MESSAGES,
+  currentQuestion: 'adresse' as QuestionId,
+  answers: {} as VendreAnswers,
+  progress: 0,
 }
 
 export const useVendreStore = create<VendreState>((set) => ({
-  ...initialState,
-  setField: (key, value) => set((state) => ({ ...state, [key]: value })),
-  nextStep: () => set((state) => ({ step: Math.min(state.step + 1, 4) })),
-  prevStep: () => set((state) => ({ step: Math.max(state.step - 1, 1) })),
-  reset: () => set(initialState),
+  ...initial,
+  addMessage: (msg) =>
+    set((s) => ({
+      messages: [...s.messages, { ...msg, id: Date.now().toString() }],
+    })),
+  setAnswer: (key, value) =>
+    set((s) => ({ answers: { ...s.answers, [key]: value } })),
+  setQuestion: (q) => set({ currentQuestion: q }),
+  setProgress: (p) => set({ progress: p }),
+  reset: () => set(initial),
 }))

@@ -1,321 +1,523 @@
 'use client'
 
+import { useRef, useEffect, useState } from 'react'
 import { useVendreStore } from '@/stores/vendreStore'
+import type { VendreAnswers, QuestionId } from '@/stores/vendreStore'
 import type { CSSProperties } from 'react'
-import { Phone, ChevronLeft, ChevronRight, Check } from 'lucide-react'
+import { Phone, ChevronLeft, Send, Home, FileText, Target, User } from 'lucide-react'
 import Link from 'next/link'
 
-/* ─── Tokens ─── */
-const brand = '#0066FF'
-const brandLight = '#EFF6FF'
-const fg = '#0F172A'
-const muted = '#64748B'
-const border = '#E2E8F0'
-const surface = '#F8FAFC'
-const success = '#10B981'
-const white = '#ffffff'
-
-/* ─── Styles statiques ─── */
-const page: CSSProperties = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif' }
-const nav: CSSProperties = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: `1px solid ${border}` }
-const navInner: CSSProperties = { maxWidth: '75rem', margin: '0 auto', padding: '18px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
-const navBack: CSSProperties = { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: muted, textDecoration: 'none' }
-const navPhone: CSSProperties = { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 600, color: fg, textDecoration: 'none' }
-const main: CSSProperties = { maxWidth: '600px', margin: '0 auto', padding: '100px 24px 60px' }
-const progressWrap: CSSProperties = { marginBottom: '40px' }
-const progressHeader: CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }
-const progressLabel: CSSProperties = { fontSize: '12px', fontWeight: 600, color: muted, textTransform: 'uppercase', letterSpacing: '0.14em', display: 'flex', alignItems: 'center', gap: '6px' }
-const progressCount: CSSProperties = { fontSize: '12px', fontWeight: 600, color: muted }
-const progressBar: CSSProperties = { height: '4px', backgroundColor: border, borderRadius: '999px', overflow: 'hidden' }
-const stepsRow: CSSProperties = { display: 'flex', gap: '8px', marginTop: '16px' }
-const card: CSSProperties = { backgroundColor: white, borderRadius: '20px', border: `1px solid ${border}`, padding: '36px', marginBottom: '20px' }
-const cardEyebrow: CSSProperties = { fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.18em', color: brand, marginBottom: '8px' }
-const cardTitle: CSSProperties = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.02em', marginBottom: '6px' }
-const cardSub: CSSProperties = { fontSize: '14px', fontWeight: 300, color: muted, marginBottom: '32px', lineHeight: 1.6 }
-const fieldGroup: CSSProperties = { marginBottom: '24px' }
-const lbl: CSSProperties = { display: 'block', fontSize: '13px', fontWeight: 600, color: fg, marginBottom: '8px' }
-const inp: CSSProperties = { width: '100%', fontSize: '14px', color: fg, backgroundColor: white, border: `1.5px solid ${border}`, borderRadius: '10px', padding: '12px 14px', outline: 'none', boxSizing: 'border-box' }
-const row2: CSSProperties = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }
-const optGrid2: CSSProperties = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }
-const optGrid3: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }
-const optGrid1: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '10px' }
-const optGridDpe: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }
-const toggleRow: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderRadius: '12px', border: `1.5px solid ${border}`, marginBottom: '10px', cursor: 'pointer' }
-const toggleLabel: CSSProperties = { fontSize: '13px', fontWeight: 500, color: fg }
-const navBtns: CSSProperties = { display: 'flex', gap: '12px', justifyContent: 'space-between' }
-const btnSecondary: CSSProperties = { display: 'flex', alignItems: 'center', gap: '6px', padding: '13px 24px', borderRadius: '999px', border: `1.5px solid ${border}`, backgroundColor: white, fontSize: '14px', fontWeight: 600, color: fg, cursor: 'pointer' }
-const btnPrimaryActive: CSSProperties = { display: 'flex', alignItems: 'center', gap: '6px', padding: '13px 28px', borderRadius: '999px', backgroundColor: brand, fontSize: '14px', fontWeight: 600, color: white, cursor: 'pointer', border: 'none', marginLeft: 'auto' }
-const btnPrimaryDisabled: CSSProperties = { display: 'flex', alignItems: 'center', gap: '6px', padding: '13px 28px', borderRadius: '999px', backgroundColor: border, fontSize: '14px', fontWeight: 600, color: muted, cursor: 'not-allowed', border: 'none', marginLeft: 'auto' }
-const hint: CSSProperties = { fontSize: '11px', fontWeight: 400, color: muted, marginTop: '6px' }
-const mention: CSSProperties = { fontSize: '12px', fontWeight: 300, color: muted, lineHeight: 1.6, marginBottom: '24px' }
-const badgeSuccess: CSSProperties = { fontSize: '11px', fontWeight: 600, color: success }
-
-/* ─── Styles dynamiques ─── */
-function progressFill(pct: number): CSSProperties {
-  return { height: '100%', width: `${pct}%`, backgroundColor: brand, borderRadius: '999px', transition: 'width 0.4s ease' }
+/* ─────────────────────────────────────────────────────────────
+   Tokens
+───────────────────────────────────────────────────────────── */
+const C = {
+  brand:       '#0066FF',
+  brandLight:  '#EFF6FF',
+  brandDark:   '#0052CC',
+  fg:          '#0F172A',
+  muted:       '#64748B',
+  border:      '#E2E8F0',
+  surface:     '#F8FAFC',
+  white:       '#ffffff',
+  success:     '#10B981',
 }
-function stepDot(active: boolean, done: boolean): CSSProperties {
+
+/* ─────────────────────────────────────────────────────────────
+   Styles statiques
+───────────────────────────────────────────────────────────── */
+const pageStyle: CSSProperties         = { minHeight: '100vh', backgroundColor: C.surface, fontFamily: 'var(--font-inter), system-ui, sans-serif', display: 'flex', flexDirection: 'column' }
+const navStyle: CSSProperties          = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: C.white, borderBottom: `1px solid ${C.border}` }
+const navTopStyle: CSSProperties       = { maxWidth: '700px', margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
+const navLeftStyle: CSSProperties      = { display: 'flex', alignItems: 'center', gap: '10px' }
+const avatarStyle: CSSProperties       = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: C.brand, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
+const navNameStyle: CSSProperties      = { fontSize: '14px', fontWeight: 700, color: C.fg }
+const navSubStyle: CSSProperties       = { fontSize: '11px', fontWeight: 400, color: C.muted }
+const backLinkStyle: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', fontWeight: 600, color: C.muted, textDecoration: 'none' }
+const phoneLinkStyle: CSSProperties    = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: C.fg, textDecoration: 'none' }
+
+/* Progress bar */
+const progressBarWrap: CSSProperties   = { height: '3px', backgroundColor: C.border }
+const progressTabs: CSSProperties      = { maxWidth: '700px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
+
+/* Chat area */
+const chatAreaStyle: CSSProperties     = { flex: 1, maxWidth: '700px', width: '100%', margin: '0 auto', padding: '130px 20px 160px', display: 'flex', flexDirection: 'column', gap: '16px' }
+
+/* Messages */
+const msgRowAlStyle: CSSProperties     = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
+const msgRowUserStyle: CSSProperties   = { display: 'flex', justifyContent: 'flex-end' }
+const msgAl: CSSProperties             = { backgroundColor: C.white, border: `1px solid ${C.border}`, borderRadius: '16px 16px 16px 4px', padding: '14px 16px', maxWidth: '80%', fontSize: '14px', fontWeight: 400, color: C.fg, lineHeight: 1.6, whiteSpace: 'pre-wrap' }
+const msgUser: CSSProperties           = { backgroundColor: C.brand, borderRadius: '16px 16px 4px 16px', padding: '10px 16px', maxWidth: '70%', fontSize: '14px', fontWeight: 500, color: C.white, lineHeight: 1.5 }
+const tsStyle: CSSProperties           = { fontSize: '10px', color: C.muted, marginTop: '4px' }
+
+/* Input zone */
+const inputZoneStyle: CSSProperties    = { position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: C.white, borderTop: `1px solid ${C.border}`, padding: '16px 20px 20px' }
+const inputInner: CSSProperties        = { maxWidth: '700px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '12px' }
+const textInputRow: CSSProperties      = { display: 'flex', gap: '10px', alignItems: 'center' }
+const textInputStyle: CSSProperties    = { flex: 1, fontSize: '14px', color: C.fg, border: `1.5px solid ${C.border}`, borderRadius: '12px', padding: '12px 14px', outline: 'none', backgroundColor: C.white, boxSizing: 'border-box' }
+const sendBtnStyle: CSSProperties      = { width: '42px', height: '42px', borderRadius: '12px', backgroundColor: C.brand, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
+
+/* Cards */
+const cardsGrid: CSSProperties         = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const cardsGrid3: CSSProperties        = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }
+
+/* Slider */
+const sliderWrap: CSSProperties        = { backgroundColor: C.white, borderRadius: '16px', border: `1px solid ${C.border}`, padding: '20px' }
+const sliderValueRow: CSSProperties    = { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '16px' }
+const sliderValBox: CSSProperties      = { border: `1.5px solid ${C.border}`, borderRadius: '10px', padding: '8px 16px', fontSize: '18px', fontWeight: 700, color: C.fg, minWidth: '80px', textAlign: 'center' }
+const sliderUnit: CSSProperties        = { fontSize: '14px', fontWeight: 500, color: C.muted }
+const sliderLabels: CSSProperties      = { display: 'flex', justifyContent: 'space-between', marginTop: '8px' }
+const sliderLabel: CSSProperties       = { fontSize: '11px', color: C.muted }
+const validateBtnStyle: CSSProperties  = { width: '100%', padding: '13px', borderRadius: '12px', backgroundColor: C.brand, border: 'none', color: C.white, fontSize: '14px', fontWeight: 600, cursor: 'pointer', marginTop: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }
+
+/* ─────────────────────────────────────────────────────────────
+   Styles dynamiques
+───────────────────────────────────────────────────────────── */
+function cardStyle(active: boolean): CSSProperties {
   return {
-    width: '28px', height: '28px', borderRadius: '999px',
-    border: `2px solid ${done || active ? brand : border}`,
-    backgroundColor: done ? brand : active ? brandLight : white,
+    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+    gap: '8px', padding: '16px 12px', borderRadius: '14px', cursor: 'pointer',
+    border: `2px solid ${active ? C.brand : C.border}`,
+    backgroundColor: active ? C.brandLight : C.white,
+    fontSize: '13px', fontWeight: 600,
+    color: active ? C.brand : C.fg,
+    transition: 'all 0.15s ease', textAlign: 'center',
+  }
+}
+function cardIconBox(active: boolean): CSSProperties {
+  return {
+    width: '40px', height: '40px', borderRadius: '10px',
+    backgroundColor: active ? C.brand : C.brandLight,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontSize: '11px', fontWeight: 700,
-    color: done ? white : active ? brand : muted,
+  }
+}
+function progressFill(pct: number): CSSProperties {
+  return { height: '100%', width: `${pct}%`, backgroundColor: C.brand, transition: 'width 0.4s ease' }
+}
+function tabStyle(active: boolean): CSSProperties {
+  return {
+    display: 'flex', alignItems: 'center', gap: '5px', padding: '10px 4px',
+    fontSize: '11px', fontWeight: 600,
+    color: active ? C.brand : C.muted,
+    borderBottom: active ? `2px solid ${C.brand}` : '2px solid transparent',
     transition: 'all 0.2s ease',
   }
 }
-function opt(active: boolean, fullWidth = false): CSSProperties {
-  return {
-    border: `2px solid ${active ? brand : border}`,
-    backgroundColor: active ? brandLight : white,
-    borderRadius: '12px', padding: '14px 16px', cursor: 'pointer',
-    fontSize: '13px', fontWeight: 600,
-    color: active ? brand : fg,
-    textAlign: fullWidth ? 'left' : 'center',
-    transition: 'all 0.15s ease',
-    width: '100%',
+
+/* ─────────────────────────────────────────────────────────────
+   Constantes de questions
+───────────────────────────────────────────────────────────── */
+const TYPE_BIEN_OPTIONS = [
+  { value: 'appartement', label: 'Appartement', emoji: '🏢' },
+  { value: 'maison',      label: 'Maison',       emoji: '🏠' },
+  { value: 'terrain',     label: 'Terrain',      emoji: '🌿' },
+  { value: 'commerce',    label: 'Commerce',     emoji: '🏪' },
+  { value: 'immeuble',    label: 'Immeuble',     emoji: '🏗️' },
+  { value: 'autre',       label: 'Autre',        emoji: '•••' },
+]
+
+const ETAT_OPTIONS = [
+  { value: 'neuf',          label: 'Neuf / récent',          emoji: '🏆' },
+  { value: 'tres_bon_etat', label: 'Très bon état',          emoji: '✨' },
+  { value: 'bon_etat',      label: 'Bon état',               emoji: '👍' },
+  { value: 'rafraichir',    label: 'À rafraîchir',           emoji: '🖌️' },
+  { value: 'travaux',       label: 'Travaux importants',     emoji: '🔨' },
+]
+
+const DELAI_OPTIONS = [
+  { value: 'immediat',  label: 'Immédiat',   emoji: '🔥' },
+  { value: '1_3_mois',  label: '1 – 3 mois', emoji: '📅' },
+  { value: '3_6_mois',  label: '3 – 6 mois', emoji: '🗓️' },
+  { value: '6_mois',    label: '+6 mois',    emoji: '⏳' },
+  { value: 'pas_decide',label: 'Pas décidé', emoji: '🤔' },
+]
+
+const EQUIPEMENTS_OPTIONS = [
+  'Balcon', 'Terrasse', 'Parking', 'Garage', 'Cave', 'Jardin',
+  'Vue exceptionnelle', 'Piscine',
+]
+
+/* ─────────────────────────────────────────────────────────────
+   Logique de flow
+───────────────────────────────────────────────────────────── */
+function getNextQuestion(current: QuestionId, answers: VendreAnswers): QuestionId {
+  switch (current) {
+    case 'adresse':           return 'type_bien'
+    case 'type_bien':         return answers.type_bien === 'maison' ? 'sous_type_maison' : 'surface'
+    case 'sous_type_maison':  return 'surface'
+    case 'surface':           return answers.type_bien === 'maison' ? 'surface_terrain' : 'nb_pieces'
+    case 'surface_terrain':   return 'nb_pieces'
+    case 'nb_pieces':         return 'etat'
+    case 'etat':              return 'equipements'
+    case 'equipements':       return 'delai'
+    case 'delai':             return 'coordonnees'
+    case 'coordonnees':       return 'done'
+    default:                  return 'done'
   }
 }
-function toggle(on: boolean): CSSProperties {
-  return { width: '40px', height: '22px', borderRadius: '999px', backgroundColor: on ? brand : border, position: 'relative', transition: 'background-color 0.2s ease', flexShrink: 0 }
-}
-function toggleThumb(on: boolean): CSSProperties {
-  return { position: 'absolute', top: '3px', left: on ? '21px' : '3px', width: '16px', height: '16px', borderRadius: '999px', backgroundColor: white, transition: 'left 0.2s ease' }
-}
 
-const STEPS = [{ n: 1, label: 'Le bien' }, { n: 2, label: 'État' }, { n: 3, label: 'Contexte' }, { n: 4, label: 'Contact' }]
-
-/* ─── Étapes ─── */
-
-function Step1() {
-  const { type_bien, adresse, surface: surf, nb_pieces, etage, annee_construction, setField } = useVendreStore()
-  return (
-    <div>
-      <p style={cardEyebrow}>Étape 1 sur 4</p>
-      <h1 style={cardTitle}>Votre bien</h1>
-      <p style={cardSub}>Renseignez les informations principales de votre bien immobilier.</p>
-      <div style={fieldGroup}>
-        <label style={lbl}>Type de bien</label>
-        <div style={optGrid2}>
-          {([['appartement', '🏢 Appartement'], ['maison', '🏠 Maison'], ['terrain', '🌿 Terrain'], ['autre', '🏗️ Autre']] as [string, string][]).map(([v, l]) => (
-            <button key={v} style={opt(type_bien === v)} onClick={() => setField('type_bien', v as never)}>{l}</button>
-          ))}
-        </div>
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Adresse du bien</label>
-        <input style={inp} type="text" placeholder="12 rue de la Paix, Cotignac" value={adresse} onChange={(e) => setField('adresse', e.target.value)} />
-        <p style={hint}>Adresse complète pour une estimation précise</p>
-      </div>
-      <div style={row2}>
-        <div style={fieldGroup}>
-          <label style={lbl}>Surface habitable (m²)</label>
-          <input style={inp} type="number" placeholder="85" value={surf} onChange={(e) => setField('surface', e.target.value)} min="1" />
-        </div>
-        <div style={fieldGroup}>
-          <label style={lbl}>Nombre de pièces</label>
-          <input style={inp} type="number" placeholder="4" value={nb_pieces} onChange={(e) => setField('nb_pieces', e.target.value)} min="1" />
-        </div>
-      </div>
-      <div style={row2}>
-        <div style={fieldGroup}>
-          <label style={lbl}>Étage (optionnel)</label>
-          <input style={inp} type="number" placeholder="2" value={etage} onChange={(e) => setField('etage', e.target.value)} min="0" />
-        </div>
-        <div style={fieldGroup}>
-          <label style={lbl}>Année de construction</label>
-          <input style={inp} type="number" placeholder="1985" value={annee_construction} onChange={(e) => setField('annee_construction', e.target.value)} min="1800" max="2025" />
-        </div>
-      </div>
-    </div>
-  )
+function getProgressForQuestion(q: QuestionId): number {
+  const map: Record<QuestionId, number> = {
+    adresse: 5, type_bien: 15, sous_type_maison: 22, surface: 30, surface_terrain: 38,
+    nb_pieces: 45, etat: 55, travaux: 62, equipements: 70, sous_sol: 75,
+    proprietaire: 80, situation_juridique: 85, delai: 90, coordonnees: 95, done: 100,
+  }
+  return map[q] ?? 0
 }
 
-function Step2() {
-  const { etat, garage, parking, cave, exterieur, cuisine_equipee, double_vitrage, dpe, setField } = useVendreStore()
-  return (
-    <div>
-      <p style={cardEyebrow}>Étape 2 sur 4</p>
-      <h1 style={cardTitle}>État & prestations</h1>
-      <p style={cardSub}>Ces critères impactent directement la valeur estimée de votre bien.</p>
-      <div style={fieldGroup}>
-        <label style={lbl}>État général</label>
-        <div style={optGrid2}>
-          {([['a_renover', '🔨 À rénover'], ['bon_etat', '👍 Bon état'], ['tres_bon_etat', '✨ Très bon état'], ['neuf', '🏆 Neuf']] as [string, string][]).map(([v, l]) => (
-            <button key={v} style={opt(etat === v)} onClick={() => setField('etat', v as never)}>{l}</button>
-          ))}
-        </div>
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Annexes</label>
-        {([['garage', '🚗 Garage', garage], ['parking', '🅿️ Parking', parking], ['cave', '📦 Cave', cave]] as [string, string, boolean][]).map(([key, label, val]) => (
-          <div key={key} style={toggleRow} onClick={() => setField(key as never, !val as never)}>
-            <span style={toggleLabel}>{label}</span>
-            <div style={toggle(val)}><div style={toggleThumb(val)} /></div>
-          </div>
-        ))}
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Extérieur</label>
-        <div style={optGrid2}>
-          {([['aucun', 'Aucun'], ['balcon', '🌿 Balcon'], ['terrasse', '☀️ Terrasse'], ['jardin', '🌳 Jardin']] as [string, string][]).map(([v, l]) => (
-            <button key={v} style={opt(exterieur === v)} onClick={() => setField('exterieur', v as never)}>{l}</button>
-          ))}
-        </div>
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Équipements</label>
-        {([['cuisine_equipee', '🍳 Cuisine équipée', cuisine_equipee], ['double_vitrage', '🪟 Double vitrage', double_vitrage]] as [string, string, boolean][]).map(([key, label, val]) => (
-          <div key={key} style={toggleRow} onClick={() => setField(key as never, !val as never)}>
-            <span style={toggleLabel}>{label}</span>
-            <div style={toggle(val)}><div style={toggleThumb(val)} /></div>
-          </div>
-        ))}
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>DPE (Diagnostic de Performance Énergétique)</label>
-        <div style={optGridDpe}>
-          {(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'NC'] as string[]).map((v) => (
-            <button key={v} style={opt(dpe === v)} onClick={() => setField('dpe', v as never)}>{v === 'NC' ? '?' : v}</button>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+function getALMessage(q: QuestionId, answers: VendreAnswers): string {
+  switch (q) {
+    case 'type_bien':        return `Parfait, je localise votre bien ! Quel type de bien souhaitez-vous faire estimer ?`
+    case 'sous_type_maison': return `Très bien ! S'agit-il d'une maison mitoyenne ou individuelle ?`
+    case 'surface':          return `Parfait ! Quelle est la surface habitable de votre bien ?`
+    case 'surface_terrain':  return `C'est noté ! Quelle est la superficie totale du terrain de votre maison ?`
+    case 'nb_pieces':        return `C'est noté ! Combien de pièces principales compte votre bien ? (Séjour + chambres, sans compter cuisine, salle de bain et WC)`
+    case 'etat':             return `Parfait ! Quel est l'état général de votre bien ?`
+    case 'equipements':      return `Très bien ! Quels équipements et atouts possède votre bien ?`
+    case 'delai':            return `Compris ! Dans quel délai souhaitez-vous vendre votre bien ?`
+    case 'coordonnees':      return `Parfait ! Pour finaliser votre estimation, j'ai besoin de vos coordonnées. Comment puis-je vous appeler ?`
+    case 'done':             return `Merci ${answers.prenom} ! 🎉 Je prépare votre estimation personnalisée. Vous recevrez vos résultats par email sous quelques instants.`
+    default:                 return ''
+  }
 }
 
-function Step3() {
-  const { delai, occupe, deja_estime, prix_souhaite, setField } = useVendreStore()
-  return (
-    <div>
-      <p style={cardEyebrow}>Étape 3 sur 4</p>
-      <h1 style={cardTitle}>Contexte de vente</h1>
-      <p style={cardSub}>Quelques questions sur votre projet pour affiner l&apos;estimation.</p>
-      <div style={fieldGroup}>
-        <label style={lbl}>Délai de vente souhaité</label>
-        <div style={optGrid1}>
-          {([['urgent', '🔥 Urgent — moins de 3 mois'], ['3_6_mois', '📅 3 à 6 mois'], ['6_mois_plus', '🗓️ Plus de 6 mois']] as [string, string][]).map(([v, l]) => (
-            <button key={v} style={opt(delai === v, true)} onClick={() => setField('delai', v as never)}>{l}</button>
-          ))}
-        </div>
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Informations complémentaires</label>
-        {([['occupe', '🔑 Bien actuellement occupé', occupe], ['deja_estime', '📋 Déjà estimé par un professionnel', deja_estime]] as [string, string, boolean][]).map(([key, label, val]) => (
-          <div key={key} style={toggleRow} onClick={() => setField(key as never, !val as never)}>
-            <span style={toggleLabel}>{label}</span>
-            <div style={toggle(val)}><div style={toggleThumb(val)} /></div>
-          </div>
-        ))}
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Prix de vente espéré (optionnel)</label>
-        <input style={inp} type="number" placeholder="250000" value={prix_souhaite} onChange={(e) => setField('prix_souhaite', e.target.value)} min="0" />
-        <p style={hint}>En euros — laissez vide si vous n&apos;avez pas d&apos;idée précise</p>
-      </div>
-    </div>
-  )
+function getSectionForQuestion(q: QuestionId): 'bien' | 'details' | 'projet' | 'contact' {
+  if (['adresse', 'type_bien', 'sous_type_maison', 'surface', 'surface_terrain', 'nb_pieces'].includes(q)) return 'bien'
+  if (['etat', 'travaux', 'equipements', 'sous_sol'].includes(q)) return 'details'
+  if (['proprietaire', 'situation_juridique', 'delai'].includes(q)) return 'projet'
+  return 'contact'
 }
 
-function Step4() {
-  const { prenom, nom, telephone, email, setField } = useVendreStore()
-  return (
-    <div>
-      <p style={cardEyebrow}>Étape 4 sur 4</p>
-      <h1 style={cardTitle}>Vos coordonnées</h1>
-      <p style={cardSub}>Pour recevoir votre estimation personnalisée par email.</p>
-      <div style={row2}>
-        <div style={fieldGroup}>
-          <label style={lbl}>Prénom</label>
-          <input style={inp} type="text" placeholder="Marie" value={prenom} onChange={(e) => setField('prenom', e.target.value)} />
-        </div>
-        <div style={fieldGroup}>
-          <label style={lbl}>Nom</label>
-          <input style={inp} type="text" placeholder="Dupont" value={nom} onChange={(e) => setField('nom', e.target.value)} />
-        </div>
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Téléphone</label>
-        <input style={inp} type="tel" placeholder="06 12 34 56 78" value={telephone} onChange={(e) => setField('telephone', e.target.value)} />
-      </div>
-      <div style={fieldGroup}>
-        <label style={lbl}>Email</label>
-        <input style={inp} type="email" placeholder="marie.dupont@email.fr" value={email} onChange={(e) => setField('email', e.target.value)} />
-        <p style={hint}>Votre estimation sera envoyée à cette adresse</p>
-      </div>
-      <p style={mention}>
-        En soumettant ce formulaire, vous acceptez d&apos;être contacté par Alex Lopez dans le cadre de votre projet immobilier. Vos données sont traitées conformément au RGPD.
-      </p>
-    </div>
-  )
+/* ─────────────────────────────────────────────────────────────
+   Composant Avatar
+───────────────────────────────────────────────────────────── */
+function Avatar() {
+  return <div style={avatarStyle}>AL</div>
 }
 
-function canProceed(step: number, store: ReturnType<typeof useVendreStore>): boolean {
-  if (step === 1) return !!store.type_bien && !!store.adresse.trim() && !!store.surface && !!store.nb_pieces
-  if (step === 2) return !!store.etat && !!store.dpe
-  if (step === 3) return !!store.delai
-  if (step === 4) return !!store.prenom.trim() && !!store.nom.trim() && !!store.telephone.trim() && !!store.email.trim()
-  return false
-}
-
+/* ─────────────────────────────────────────────────────────────
+   Page principale
+───────────────────────────────────────────────────────────── */
 export default function VendrePage() {
-  const store = useVendreStore()
-  const { step, nextStep, prevStep } = store
-  const pct = ((step - 1) / 3) * 100
-  const valid = canProceed(step, store)
+  const { messages, currentQuestion, answers, progress, addMessage, setAnswer, setQuestion, setProgress } = useVendreStore()
+  const chatRef = useRef<HTMLDivElement>(null)
+  const section = getSectionForQuestion(currentQuestion)
+
+  // Scroll au dernier message
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
+  }, [messages])
+
+  function handleAnswer(key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], displayText: string) {
+    setAnswer(key, value)
+    addMessage({ from: 'user', text: displayText, timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) })
+    const next = getNextQuestion(currentQuestion, { ...answers, [key]: value })
+    const nextPct = getProgressForQuestion(next)
+    setProgress(nextPct)
+    if (next !== 'done') {
+      setTimeout(() => {
+        const msg = getALMessage(next, answers)
+        if (msg) addMessage({ from: 'al', text: msg, timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) })
+        setQuestion(next)
+      }, 400)
+    } else {
+      setTimeout(() => {
+        const msg = getALMessage('done', { ...answers, [key]: value })
+        addMessage({ from: 'al', text: msg, timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) })
+        setQuestion('done')
+        setProgress(100)
+      }, 400)
+    }
+  }
+
+  const tabs = [
+    { id: 'bien',    label: 'Bien',    Icon: Home },
+    { id: 'details', label: 'Détails', Icon: FileText },
+    { id: 'projet',  label: 'Projet',  Icon: Target },
+    { id: 'contact', label: 'Contact', Icon: User },
+  ]
 
   return (
-    <div style={page}>
-      <header style={nav}>
-        <div style={navInner}>
-          <Link href="/" style={navBack}>
-            <ChevronLeft size={16} /> Retour aux outils
-          </Link>
-          <a href="tel:+33613180168" style={navPhone}>
-            <Phone size={14} color={brand} /> 06 13 18 01 68
+    <div style={pageStyle}>
+
+      {/* ── Navbar ── */}
+      <header style={navStyle}>
+        {/* Ligne 1 : avatar + nom + retour + tel */}
+        <div style={navTopStyle}>
+          <div style={navLeftStyle}>
+            <Link href="/" style={backLinkStyle}>
+              <ChevronLeft size={14} />
+            </Link>
+            <Avatar />
+            <div>
+              <div style={navNameStyle}>Alex Lopez</div>
+              <div style={navSubStyle}>Mandataire IAD · Provence Verte</div>
+            </div>
+          </div>
+          <a href="tel:+33613180168" style={phoneLinkStyle}>
+            <Phone size={13} color={C.brand} />
+            06 13 18 01 68
           </a>
+        </div>
+
+        {/* Barre de progression */}
+        <div style={progressBarWrap}>
+          <div style={progressFill(progress)} />
+        </div>
+
+        {/* Onglets sections */}
+        <div style={progressTabs}>
+          {tabs.map((tab) => {
+            const active = section === tab.id
+            const Icon = tab.Icon
+            return (
+              <div key={tab.id} style={tabStyle(active)}>
+                <Icon size={13} />
+                {tab.label}
+              </div>
+            )
+          })}
+          <div style={tabStyle(false)}>
+            <span style= fontSize: '11px', fontWeight: 700, color: C.brand >{progress}%</span>
+          </div>
         </div>
       </header>
 
-      <main style={main}>
-        <div style={progressWrap}>
-          <div style={progressHeader}>
-            <span style={progressLabel}>🏠 Estimation vendeur</span>
-            <span style={progressCount}>Étape {step} / 4</span>
-          </div>
-          <div style={progressBar}>
-            <div style={progressFill(pct)} />
-          </div>
-          <div style={stepsRow}>
-            {STEPS.map((st) => (
-              <div key={st.n} style={stepDot(step === st.n, step > st.n)}>
-                {step > st.n ? <Check size={12} /> : st.n}
+      {/* ── Chat ── */}
+      <div ref={chatRef} style={chatAreaStyle}>
+        {messages.map((msg) => (
+          <div key={msg.id}>
+            {msg.from === 'al' ? (
+              <div style={msgRowAlStyle}>
+                <Avatar />
+                <div>
+                  <div style={msgAl}>{msg.text}</div>
+                  <div style={tsStyle}>{msg.timestamp}</div>
+                </div>
               </div>
-            ))}
+            ) : (
+              <div style={msgRowUserStyle}>
+                <div>
+                  <div style={msgUser}>{msg.text}</div>
+                  <div style= ...tsStyle, textAlign: 'right' >{msg.timestamp}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* ── Zone de saisie ── */}
+      {currentQuestion !== 'done' && (
+        <div style={inputZoneStyle}>
+          <div style={inputInner}>
+            <InputForQuestion
+              question={currentQuestion}
+              answers={answers}
+              onAnswer={handleAnswer}
+            />
           </div>
         </div>
+      )}
 
-        <div style={card}>
-          {step === 1 && <Step1 />}
-          {step === 2 && <Step2 />}
-          {step === 3 && <Step3 />}
-          {step === 4 && <Step4 />}
-        </div>
+    </div>
+  )
+}
 
-        <div style={navBtns}>
-          {step > 1
-            ? <button style={btnSecondary} onClick={prevStep}><ChevronLeft size={16} /> Précédent</button>
-            : <div />}
-          <button
-            style={valid ? btnPrimaryActive : btnPrimaryDisabled}
-            onClick={valid ? nextStep : undefined}
-            disabled={!valid}
-          >
-            {step === 4 ? 'Obtenir mon estimation' : 'Continuer'} <ChevronRight size={16} />
-          </button>
-        </div>
-      </main>
+/* ─────────────────────────────────────────────────────────────
+   Composant de saisie selon la question
+───────────────────────────────────────────────────────────── */
+function InputForQuestion({ question, answers, onAnswer }: {
+  question: QuestionId
+  answers: VendreAnswers
+  onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
+}) {
+  if (question === 'adresse') return <AdresseInput onAnswer={onAnswer} />
+  if (question === 'type_bien') return <CardsInput options={TYPE_BIEN_OPTIONS} onSelect={(v, l) => onAnswer('type_bien', v, l)} />
+  if (question === 'sous_type_maison') return (
+    <CardsInput
+      options={[{ value: 'mitoyenne', label: 'Mitoyenne', emoji: '🏘️' }, { value: 'individuelle', label: 'Individuelle', emoji: '🏠' }]}
+      onSelect={(v, l) => onAnswer('sous_type', v, l)}
+    />
+  )
+  if (question === 'surface') return <SliderInput unit="m²" min={5} max={1000} defaultValue={80} label="Surface habitable" onValidate={(v) => onAnswer('surface', v, `${v} m²`)} />
+  if (question === 'surface_terrain') return <SliderInput unit="m²" min={50} max={5000} defaultValue={500} label="Surface terrain" onValidate={(v) => onAnswer('surface_terrain', v, `${v} m²`)} />
+  if (question === 'nb_pieces') return (
+    <CardsInput
+      options={['1','2','3','4','5','6+'].map((n) => ({ value: n, label: n, emoji: '' }))}
+      onSelect={(v, l) => onAnswer('nb_pieces', parseInt(v) || 6, `${l} pièce${parseInt(v) > 1 ? 's' : ''}`)}
+      cols={3}
+    />
+  )
+  if (question === 'etat') return <CardsInput options={ETAT_OPTIONS} onSelect={(v, l) => onAnswer('etat', v, l)} cols={2} />
+  if (question === 'equipements') return <MultiSelectInput options={EQUIPEMENTS_OPTIONS} onValidate={(selected) => onAnswer('equipements', selected, selected.length ? selected.join(', ') : 'Aucun équipement')} />
+  if (question === 'delai') return <CardsInput options={DELAI_OPTIONS} onSelect={(v, l) => onAnswer('delai', v, l)} cols={2} />
+  if (question === 'coordonnees') return <CoordonneesInput onAnswer={onAnswer} />
+  return null
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Saisie adresse
+───────────────────────────────────────────────────────────── */
+function AdresseInput({ onAnswer }: { onAnswer: (key: keyof VendreAnswers, value: string, display: string) => void }) {
+  const [val, setVal] = useState('')
+  function submit() {
+    if (!val.trim()) return
+    onAnswer('adresse', val.trim(), val.trim())
+  }
+  return (
+    <div style={textInputRow}>
+      <input
+        style= ...textInputStyle, flex: 1 
+        type="text"
+        placeholder="Entrez votre adresse..."
+        value={val}
+        onChange={(e) => setVal(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && submit()}
+        autoFocus
+      />
+      <button style={sendBtnStyle} onClick={submit}>
+        <Send size={16} color={C.white} />
+      </button>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Cards de choix
+───────────────────────────────────────────────────────────── */
+function CardsInput({ options, onSelect, cols = 2 }: {
+  options: { value: string; label: string; emoji: string }[]
+  onSelect: (value: string, label: string) => void
+  cols?: number
+}) {
+  const gridStyle: CSSProperties = { display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: '10px' }
+  return (
+    <div style={gridStyle}>
+      {options.map((opt) => (
+        <button key={opt.value} style={cardStyle(false)} onClick={() => onSelect(opt.value, opt.label)}>
+          {opt.emoji && <span style= fontSize: '20px' >{opt.emoji}</span>}
+          <span>{opt.label}</span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Slider
+───────────────────────────────────────────────────────────── */
+function SliderInput({ unit, min, max, defaultValue, label, onValidate }: {
+  unit: string; min: number; max: number; defaultValue: number
+  label: string; onValidate: (v: number) => void
+}) {
+  const [val, setVal] = useState(defaultValue)
+  return (
+    <div style={sliderWrap}>
+      <div style={sliderValueRow}>
+        <div style={sliderValBox}>{val}</div>
+        <span style={sliderUnit}>{unit}</span>
+      </div>
+      <input
+        type="range" min={min} max={max} value={val}
+        onChange={(e) => setVal(Number(e.target.value))}
+        style= width: '100%', accentColor: C.brand 
+      />
+      <div style={sliderLabels}>
+        <span style={sliderLabel}>{min} {unit}</span>
+        <span style={sliderLabel}>{max} {unit}</span>
+      </div>
+      <button style={validateBtnStyle} onClick={() => onValidate(val)}>
+        <Send size={14} /> Valider
+      </button>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Multi-select
+───────────────────────────────────────────────────────────── */
+function MultiSelectInput({ options, onValidate }: {
+  options: string[]
+  onValidate: (selected: string[]) => void
+}) {
+  const [selected, setSelected] = useState<string[]>([])
+  function toggle(opt: string) {
+    setSelected((prev) => prev.includes(opt) ? prev.filter((x) => x !== opt) : [...prev, opt])
+  }
+  return (
+    <div>
+      <div style={cardsGrid}>
+        {options.map((opt) => {
+          const active = selected.includes(opt)
+          const checkStyle: CSSProperties = {
+            width: '18px', height: '18px', borderRadius: '4px',
+            border: `2px solid ${active ? C.brand : C.border}`,
+            backgroundColor: active ? C.brand : C.white,
+            flexShrink: 0,
+          }
+          const rowStyle: CSSProperties = {
+            display: 'flex', alignItems: 'center', gap: '10px',
+            padding: '12px 14px', borderRadius: '12px', cursor: 'pointer',
+            border: `1.5px solid ${active ? C.brand : C.border}`,
+            backgroundColor: active ? C.brandLight : C.white,
+            fontSize: '13px', fontWeight: 500, color: active ? C.brand : C.fg,
+          }
+          return (
+            <div key={opt} style={rowStyle} onClick={() => toggle(opt)}>
+              <div style={checkStyle} />
+              <span>{opt}</span>
+            </div>
+          )
+        })}
+      </div>
+      <button style= ...validateBtnStyle, marginTop: '12px'  onClick={() => onValidate(selected)}>
+        {selected.length === 0 ? 'Aucun équipement' : `Valider (${selected.length} sélectionné${selected.length > 1 ? 's' : ''})`}
+        <Send size={14} />
+      </button>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Coordonnées
+───────────────────────────────────────────────────────────── */
+function CoordonneesInput({ onAnswer }: {
+  onAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers], display: string) => void
+}) {
+  const [prenom, setPrenom] = useState('')
+  const [nom, setNom] = useState('')
+  const [tel, setTel] = useState('')
+  const [email, setEmail] = useState('')
+  const valid = prenom.trim() && nom.trim() && tel.trim() && email.trim()
+
+  const coordWrap: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '10px' }
+  const coordRow: CSSProperties  = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+
+  function submit() {
+    if (!valid) return
+    onAnswer('prenom', prenom.trim(), '')
+    onAnswer('nom', nom.trim(), '')
+    onAnswer('telephone', tel.trim(), '')
+    onAnswer('email', email.trim(), `${prenom} ${nom}`)
+  }
+
+  return (
+    <div style={coordWrap}>
+      <div style={coordRow}>
+        <input style={textInputStyle} placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+        <input style={textInputStyle} placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)} />
+      </div>
+      <input style={textInputStyle} type="tel" placeholder="Téléphone" value={tel} onChange={(e) => setTel(e.target.value)} />
+      <input style={textInputStyle} type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <button
+        style= ...validateBtnStyle, opacity: valid ? 1 : 0.5, cursor: valid ? 'pointer' : 'not-allowed' 
+        onClick={submit}
+        disabled={!valid}
+      >
+        Obtenir mon estimation <Send size={14} />
+      </button>
     </div>
   )
 }
