@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useVendreStore } from '@/stores/vendreStore'
 import type { VendreAnswers, QuestionId } from '@/stores/vendreStore'
 import type { CSSProperties } from 'react'
-import { Phone, ChevronLeft, Send, Check, MapPin, Edit3, Zap, Map } from 'lucide-react'
+import { Phone, ChevronLeft, Send, Check, MapPin, Edit3, Zap, Map, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 
 const brand      = '#0066FF'
@@ -23,11 +23,13 @@ const pageSt: CSSProperties      = { minHeight: '100vh', backgroundColor: surfac
 const navSt: CSSProperties       = { position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backgroundColor: white, borderBottom: '1px solid ' + border }
 const navTopSt: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }
 const navLeftSt: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '10px' }
+const navRightSt: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '12px' }
 const avatarSt: CSSProperties    = { width: '36px', height: '36px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, flexShrink: 0 }
 const navNameSt: CSSProperties   = { fontSize: '14px', fontWeight: 700, color: fg }
 const navSubSt: CSSProperties    = { fontSize: '11px', color: muted }
 const backSt: CSSProperties      = { display: 'flex', alignItems: 'center', fontSize: '12px', fontWeight: 600, color: muted, textDecoration: 'none' }
 const phoneSt: CSSProperties     = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: fg, textDecoration: 'none' }
+const restartBtnSt: CSSProperties = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 500, color: muted, backgroundColor: 'transparent', border: '1px solid ' + border, borderRadius: '999px', padding: '5px 10px', cursor: 'pointer' }
 const chatWrap: CSSProperties    = { maxWidth: W, margin: '0 auto', padding: '148px 20px 40px', display: 'flex', flexDirection: 'column', gap: '16px' }
 const rowAl: CSSProperties       = { display: 'flex', gap: '10px', alignItems: 'flex-end' }
 const rowUser: CSSProperties     = { display: 'flex', justifyContent: 'flex-end' }
@@ -72,6 +74,16 @@ const infoCardYellow: CSSProperties = { display: 'flex', alignItems: 'center', g
 const infoTxt: CSSProperties        = { fontSize: '13px', fontWeight: 500, color: fg }
 const dpeBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#dbeafe', color: brand }
 const ignBadgeSt: CSSProperties     = { fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', marginLeft: 'auto', backgroundColor: '#fef9c3', color: '#854d0e' }
+
+/* Modal confirmation */
+const overlayStyle: CSSProperties   = { position: 'fixed', inset: 0, backgroundColor: 'rgba(15,23,42,0.45)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }
+const modalCard: CSSProperties      = { backgroundColor: white, borderRadius: '20px', padding: '28px 28px 24px', maxWidth: '360px', width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }
+const modalIcon: CSSProperties      = { fontSize: '32px', textAlign: 'center', marginBottom: '14px' }
+const modalTitle: CSSProperties     = { fontSize: '17px', fontWeight: 800, color: fg, letterSpacing: '-0.02em', marginBottom: '8px', textAlign: 'center' }
+const modalSub: CSSProperties       = { fontSize: '13px', fontWeight: 300, color: muted, lineHeight: 1.6, textAlign: 'center', marginBottom: '24px' }
+const modalBtns: CSSProperties      = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }
+const modalBtnCancel: CSSProperties = { padding: '12px', borderRadius: '12px', border: '1.5px solid ' + border, backgroundColor: white, fontSize: '13px', fontWeight: 600, color: fg, cursor: 'pointer' }
+const modalBtnConfirm: CSSProperties = { padding: '12px', borderRadius: '12px', border: 'none', backgroundColor: '#EF4444', fontSize: '13px', fontWeight: 600, color: white, cursor: 'pointer' }
 
 /* Stepper */
 const stepperWrap: CSSProperties = { maxWidth: W, margin: '0 auto', padding: '10px 20px 12px', display: 'flex', alignItems: 'center' }
@@ -146,7 +158,7 @@ function rgpdBoxSt(active: boolean): CSSProperties {
   return { width: '18px', height: '18px', borderRadius: '4px', border: '2px solid ' + (active ? brand : border), backgroundColor: active ? brand : white, flexShrink: 0, marginTop: '1px', display: 'flex', alignItems: 'center', justifyContent: 'center' }
 }
 
-/* -------- Stepper — Fragment avec key -------- */
+/* -------- Stepper -------- */
 const STEPS = [
   { n: 1, label: 'Bien',    qs: ['adresse','type_bien','sous_type_maison','surface','surface_terrain','nb_pieces'] },
   { n: 2, label: 'D\u00e9tails', qs: ['etat','equipements'] },
@@ -171,12 +183,27 @@ function Stepper({ currentQ }: { currentQ: QuestionId }) {
               </div>
               <span style={st === 'done' ? lblDone : st === 'curr' ? lblCurr : lblFutu}>{step.label}</span>
             </div>
-            {i < STEPS.length - 1 && (
-              <div style={connOut}><div style={step.n < cs ? connOn : connOff} /></div>
-            )}
+            {i < STEPS.length - 1 && (<div style={connOut}><div style={step.n < cs ? connOn : connOff} /></div>)}
           </Fragment>
         )
       })}
+    </div>
+  )
+}
+
+/* -------- Modal confirmation -------- */
+function ConfirmModal({ onCancel, onConfirm }: { onCancel: () => void; onConfirm: () => void }) {
+  return (
+    <div style={overlayStyle} onClick={onCancel}>
+      <div style={modalCard} onClick={(e) => e.stopPropagation()}>
+        <div style={modalIcon}>\u267b\ufe0f</div>
+        <div style={modalTitle}>Recommencer depuis le d\u00e9but ?</div>
+        <div style={modalSub}>Votre progression actuelle sera effac\u00e9e et le formulaire sera r\u00e9initialis\u00e9.</div>
+        <div style={modalBtns}>
+          <button style={modalBtnCancel} onClick={onCancel}>Annuler</button>
+          <button style={modalBtnConfirm} onClick={onConfirm}>Recommencer</button>
+        </div>
+      </div>
     </div>
   )
 }
@@ -191,11 +218,11 @@ const TYPE_BIEN = [
   { value: 'autre',       label: 'Autre',       emoji: '...' },
 ]
 const ETAT = [
-  { value: 'neuf',          label: 'Neuf / r\u00e9cent',      emoji: '\ud83c\udfc6' },
-  { value: 'tres_bon_etat', label: 'Tr\u00e8s bon \u00e9tat',  emoji: '\u2728' },
-  { value: 'bon_etat',      label: 'Bon \u00e9tat',           emoji: '\ud83d\udc4d' },
-  { value: 'rafraichir',    label: '\u00c0 rafra\u00eechir',   emoji: '\ud83d\udd8c\ufe0f' },
-  { value: 'travaux',       label: 'Travaux importants',      emoji: '\ud83d\udd28' },
+  { value: 'neuf',          label: 'Neuf / r\u00e9cent',  emoji: '\ud83c\udfc6' },
+  { value: 'tres_bon_etat', label: 'Tr\u00e8s bon \u00e9tat', emoji: '\u2728' },
+  { value: 'bon_etat',      label: 'Bon \u00e9tat',        emoji: '\ud83d\udc4d' },
+  { value: 'rafraichir',    label: '\u00c0 rafra\u00eechir', emoji: '\ud83d\udd8c\ufe0f' },
+  { value: 'travaux',       label: 'Travaux importants', emoji: '\ud83d\udd28' },
 ]
 const DELAI = [
   { value: 'immediat',   label: 'Imm\u00e9diat',   emoji: '\ud83d\udd25' },
@@ -264,9 +291,10 @@ type UiState = 'chat' | 'calcul' | 'verification'
 export default function VendrePage() {
   const router = useRouter()
   const { messages, currentQuestion, answers, addMessage, setAnswer, setQuestion, reset } = useVendreStore()
-  const bottomRef = useRef<HTMLDivElement>(null)
-  const [uiState, setUiState] = useState<UiState>('chat')
-  const [token, setToken]     = useState('')
+  const bottomRef  = useRef<HTMLDivElement>(null)
+  const [uiState, setUiState]     = useState<UiState>('chat')
+  const [token, setToken]         = useState('')
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, currentQuestion])
 
@@ -303,11 +331,16 @@ export default function VendrePage() {
 
   function handleVerifComplete(chosen: number) { setAnswer('surface_terrain', chosen); router.push('/resultats/' + token) }
 
+  function confirmRestart() { reset(); setUiState('chat'); setShowModal(false) }
+
   if (uiState === 'calcul') return <CalculLoading onComplete={handleCalculComplete} />
   if (uiState === 'verification') return <VerificationDonnees userSurface={answers.surface_terrain ?? 0} cadastreSurface={answers.cadastre_surface ?? 0} onComplete={handleVerifComplete} />
 
   return (
     <div style={pageSt}>
+      {/* Modal de confirmation */}
+      {showModal && <ConfirmModal onCancel={() => setShowModal(false)} onConfirm={confirmRestart} />}
+
       <header style={navSt}>
         <div style={navTopSt}>
           <div style={navLeftSt}>
@@ -315,7 +348,13 @@ export default function VendrePage() {
             <Avatar />
             <div><div style={navNameSt}>Alex Lopez</div><div style={navSubSt}>Mandataire IAD - Provence Verte</div></div>
           </div>
-          <a href="tel:+33613180168" style={phoneSt}><Phone size={13} color={brand} /> 06 13 18 01 68</a>
+          <div style={navRightSt}>
+            <button style={restartBtnSt} onClick={() => setShowModal(true)}>
+              <RotateCcw size={12} />
+              Recommencer
+            </button>
+            <a href="tel:+33613180168" style={phoneSt}><Phone size={13} color={brand} /></a>
+          </div>
         </div>
         <Stepper currentQ={currentQuestion} />
       </header>
@@ -332,7 +371,7 @@ export default function VendrePage() {
         ))}
         {currentQuestion !== 'done' && (
           <div style={inlineZone}>
-            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} onRestart={() => { reset(); setUiState('chat') }} />
+            <InputZone question={currentQuestion} answers={answers} onAnswer={handleAnswer} onFinalSubmit={handleFinalSubmit} onRestart={() => setShowModal(true)} />
           </div>
         )}
         <div ref={bottomRef} />
@@ -361,7 +400,6 @@ function InputZone({ question, answers, onAnswer, onFinalSubmit, onRestart }: {
   return null
 }
 
-/* -------- Adresse + DPE + Parcelle -------- */
 const API_ADRESSE = 'https://api-adresse.data.gouv.fr/search/'
 interface Suggestion { label: string; lat: number; lng: number }
 interface AdresseInfos { dpe?: { lettre: string }; parcelle?: { id: string; commune: string; surface: number | null } }
