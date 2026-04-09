@@ -19,9 +19,7 @@ export interface VendreAnswers {
   surface_terrain?: number
   nb_pieces?: number
   etat?: string
-  travaux?: string[]
   equipements?: string[]
-  sous_sol?: string
   delai?: string
   civilite?: 'monsieur' | 'madame'
   prenom?: string
@@ -63,7 +61,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: '1',
     from: 'al',
-    text: "Bonjour ! 👋 Je suis Alex Lopez, votre conseiller immobilier. Je vais vous aider à estimer la valeur de votre bien en quelques minutes.\n\nCommençons par l'adresse de votre bien s'il vous plaît !",
+    text: "Bonjour ! Je suis Alex Lopez, votre conseiller immobilier. Je vais vous aider a estimer la valeur de votre bien en quelques minutes.\n\nCommen\u00e7ons par l'adresse de votre bien s'il vous pla\u00eet !",
     timestamp: now(),
   },
 ]
