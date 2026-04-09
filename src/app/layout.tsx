@@ -28,7 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={inter.variable}>
-      <body className="font-sans antialiased">
+      <body style=
+        fontFamily: 'var(--font-inter), system-ui, sans-serif',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+        margin: 0,
+        padding: 0,
+      >
         {children}
       </body>
     </html>
