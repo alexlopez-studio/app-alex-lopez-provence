@@ -12,7 +12,7 @@ const outils = [
     icon: Home,
     label: 'Estimer mon bien',
     description:
-      'Obtenez une estimation gratuite de votre bien en 3 minutes, basée sur les ventes réelles du marché.',
+      `Obtenez une estimation gratuite de votre bien en 3 minutes, basée sur les ventes réelles du marché.`,
     cta: 'Estimer maintenant',
     color: 'brand',
   },
@@ -21,7 +21,7 @@ const outils = [
     icon: Search,
     label: 'Définir mon projet achat',
     description:
-      'Décrivez votre projet et recevez une analyse personnalisée des biens disponibles dans votre zone.',
+      `Décrivez votre projet et recevez une analyse personnalisée des biens disponibles dans votre zone.`,
     cta: 'Démarrer mon projet',
     color: 'brand',
   },
@@ -30,8 +30,8 @@ const outils = [
     icon: ClipboardCheck,
     label: 'Audit immobilier express',
     description:
-      'Évaluez l'état général d'un bien avant achat ou avant mise en vente avec notre checklist experte.',
-    cta: 'Lancer l'audit',
+      `Évaluez l'état général d'un bien avant achat ou avant mise en vente avec notre checklist experte.`,
+    cta: `Lancer l'audit`,
     color: 'brand',
   },
 ]
@@ -67,15 +67,17 @@ export default function HubPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#64748B] mb-4">
             Provence Verte &amp; Haut-Var
           </p>
-          <h1 className="font-black leading-[1.1] tracking-tight text-[#0F172A] mb-6"
-              style= fontSize: 'clamp(2rem, 5vw, 3.5rem)' >
+          <h1
+            className="font-black leading-[1.1] tracking-tight text-[#0F172A] mb-6"
+            style= fontSize: 'clamp(2rem, 5vw, 3.5rem)' 
+          >
             Vos outils immobiliers
             <br />
             <span className="text-[#0066FF]">gratuits et personnalisés</span>
           </h1>
           <p className="text-lg font-light leading-relaxed text-[#64748B] max-w-2xl mx-auto">
-            Estimation de vente, projet d'achat ou audit de bien — obtenez
-            des résultats personnalisés en quelques minutes, sans engagement.
+            {`Estimation de vente, projet d'achat ou audit de bien — obtenez
+            des résultats personnalisés en quelques minutes, sans engagement.`}
           </p>
         </div>
       </section>
