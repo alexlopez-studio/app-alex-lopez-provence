@@ -97,19 +97,18 @@ function cntBadge2(active: boolean, accentColor?: string): CSSProperties {
   return { fontSize: '10px', fontWeight: 700, color: active ? white : muted, backgroundColor: active ? c : border, borderRadius: '999px', padding: '1px 6px' }
 }
 
-/* ── Next.js 15 : searchParams est une Promise ── */
 export default async function LeadsPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string; type?: string; temp?: string }>
 }) {
-  const sp   = await searchParams   // ← await obligatoire en Next.js 15
+  const sp = await searchParams
 
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { get: (name) => cookieStore.get(name)?.value } }
+    { cookies: { get: (name: string) => cookieStore.get(name)?.value } }
   )
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) redirect('/auth/login')
@@ -165,7 +164,6 @@ export default async function LeadsPage({
   return (
     <CrmLayout>
       <div style={pageWrap}>
-
         <div style={topRow}>
           <div style={titleWrap}>
             <h1 style={pageTitle}>Prospects</h1>
@@ -218,7 +216,6 @@ export default async function LeadsPage({
                 <span style={scoreWrap}>Score</span>
                 <span />
               </div>
-
               {filtered.map((lead) => {
                 const prenom   = (lead.prenom as string) ?? ''
                 const nom      = (lead.nom    as string) ?? ''
@@ -236,7 +233,6 @@ export default async function LeadsPage({
                 const typeBien = fd.type_bien ?? ''
                 const date     = new Date(lead.created_at as string).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
                 const isNew    = statut === 'nouveau'
-
                 return (
                   <Link key={lead.id as string} href={'/leads/' + lead.id} style={rowSt}>
                     <div style={checkboxSt} />
@@ -247,33 +243,21 @@ export default async function LeadsPage({
                           {prenom && nom ? prenom + ' ' + nom : 'Anonyme'}
                           {isNew && <span style={newBadge}>New</span>}
                         </div>
-                        <div style={leadInfo}>
-                          {adresse}{typeBien ? ' \u00b7 ' + typeBien : ''}{' \u00b7 ' + date}
-                        </div>
+                        <div style={leadInfo}>{adresse}{typeBien ? ' \u00b7 ' + typeBien : ''}{' \u00b7 ' + date}</div>
                       </div>
                     </div>
                     <div><span style={badge(tCfg.color, tCfg.bg)}>{tCfg.label}</span></div>
                     <div style={estimWrap}>
-                      {bas && haut ? (
-                        <>
-                          <div style={estimSt}>{fmt(bas) + ' \u2013 ' + fmt(haut)}</div>
-                          {prixM2 && <div style={estimM2}>{prixM2.toLocaleString('fr-FR') + ' \u20ac/m\u00b2'}</div>}
-                        </>
-                      ) : (
-                        <div style={estimM2}>Non estim\u00e9</div>
-                      )}
+                      {bas && haut ? (<><div style={estimSt}>{fmt(bas) + ' \u2013 ' + fmt(haut)}</div>{prixM2 && <div style={estimM2}>{prixM2.toLocaleString('fr-FR') + ' \u20ac/m\u00b2'}</div>}</>) : (<div style={estimM2}>Non estim\u00e9</div>)}
                     </div>
                     <div style={statusWrap}><span style={badge(sCfg.color, sCfg.bg)}>{sCfg.label}</span></div>
                     <div style={scoreWrap}>
-                      <div style={scoreCircle(conf)} title={getTemperature(conf).label + (conf ? ' \u00b7 ' + conf + '/100' : '')}>
-                        {conf ?? '\u2014'}
-                      </div>
+                      <div style={scoreCircle(conf)}>{conf ?? '\u2014'}</div>
                     </div>
                     <div style={menuSt}>\u22ef</div>
                   </Link>
                 )
               })}
-
               <div style={paginationSt}>
                 <span>Afficher 10 \u00b7 par page</span>
                 <span>{'1\u2013' + filtered.length + ' sur ' + filtered.length}</span>
@@ -282,11 +266,10 @@ export default async function LeadsPage({
           ) : (
             <div style={emptyWrap}>
               <div style={emptyTxt}>{q ? 'Aucun r\u00e9sultat pour "' + q + '".' : 'Aucun prospect pour l\'instant.'}</div>
-              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads du formulaire appara\u00eetront ici d\u00e8s le d\u00e9ploiement.'}</div>
+              <div style={emptySub}>{q ? 'Essayez une autre recherche.' : 'Les leads appara\u00eetront ici d\u00e8s le d\u00e9ploiement.'}</div>
             </div>
           )}
         </div>
-
       </div>
     </CrmLayout>
   )

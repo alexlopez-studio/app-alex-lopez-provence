@@ -92,19 +92,18 @@ function relanceBorderSt(last: boolean): CSSProperties {
   return { ...relanceItemSt, borderBottom: last ? 'none' : '1px solid ' + border }
 }
 
-/* ── Next.js 15 : params est une Promise ── */
 export default async function LeadDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
-  const { id } = await params   // ← await obligatoire en Next.js 15
+  const { id } = await params
 
   const cookieStore = cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { get: (name) => cookieStore.get(name)?.value } }
+    { cookies: { get: (name: string) => cookieStore.get(name)?.value } }
   )
 
   const { data: { session } } = await supabase.auth.getSession()
@@ -142,7 +141,6 @@ export default async function LeadDetailPage({
   return (
     <CrmLayout>
       <div style={pageWrap}>
-
         <Link href="/leads" style={backLnk}>{'\u2190 Prospects'}</Link>
 
         <div style={topBar}>
@@ -156,9 +154,7 @@ export default async function LeadDetailPage({
             </div>
           </div>
           <div style={actionsRow}>
-            {lead.telephone && (
-              <a href={'tel:' + lead.telephone} style={btnCall}>{'\ud83d\udcde Appeler'}</a>
-            )}
+            {lead.telephone && (<a href={'tel:' + lead.telephone} style={btnCall}>{'\ud83d\udcde Appeler'}</a>)}
             <button style={btnSave}>Sauvegarder</button>
           </div>
         </div>
@@ -185,7 +181,6 @@ export default async function LeadDetailPage({
               </div>
             ))}
           </div>
-
           <div style={card}>
             <div style={cardTitle}>{'\u26a1 Activit\u00e9 du prospect'}</div>
             <div style={activityRow}>
@@ -195,9 +190,7 @@ export default async function LeadDetailPage({
                 <div style={activityDate}>{date}</div>
               </div>
             </div>
-            <div style={activityNote}>
-              {'Les ouvertures d\'emails, clics et consultations de rapport appara\u00eetront ici d\u00e8s qu\'ils se produiront.'}
-            </div>
+            <div style={activityNote}>{'Les ouvertures d\'emails et consultations de rapport appara\u00eetront ici.'}</div>
           </div>
         </div>
 
@@ -232,20 +225,16 @@ export default async function LeadDetailPage({
             </div>
             {delai && <div style={delaiTxt}>{'\ud83d\uddd3 Vente souhait\u00e9e : ' + (DELAI_LBL[delai] ?? delai)}</div>}
           </div>
-
           <div style={card}>
             <div style={cardTitle}>{'\ud83d\udcdd Statut & Notes'}</div>
             <div style={fieldLabel}>Statut</div>
             <select style={selectSt} defaultValue={statut}>
-              {Object.entries(STATUT_CONFIG).map(([k, v]) => (
-                <option key={k} value={k}>{v.label}</option>
-              ))}
+              {Object.entries(STATUT_CONFIG).map(([k, v]) => (<option key={k} value={k}>{v.label}</option>))}
             </select>
             <div style={fieldLabel}>{'Notes priv\u00e9es'}</div>
             <textarea style={notesArea} placeholder={'Ajoutez vos notes priv\u00e9es ici...'} defaultValue={lead.notes ?? ''} />
           </div>
         </div>
-
       </div>
     </CrmLayout>
   )
