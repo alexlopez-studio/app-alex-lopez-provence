@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export interface ChatMessage {
   id: string
@@ -9,6 +10,9 @@ export interface ChatMessage {
 
 export interface VendreAnswers {
   adresse?: string
+  lat?: number
+  lng?: number
+  cadastre_surface?: number | null
   type_bien?: string
   sous_type?: string
   surface?: number
@@ -18,13 +22,13 @@ export interface VendreAnswers {
   travaux?: string[]
   equipements?: string[]
   sous_sol?: string
-  proprietaire?: string
-  situation_juridique?: string
   delai?: string
+  civilite?: 'monsieur' | 'madame'
   prenom?: string
   nom?: string
   telephone?: string
   email?: string
+  rgpd?: boolean
 }
 
 export type QuestionId =
@@ -35,12 +39,9 @@ export type QuestionId =
   | 'surface_terrain'
   | 'nb_pieces'
   | 'etat'
-  | 'travaux'
   | 'equipements'
-  | 'sous_sol'
-  | 'proprietaire'
-  | 'situation_juridique'
   | 'delai'
+  | 'recapitulatif'
   | 'coordonnees'
   | 'done'
 
@@ -48,11 +49,9 @@ interface VendreState {
   messages: ChatMessage[]
   currentQuestion: QuestionId
   answers: VendreAnswers
-  progress: number
   addMessage: (msg: Omit<ChatMessage, 'id'>) => void
   setAnswer: (key: keyof VendreAnswers, value: VendreAnswers[keyof VendreAnswers]) => void
   setQuestion: (q: QuestionId) => void
-  setProgress: (p: number) => void
   reset: () => void
 }
 
@@ -64,7 +63,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: '1',
     from: 'al',
-    text: `Bonjour ! 👋 Je suis Alex Lopez, votre conseiller immobilier. Je vais vous aider à estimer la valeur de votre bien en quelques minutes.\n\nCommençons par l'adresse de votre bien s'il vous plaît !`,
+    text: "Bonjour ! 👋 Je suis Alex Lopez, votre conseiller immobilier. Je vais vous aider à estimer la valeur de votre bien en quelques minutes.\n\nCommençons par l'adresse de votre bien s'il vous plaît !",
     timestamp: now(),
   },
 ]
@@ -73,18 +72,19 @@ const initial = {
   messages: INITIAL_MESSAGES,
   currentQuestion: 'adresse' as QuestionId,
   answers: {} as VendreAnswers,
-  progress: 0,
 }
 
-export const useVendreStore = create<VendreState>((set) => ({
-  ...initial,
-  addMessage: (msg) =>
-    set((s) => ({
-      messages: [...s.messages, { ...msg, id: Date.now().toString() }],
-    })),
-  setAnswer: (key, value) =>
-    set((s) => ({ answers: { ...s.answers, [key]: value } })),
-  setQuestion: (q) => set({ currentQuestion: q }),
-  setProgress: (p) => set({ progress: p }),
-  reset: () => set(initial),
-}))
+export const useVendreStore = create<VendreState>()(
+  persist(
+    (set) => ({
+      ...initial,
+      addMessage: (msg) =>
+        set((s) => ({ messages: [...s.messages, { ...msg, id: Date.now().toString() }] })),
+      setAnswer: (key, value) =>
+        set((s) => ({ answers: { ...s.answers, [key]: value } })),
+      setQuestion: (q) => set({ currentQuestion: q }),
+      reset: () => set(initial),
+    }),
+    { name: 'vendre-store' }
+  )
+)
