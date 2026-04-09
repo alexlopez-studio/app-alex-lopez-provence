@@ -1,364 +1,137 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Home, Search, ClipboardCheck, ArrowRight, Phone } from 'lucide-react'
 import type { CSSProperties } from 'react'
+import { Home, Search, ClipboardCheck, ArrowRight, Phone, MapPin, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Outils immobiliers gratuits — Alex Lopez Provence',
+  title: 'Alex Lopez — Outils immobiliers',
+  description: 'Estimation gratuite, projet achat et audit immobilier en Provence Verte.',
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Design tokens — CdC site alex-lopez-provence
-   #0066FF brand / #0F172A foreground / #64748B muted
-   #E2E8F0 border / #F8FAFC surface / #EFF6FF brand-light
-   #10B981 success — Inter 300→900 — rounded-2xl — py-24
-───────────────────────────────────────────────────────────── */
+/* ─── Tokens CdC site-alex-lopez-provence ─── */
+const brand      = '#0066FF'
+const brandLight = '#EFF6FF'
+const fg         = '#0F172A'
+const muted      = '#64748B'
+const border     = '#E2E8F0'
+const surface    = '#F8FAFC'
+const white      = '#ffffff'
+const success    = '#10B981'
 
-const token = {
-  brand:       '#0066FF',
-  brandHover:  '#0052CC',
-  brandLight:  '#EFF6FF',
-  fg:          '#0F172A',
-  muted:       '#64748B',
-  border:      '#E2E8F0',
-  surface:     '#F8FAFC',
-  success:     '#10B981',
-  white:       '#ffffff',
-}
+/* ─── Styles ─── */
+const pageSt: CSSProperties    = { minHeight: '100vh', backgroundColor: surface, fontFamily: 'var(--font-inter), system-ui, sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px 60px' }
+const innerSt: CSSProperties   = { width: '100%', maxWidth: '480px', display: 'flex', flexDirection: 'column', alignItems: 'center' }
 
-const s: Record<string, CSSProperties> = {
+/* Header centré — style Cal.com */
+const avatarSt: CSSProperties  = { width: '80px', height: '80px', borderRadius: '999px', backgroundColor: brand, color: white, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.02em' }
+const nameSt: CSSProperties    = { fontSize: '22px', fontWeight: 900, color: fg, letterSpacing: '-0.03em', marginBottom: '4px', textAlign: 'center' }
+const titleSt: CSSProperties   = { fontSize: '13px', fontWeight: 500, color: muted, marginBottom: '16px', textAlign: 'center' }
+const metaRow: CSSProperties   = { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '32px', flexWrap: 'wrap' }
+const metaItem: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 500, color: muted }
+const phoneLnk: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 600, color: brand, textDecoration: 'none' }
 
-  /* Page */
-  page: {
-    minHeight: '100vh',
-    backgroundColor: token.white,
-    fontFamily: '"Inter", system-ui, sans-serif',
-    color: token.fg,
-  },
+/* Divider */
+const divSt: CSSProperties     = { width: '100%', height: '1px', backgroundColor: border, marginBottom: '24px' }
 
-  /* ── Navbar ── fixed, z-50, bg-white, border-b */
-  nav: {
-    position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-    backgroundColor: token.white,
-    borderBottom: `1px solid ${token.border}`,
-  },
-  navInner: {
-    maxWidth: '75rem', margin: '0 auto', padding: '20px 24px',
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-  },
-  navLeft: {
-    display: 'flex', alignItems: 'center', gap: '12px',
-  },
-  navName: {
-    fontSize: '15px', fontWeight: 800, color: token.fg,
-    letterSpacing: '-0.02em',
-  },
-  navTag: {
-    fontSize: '10px', fontWeight: 600,
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.18em', color: token.muted,
-    border: `1px solid ${token.border}`,
-    borderRadius: '999px', padding: '3px 10px',
-  },
-  navPhone: {
-    display: 'flex', alignItems: 'center', gap: '6px',
-    fontSize: '13px', fontWeight: 600, color: token.fg,
-    textDecoration: 'none',
-  },
+/* Section label */
+const sectionLbl: CSSProperties = { width: '100%', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.18em', color: muted, marginBottom: '12px' }
 
-  /* ── Container — max-w-[75rem] mx-auto px-6 ── */
-  wrap: {
-    maxWidth: '75rem', margin: '0 auto', padding: '0 24px',
-  },
+/* Cards */
+const cardLnk: CSSProperties   = { display: 'flex', alignItems: 'center', gap: '14px', width: '100%', backgroundColor: white, borderRadius: '14px', border: '1px solid ' + border, padding: '18px 20px', textDecoration: 'none', color: 'inherit', marginBottom: '10px', transition: 'box-shadow 0.15s ease, transform 0.15s ease' }
+const cardIcon: CSSProperties  = { width: '40px', height: '40px', borderRadius: '10px', backgroundColor: brandLight, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }
+const cardBody: CSSProperties  = { flex: 1 }
+const cardTitle: CSSProperties = { fontSize: '14px', fontWeight: 700, color: fg, marginBottom: '2px' }
+const cardSub: CSSProperties   = { fontSize: '12px', fontWeight: 400, color: muted }
+const cardMeta: CSSProperties  = { display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 600, color: success, marginTop: '4px' }
+const cardArrow: CSSProperties = { flexShrink: 0, color: muted }
 
-  /* ── Hero — py-24 ── */
-  hero: {
-    paddingTop: '136px',   /* 64px nav + 72px section */
-    paddingBottom: '96px',
-    backgroundColor: token.white,
-    textAlign: 'center' as const,
-  },
-  eyebrow: {
-    /* CdC : text-xs font-semibold uppercase tracking-[0.18em] */
-    fontSize: '11px', fontWeight: 600,
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.18em', color: token.muted,
-    marginBottom: '16px',
-  },
-  h1: {
-    /* CdC : font-black leading-[1.1] tracking-tight clamp(36px, 6vw, 64px) */
-    fontSize: 'clamp(36px, 6vw, 64px)',
-    fontWeight: 900, lineHeight: 1.1,
-    letterSpacing: '-0.03em', color: token.fg,
-    marginBottom: '24px',
-  },
-  h1Accent: {
-    color: token.brand,
-  },
-  heroSub: {
-    /* CdC : text-lg font-light leading-relaxed */
-    fontSize: '18px', fontWeight: 300, lineHeight: 1.7,
-    color: token.muted, maxWidth: '540px',
-    margin: '0 auto 40px',
-  },
-
-  /* Chips réassurance */
-  chips: {
-    display: 'flex', flexWrap: 'wrap' as const,
-    justifyContent: 'center', gap: '10px',
-  },
-  chip: {
-    fontSize: '12px', fontWeight: 500, color: token.fg,
-    backgroundColor: token.surface,
-    border: `1px solid ${token.border}`,
-    borderRadius: '999px', padding: '6px 14px',
-  },
-
-  /* ── Cards — py-24 bg-surface ── */
-  cardsSection: {
-    padding: '96px 0',
-    backgroundColor: token.surface,
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(288px, 1fr))',
-    gap: '24px',
-  },
-  /* CdC cards : rounded-2xl p-[28-32px] border shadow hover:-translate-y-0.5 shadow-md */
-  card: {
-    backgroundColor: token.white,
-    borderRadius: '16px',
-    border: `1px solid ${token.border}`,
-    padding: '32px',
-    display: 'flex', flexDirection: 'column' as const,
-    textDecoration: 'none', color: 'inherit',
-    transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-    cursor: 'pointer',
-  },
-  cardEyebrow: {
-    fontSize: '10px', fontWeight: 600,
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.18em', color: token.muted,
-    marginBottom: '20px',
-  },
-  cardIcon: {
-    width: '48px', height: '48px',
-    borderRadius: '12px',
-    backgroundColor: token.brandLight,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    marginBottom: '20px',
-  },
-  /* CdC h3 : text-xl font-black */
-  cardTitle: {
-    fontSize: '20px', fontWeight: 900,
-    color: token.fg, letterSpacing: '-0.02em',
-    marginBottom: '12px',
-  },
-  /* CdC body : text-sm / font-300 */
-  cardDesc: {
-    fontSize: '14px', fontWeight: 300, lineHeight: 1.7,
-    color: token.muted, flexGrow: 1, marginBottom: '16px',
-  },
-  cardBadge: {
-    fontSize: '11px', fontWeight: 600,
-    color: token.success, marginBottom: '24px',
-  },
-  cardFooter: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    paddingTop: '20px', borderTop: `1px solid ${token.border}`,
-  },
-  /* CdC label UI : text-xs font-semibold */
-  cardCta: {
-    fontSize: '12px', fontWeight: 600, color: token.brand,
-  },
-  cardArrow: {
-    width: '32px', height: '32px',
-    borderRadius: '999px', backgroundColor: token.brandLight,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-  },
-
-  /* ── CTA final — bg-brand-light ── */
-  cta: {
-    backgroundColor: token.brandLight,
-    padding: '96px 24px', textAlign: 'center' as const,
-  },
-  ctaEyebrow: {
-    fontSize: '11px', fontWeight: 600,
-    textTransform: 'uppercase' as const,
-    letterSpacing: '0.18em', color: token.brand,
-    marginBottom: '16px',
-  },
-  /* CdC h2 : font-black clamp(28px,4vw,48px) */
-  ctaH2: {
-    fontSize: 'clamp(28px, 4vw, 48px)',
-    fontWeight: 900, lineHeight: 1.15,
-    letterSpacing: '-0.03em', color: token.fg,
-    marginBottom: '16px',
-  },
-  ctaSub: {
-    fontSize: '16px', fontWeight: 300, color: token.muted,
-    marginBottom: '36px',
-  },
-  /* CdC btn primary : bg-brand text-white rounded-full */
-  btnPrimary: {
-    display: 'inline-flex', alignItems: 'center', gap: '10px',
-    backgroundColor: token.brand, color: token.white,
-    fontSize: '14px', fontWeight: 600,
-    padding: '14px 28px', borderRadius: '999px',
-    textDecoration: 'none',
-  },
-
-  /* ── Footer ── */
-  footer: {
-    borderTop: `1px solid ${token.border}`, padding: '24px',
-  },
-  footerInner: {
-    maxWidth: '75rem', margin: '0 auto',
-    display: 'flex', flexWrap: 'wrap' as const,
-    alignItems: 'center', justifyContent: 'space-between', gap: '8px',
-  },
-  footerText: {
-    fontSize: '12px', color: token.muted,
-  },
-  footerLink: {
-    color: token.muted, textDecoration: 'none',
-  },
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Data
-───────────────────────────────────────────────────────────── */
+/* Badge */
+const badgeSt: CSSProperties   = { display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: white, backgroundColor: brand, borderRadius: '999px', padding: '3px 10px', marginBottom: '20px' }
 
 const outils = [
   {
     href: '/vendre',
     icon: Home,
-    eyebrow: 'Propriétaire',
-    label: 'Estimer mon bien',
-    description: `Obtenez une fourchette de prix basée sur les ventes réelles DVF dans votre secteur. Résultat en 3 minutes.`,
-    cta: 'Estimer mon bien',
-    badge: 'Gratuit & sans engagement',
+    label: 'Estimation vendeur',
+    sub: 'Estimez la valeur de votre bien',
+    meta: 'Gratuit · 3 min',
   },
   {
     href: '/acheter',
     icon: Search,
-    eyebrow: 'Acheteur',
-    label: 'Définir mon projet',
-    description: `Décrivez votre recherche et recevez une analyse personnalisée de votre projet achat en Provence Verte.`,
-    cta: 'Démarrer mon projet',
-    badge: 'Résultat immédiat',
+    label: 'Projet acheteur',
+    sub: 'Définissez et qualifiez votre recherche',
+    meta: 'Gratuit · 2 min',
   },
   {
     href: '/audit',
     icon: ClipboardCheck,
-    eyebrow: 'Vendeur · Acheteur',
     label: 'Audit express',
-    description: `Évaluez l'état général d'un bien avec notre checklist experte avant achat ou avant mise en vente.`,
-    cta: `Lancer l'audit`,
-    badge: 'Score détaillé + PDF',
+    sub: "Évaluez l'état d'un bien avant achat",
+    meta: 'Gratuit · 3 min',
   },
 ]
 
-const chips = [
-  '✓ 100% gratuit',
-  '✓ Sans engagement',
-  '✓ Sans compte requis',
-  '✓ Résultat immédiat',
-]
-
-/* ─────────────────────────────────────────────────────────────
-   Page
-───────────────────────────────────────────────────────────── */
-
 export default function HubPage() {
   return (
-    <div style={s.page}>
+    <main style={pageSt}>
+      <div style={innerSt}>
 
-      {/* Navbar */}
-      <header style={s.nav}>
-        <div style={s.navInner}>
-          <div style={s.navLeft}>
-            <span style={s.navName}>Alex Lopez</span>
-            <span style={s.navTag}>Mandataire IAD</span>
-          </div>
-          <a href="tel:+33613180168" style={s.navPhone}>
-            <Phone size={14} color={token.brand} />
-            <span>06 13 18 01 68</span>
-          </a>
+        {/* Avatar + infos — header centré */}
+        <div style={avatarSt}>AL</div>
+        <h1 style={nameSt}>Alex Lopez</h1>
+        <p style={titleSt}>Mandataire IAD · Provence Verte & Haut-Var</p>
+
+        {/* Badge statut */}
+        <div style={badgeSt}>
+          <span style= color: brand >●</span>
+          Disponible
         </div>
-      </header>
 
-      {/* Hero */}
-      <section style={s.hero}>
-        <div style={s.wrap}>
-          <p style={s.eyebrow}>Provence Verte &amp; Haut-Var</p>
-          <h1 style={s.h1}>
-            Vos outils immobiliers<br />
-            <span style={s.h1Accent}>gratuits &amp; personnalisés</span>
-          </h1>
-          <p style={s.heroSub}>
-            {`Estimation, projet d'achat, audit — des résultats basés sur les données réelles du marché, en quelques minutes.`}
-          </p>
-          <div style={s.chips}>
-            {chips.map((c) => <span key={c} style={s.chip}>{c}</span>)}
-          </div>
+        {/* Méta-infos */}
+        <div style={metaRow}>
+          <span style={metaItem}><MapPin size={12} />Provence Verte</span>
+          <span style={metaItem}><Clock size={12} />Lun – Sam</span>
+          <a href="tel:+33613180168" style={phoneLnk}><Phone size={12} />06 13 18 01 68</a>
         </div>
-      </section>
 
-      {/* Cards */}
-      <section style={s.cardsSection}>
-        <div style={s.wrap}>
-          <div style={s.grid}>
-            {outils.map((o) => {
-              const Icon = o.icon
-              return (
-                <Link key={o.href} href={o.href} style={s.card}>
-                  <p style={s.cardEyebrow}>{o.eyebrow}</p>
-                  <div style={s.cardIcon}>
-                    <Icon size={22} color={token.brand} />
-                  </div>
-                  <h2 style={s.cardTitle}>{o.label}</h2>
-                  <p style={s.cardDesc}>{o.description}</p>
-                  <p style={s.cardBadge}>✓ {o.badge}</p>
-                  <div style={s.cardFooter}>
-                    <span style={s.cardCta}>{o.cta}</span>
-                    <div style={s.cardArrow}>
-                      <ArrowRight size={14} color={token.brand} />
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+        <div style={divSt} />
 
-      {/* CTA final */}
-      <section style={s.cta}>
-        <p style={s.ctaEyebrow}>Besoin d&apos;un conseil ?</p>
-        <h2 style={s.ctaH2}>Parlons de votre projet</h2>
-        <p style={s.ctaSub}>
-          Alex Lopez répond du lundi au samedi — directement, sans standardiste.
-        </p>
-        <a href="tel:+33613180168" style={s.btnPrimary}>
+        {/* Section outils */}
+        <p style={sectionLbl}>Vos outils immobiliers gratuits</p>
+
+        {outils.map((o) => {
+          const Icon = o.icon
+          return (
+            <Link key={o.href} href={o.href} style={cardLnk}>
+              <div style={cardIcon}>
+                <Icon size={20} color={brand} />
+              </div>
+              <div style={cardBody}>
+                <div style={cardTitle}>{o.label}</div>
+                <div style={cardSub}>{o.sub}</div>
+                <div style={cardMeta}>
+                  <span>✓</span>
+                  {o.meta}
+                </div>
+              </div>
+              <ArrowRight size={16} style={cardArrow} />
+            </Link>
+          )
+        })}
+
+        {/* Contact direct */}
+        <div style={divSt} />
+        <a href="tel:+33613180168" style={ctaBtn}>
           <Phone size={15} />
-          06 13 18 01 68
+          Appeler directement
         </a>
-      </section>
+        <p style={ctaSub}>Disponible du lundi au samedi · Réponse garantie</p>
 
-      {/* Footer */}
-      <footer style={s.footer}>
-        <div style={s.footerInner}>
-          <p style={s.footerText}>
-            © {new Date().getFullYear()} Alex Lopez · Mandataire IAD France
-          </p>
-          <p style={s.footerText}>
-            Provence Verte &amp; Haut-Var ·{' '}
-            <a href="tel:+33613180168" style={s.footerLink}>06 13 18 01 68</a>
-          </p>
-        </div>
-      </footer>
-
-    </div>
+      </div>
+    </main>
   )
 }
+
+const ctaBtn: CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: brand, color: white, fontFamily: 'var(--font-inter), system-ui, sans-serif', fontSize: '14px', fontWeight: 600, padding: '13px 28px', borderRadius: '999px', textDecoration: 'none', marginTop: '4px', marginBottom: '10px' }
+const ctaSub: CSSProperties = { fontSize: '11px', fontWeight: 400, color: muted, textAlign: 'center' }
