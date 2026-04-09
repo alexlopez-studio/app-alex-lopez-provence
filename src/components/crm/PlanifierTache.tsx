@@ -9,6 +9,7 @@ const muted   = '#64748B'
 const border  = '#E2E8F0'
 const white   = '#ffffff'
 const success = '#10B981'
+const error   = '#EF4444'
 
 const triggerBtn: CSSProperties = {
   display: 'inline-flex', alignItems: 'center', gap: '6px',
@@ -26,7 +27,8 @@ const formTitle: CSSProperties = {
 const grid2: CSSProperties = {
   display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px',
 }
-const fieldWrap: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '5px' }
+const fieldWrap: CSSProperties  = { display: 'flex', flexDirection: 'column', gap: '5px' }
+const fullField: CSSProperties  = { display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '10px' }
 const lbl: CSSProperties = {
   fontSize: '11px', fontWeight: 600, textTransform: 'uppercase',
   letterSpacing: '0.12em', color: muted,
@@ -36,12 +38,14 @@ const inputSt: CSSProperties = {
   borderRadius: '10px', padding: '10px 12px', outline: 'none',
   backgroundColor: white, width: '100%', boxSizing: 'border-box',
 }
-const fullField: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '10px' }
 const rowBtns: CSSProperties = { display: 'flex', gap: '10px', marginTop: '16px' }
 const btnSubmit: CSSProperties = {
   flex: 1, padding: '11px', borderRadius: '10px',
   backgroundColor: brand, border: 'none', color: white,
   fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+}
+const btnSubmitOff: CSSProperties = {
+  ...btnSubmit, backgroundColor: border, color: muted, cursor: 'not-allowed',
 }
 const btnCancel: CSSProperties = {
   padding: '11px 16px', borderRadius: '10px',
@@ -54,6 +58,12 @@ const successBand: CSSProperties = {
   backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0',
   fontSize: '13px', fontWeight: 500, color: success, marginTop: '14px',
 }
+const errorBand: CSSProperties = {
+  display: 'flex', alignItems: 'center', gap: '8px',
+  padding: '10px 14px', borderRadius: '10px',
+  backgroundColor: '#FEF2F2', border: '1px solid #FECACA',
+  fontSize: '12px', fontWeight: 500, color: error, marginTop: '10px',
+}
 
 export default function PlanifierTache({ leadId }: { leadId: string }) {
   const [open, setOpen]       = useState(false)
@@ -63,24 +73,34 @@ export default function PlanifierTache({ leadId }: { leadId: string }) {
   const [heure, setHeure]     = useState('09:00')
   const [loading, setLoading] = useState(false)
   const [done, setDone]       = useState(false)
+  const [errMsg, setErrMsg]   = useState<string | null>(null)
 
   async function submit() {
     if (!date) return
     setLoading(true)
-    const scheduled_at = new Date(date + 'T' + heure + ':00').toISOString()
-    const res = await fetch('/api/relances', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lead_id: leadId, titre: titre.trim() || null, type, scheduled_at }),
-    })
-    setLoading(false)
-    if (res.ok) {
-      setDone(true)
-      setTimeout(() => {
-        setDone(false); setOpen(false)
-        setTitre(''); setDate(''); setType('appel')
-        window.location.reload()
-      }, 1600)
+    setErrMsg(null)
+    try {
+      const scheduled_at = new Date(date + 'T' + heure + ':00').toISOString()
+      const res = await fetch('/api/relances', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ lead_id: leadId, titre: titre.trim() || null, type, scheduled_at }),
+      })
+      if (res.ok) {
+        setDone(true)
+        setTimeout(() => {
+          setDone(false); setOpen(false)
+          setTitre(''); setDate(''); setType('appel')
+          window.location.reload()
+        }, 1600)
+      } else {
+        const json = await res.json().catch(() => ({}))
+        setErrMsg(json.error ?? `Erreur ${res.status} — vérifiez les logs Vercel`)
+      }
+    } catch (e) {
+      setErrMsg('Erreur réseau, réessayez.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -105,7 +125,7 @@ export default function PlanifierTache({ leadId }: { leadId: string }) {
               </select>
             </div>
             <div style={fieldWrap}>
-              <span style={lbl}>Date</span>
+              <span style={lbl}>Date *</span>
               <input
                 style={inputSt} type="date" value={date}
                 min={new Date().toISOString().split('T')[0]}
@@ -126,11 +146,16 @@ export default function PlanifierTache({ leadId }: { leadId: string }) {
               onChange={e => setTitre(e.target.value)}
             />
           </div>
+          {errMsg && <div style={errorBand}>❌ {errMsg}</div>}
           <div style={rowBtns}>
-            <button style={btnSubmit} onClick={submit} disabled={!date || loading}>
+            <button
+              style={!date || loading ? btnSubmitOff : btnSubmit}
+              onClick={submit}
+              disabled={!date || loading}
+            >
               {loading ? 'Planification...' : 'Planifier'}
             </button>
-            <button style={btnCancel} onClick={() => setOpen(false)}>Annuler</button>
+            <button style={btnCancel} onClick={() => { setOpen(false); setErrMsg(null) }}>Annuler</button>
           </div>
         </div>
       )}
